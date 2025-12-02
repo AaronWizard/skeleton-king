@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ActorData" load_steps=4 format=3 uid="uid://c3lgstyihxicc"]
+
+[ext_resource type="Script" uid="uid://cexpxoyjyfx82" path="res://src/actors/actor_data.gd" id="1_2u1hr"]
+[ext_resource type="Texture2D" uid="uid://c8xi7d8mtyled" path="res://assets/urizen_onebit_tileset__v2d0.png" id="2_d3pwk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27a1c"]
+atlas = ExtResource("2_d3pwk")
+region = Rect2(2210, 130, 12, 12)
+
+[resource]
+script = ExtResource("1_2u1hr")
+name = "Skeleton King"
+sprite = SubResource("AtlasTexture_27a1c")
+faction = &"skeletons"
+attack = 2
+stamina = 10
+metadata/_custom_type_script = "uid://cexpxoyjyfx82"
