@@ -15,9 +15,9 @@ var terrain: Array[TileMapLayer]:
 		return result
 
 
-var actors: Array[Actor]:
+var actors: Array[ActorDesign]:
 	get:
-		var result: Array[Actor] = []
+		var result: Array[ActorDesign] = []
 		result.assign(_terrain.get_children())
 		return result
 
@@ -45,8 +45,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	if _actors:
 		for c in _actors.get_children():
-			if c is not Actor:
-				result.append("'%s' is not an Actor" % c.name)
+			if c is not ActorDesign:
+				result.append("'%s' is not an ActorDesign" % c.name)
 	else:
 		result.append("No Node2D child named '%s'" % _CHILD_NAME_ACTORS)
 
