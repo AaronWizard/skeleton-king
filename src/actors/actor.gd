@@ -26,4 +26,4 @@ func _init_data() -> void:
 func _tile_size_changed() -> void:
 	if not is_node_ready():
 		await ready
-	_sprite.position = (tile_size * Vector2i(1, -1)) / 2.0
+	_sprite.position = pixel_centre

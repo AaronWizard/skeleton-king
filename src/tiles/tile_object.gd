@@ -21,6 +21,12 @@ extends Node2D
 		queue_redraw()
 
 
+## The pixel position of the tile object's centre.
+var pixel_centre: Vector2i:
+	get:
+		return (tile_size * Vector2i(1, -1)) / 2.0
+
+
 func _draw() -> void:
 	if Engine.is_editor_hint():
 		var rect := Rect2i(Vector2i.UP * tile_size, tile_size)
