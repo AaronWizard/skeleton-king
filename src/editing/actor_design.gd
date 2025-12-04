@@ -36,7 +36,7 @@ func _ready() -> void:
 		move_child(_sprite, 0)
 
 
-func construct_actor() -> Actor:
+func create_actor() -> Actor:
 	var actor := _ACTOR_SCENE.instantiate() as Actor
 	actor.data = data
 	return actor

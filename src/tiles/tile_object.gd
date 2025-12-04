@@ -33,6 +33,10 @@ func _draw() -> void:
 		draw_rect(rect, Color.CORNFLOWER_BLUE * Color(1, 1, 1, 0.25), true)
 
 
+func covers_cell(cell: Vector2i) -> bool:
+	return origin_cell == cell
+
+
 ## Called when the origin cell changed.
 func _origin_cell_changed() -> void:
 	pass
