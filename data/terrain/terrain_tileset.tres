@@ -1,0 +1,60 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bdp5lyg86iw6n"]
+
+[ext_resource type="Texture2D" uid="uid://c4jnl3c365xm3" path="res://assets/sprites/terrain.png" id="1_aq74o"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aq74o"]
+texture = ExtResource("1_aq74o")
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(12, 12)
+0:0/0 = 0
+0:0/0/custom_data_0 = &"grass"
+1:0/0 = 0
+1:0/0/custom_data_0 = &"grass"
+2:0/0 = 0
+2:0/0/custom_data_0 = &"grass"
+3:0/0 = 0
+3:0/0/custom_data_0 = &"dirt"
+4:0/0 = 0
+4:0/0/custom_data_0 = &"dirt"
+5:0/0 = 0
+5:0/0/custom_data_0 = &"dirt"
+0:1/0 = 0
+0:1/0/custom_data_0 = &"wall"
+1:1/0 = 0
+1:1/0/custom_data_0 = &"wall"
+2:1/0 = 0
+2:1/0/custom_data_0 = &"wall"
+3:1/0 = 0
+3:1/0/custom_data_0 = &"stump"
+4:1/0 = 0
+4:1/0/custom_data_0 = &"bush"
+5:1/0 = 0
+5:1/0/custom_data_0 = &"bush"
+0:2/0 = 0
+0:2/0/custom_data_0 = &"low_wall"
+1:2/0 = 0
+1:2/0/custom_data_0 = &"low_wall"
+2:2/0 = 0
+2:2/0/custom_data_0 = &"low_wall"
+3:2/0 = 0
+3:2/0/custom_data_0 = &"low_wall"
+4:2/0 = 0
+4:2/0/custom_data_0 = &"low_wall"
+5:2/0 = 0
+5:2/0/custom_data_0 = &"dirt"
+0:3/0 = 0
+0:3/0/custom_data_0 = &"stone_floor"
+1:3/0 = 0
+1:3/0/custom_data_0 = &"stone_floor"
+2:3/0 = 0
+2:3/0/custom_data_0 = &"wall"
+3:3/0 = 0
+3:3/0/custom_data_0 = &"wall"
+4:3/0 = 0
+4:3/0/custom_data_0 = &"wall"
+
+[resource]
+tile_size = Vector2i(12, 12)
+custom_data_layer_0/name = "terrain"
+custom_data_layer_0/type = 21
+sources/0 = SubResource("TileSetAtlasSource_aq74o")

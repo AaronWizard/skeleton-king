@@ -1,5 +1,5 @@
 @tool
-class_name ActorMap
+class_name ActorLayer
 extends Node2D
 
 

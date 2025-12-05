@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8xi7d8mtyled"
-path="res://.godot/imported/urizen_onebit_tileset__v2d0.png-9ba078671901b26a40a4f661fab68b79.ctex"
+uid="uid://c4jnl3c365xm3"
+path="res://.godot/imported/terrain.png-dfc2a3dbab29348c6bdbbce57351be83.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/urizen_onebit_tileset__v2d0.png"
-dest_files=["res://.godot/imported/urizen_onebit_tileset__v2d0.png-9ba078671901b26a40a4f661fab68b79.ctex"]
+source_file="res://assets/sprites/terrain.png"
+dest_files=["res://.godot/imported/terrain.png-dfc2a3dbab29348c6bdbbce57351be83.ctex"]
 
 [params]
 
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

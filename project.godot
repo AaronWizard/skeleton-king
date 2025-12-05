@@ -28,6 +28,14 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Skeleton King"
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "green",
+"res://data/": "blue",
+"res://src/": "red"
+}
+
 [input]
 
 move_north={

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TerrainLibrary" load_steps=5 format=3 uid="uid://dahoujk76yhuf"]
+
+[ext_resource type="Script" uid="uid://c14e3iocu37mg" path="res://src/maps/terrain/terrain.gd" id="1_2o7c0"]
+[ext_resource type="Script" uid="uid://bsh7cyga2bkcg" path="res://src/maps/terrain/terrain_library.gd" id="2_l175q"]
+
+[sub_resource type="Resource" id="Resource_2o7c0"]
+script = ExtResource("1_2o7c0")
+blocks_move = true
+blocks_sight = true
+metadata/_custom_type_script = "uid://c14e3iocu37mg"
+
+[sub_resource type="Resource" id="Resource_l175q"]
+script = ExtResource("1_2o7c0")
+blocks_move = true
+metadata/_custom_type_script = "uid://c14e3iocu37mg"
+
+[resource]
+script = ExtResource("2_l175q")
+library = Dictionary[StringName, ExtResource("1_2o7c0")]({
+&"low_wall": SubResource("Resource_l175q"),
+&"wall": SubResource("Resource_2o7c0")
+})
+metadata/_custom_type_script = "uid://bsh7cyga2bkcg"
