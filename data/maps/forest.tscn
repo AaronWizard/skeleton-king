@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dpfbol1adcken" path="res://src/editing/map_design.gd" id="1_tj7cq"]
 [ext_resource type="TileSet" uid="uid://bdp5lyg86iw6n" path="res://data/terrain/terrain_tileset.tres" id="2_djkcj"]
-[ext_resource type="PackedScene" uid="uid://dcm3v0uigudns" path="res://data/actors/actordesigns/player.tscn" id="3_pq1sv"]
-[ext_resource type="PackedScene" uid="uid://cyspmqdosy6l3" path="res://data/actors/actordesigns/skeleton_fighter.tscn" id="4_cspjw"]
+[ext_resource type="PackedScene" uid="uid://cyspmqdosy6l3" path="res://data/actors/actordesigns/skeleton_fighter.tscn" id="3_pq1sv"]
+[ext_resource type="Script" uid="uid://cbojsf0hklx0q" path="res://src/tiles/tile_object.gd" id="5_cspjw"]
 
 [node name="Forest" type="Node2D"]
 y_sort_enabled = true
@@ -24,18 +24,24 @@ tile_set = ExtResource("2_djkcj")
 [node name="Actors" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Player" parent="Actors" instance=ExtResource("3_pq1sv")]
-position = Vector2(84, 144)
-origin_cell = Vector2i(7, 11)
-
-[node name="SkeletonFighter" parent="Actors" instance=ExtResource("4_cspjw")]
-position = Vector2(48, 72)
-origin_cell = Vector2i(4, 5)
-
-[node name="SkeletonFighter2" parent="Actors" instance=ExtResource("4_cspjw")]
+[node name="SkeletonFighter" parent="Actors" instance=ExtResource("3_pq1sv")]
 position = Vector2(84, 60)
 origin_cell = Vector2i(7, 4)
 
-[node name="SkeletonFighter3" parent="Actors" instance=ExtResource("4_cspjw")]
+[node name="SkeletonFighter2" parent="Actors" instance=ExtResource("3_pq1sv")]
+position = Vector2(48, 72)
+origin_cell = Vector2i(4, 5)
+
+[node name="SkeletonFighter3" parent="Actors" instance=ExtResource("3_pq1sv")]
 position = Vector2(120, 72)
 origin_cell = Vector2i(10, 5)
+
+[node name="Markers" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="PlayerSpawn" type="Node2D" parent="Markers"]
+position = Vector2(84, 144)
+script = ExtResource("5_cspjw")
+origin_cell = Vector2i(7, 11)
+editor_colour = Color(0.99999994, 0.1880843, 0.66855663, 0.2509804)
+metadata/_custom_type_script = "uid://cbojsf0hklx0q"

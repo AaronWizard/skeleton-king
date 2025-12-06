@@ -5,9 +5,6 @@ extends TileObject
 ## A design version of an actor for placing in [MapDesign] scenes while creating
 ## levels.
 
-const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
-
-
 @export var data: ActorData:
 	set(value):
 		data = value
@@ -37,8 +34,7 @@ func _ready() -> void:
 
 
 func create_actor() -> Actor:
-	var actor := _ACTOR_SCENE.instantiate() as Actor
-	actor.data = data
+	var actor := Actor.create_actor(data)
 	actor.tile_size = tile_size
 	actor.origin_cell = origin_cell
 	return actor

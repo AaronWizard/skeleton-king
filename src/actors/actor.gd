@@ -2,6 +2,8 @@
 class_name Actor
 extends TileObject
 
+const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
+
 
 @export var data: ActorData:
 	set(value):
@@ -27,3 +29,9 @@ func _tile_size_changed() -> void:
 	if not is_node_ready():
 		await ready
 	_sprite.position = pixel_centre
+
+
+static func create_actor(p_data: ActorData) -> Actor:
+	var actor := _ACTOR_SCENE.instantiate() as Actor
+	actor.data = p_data
+	return actor

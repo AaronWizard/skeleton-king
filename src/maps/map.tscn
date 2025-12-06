@@ -12,3 +12,5 @@ script = ExtResource("2_bwu8q")
 
 [node name="ActorLayer" type="Node2D" parent="."]
 script = ExtResource("2_ohcw0")
+
+[node name="MarkerLayer" type="Node2D" parent="."]
