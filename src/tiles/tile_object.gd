@@ -2,6 +2,9 @@
 class_name TileObject
 extends Node2D
 
+#region Exports
+
+@export_group("Position and size")
 
 ## The pixel position is the tile object's [b]bottom left[/b] corner.
 @export var origin_cell: Vector2i:
@@ -20,6 +23,14 @@ extends Node2D
 		_tile_size_changed()
 		queue_redraw()
 
+@export_group("Editing")
+
+@export var editor_colour := Color.CORNFLOWER_BLUE * Color(1, 1, 1, 0.25):
+	set(value):
+		editor_colour = value
+		queue_redraw()
+
+#endregion Exports
 
 ## The pixel position of the tile object's centre.
 var pixel_centre: Vector2i:
@@ -30,7 +41,7 @@ var pixel_centre: Vector2i:
 func _draw() -> void:
 	if Engine.is_editor_hint():
 		var rect := Rect2i(Vector2i.UP * tile_size, tile_size)
-		draw_rect(rect, Color.CORNFLOWER_BLUE * Color(1, 1, 1, 0.25), true)
+		draw_rect(rect, editor_colour, true)
 
 
 func covers_cell(cell: Vector2i) -> bool:
