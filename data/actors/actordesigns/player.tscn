@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcm3v0uigudns"]
+
+[ext_resource type="Script" uid="uid://cs7qxwdbdtk06" path="res://src/editing/actor_design.gd" id="1_c1vsv"]
+[ext_resource type="Resource" uid="uid://febqrfnygkw7" path="res://data/actors/player.tres" id="2_e1kvs"]
+[ext_resource type="Texture2D" uid="uid://c8xi7d8mtyled" path="res://assets/sprites/urizen_onebit_tileset__v2d0.png" id="3_4dfdt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70pp1"]
+atlas = ExtResource("3_4dfdt")
+region = Rect2(1989, 0, 12, 12)
+
+[node name="Player" type="Node2D"]
+position = Vector2(0, 12)
+script = ExtResource("1_c1vsv")
+data = ExtResource("2_e1kvs")
+metadata/_custom_type_script = "uid://cs7qxwdbdtk06"
+
+[node name="@Sprite2D@32673" type="Sprite2D" parent="."]
+position = Vector2(6, -6)
+texture = SubResource("AtlasTexture_70pp1")

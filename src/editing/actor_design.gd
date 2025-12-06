@@ -39,6 +39,8 @@ func _ready() -> void:
 func create_actor() -> Actor:
 	var actor := _ACTOR_SCENE.instantiate() as Actor
 	actor.data = data
+	actor.tile_size = tile_size
+	actor.origin_cell = origin_cell
 	return actor
 
 

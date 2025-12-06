@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyspmqdosy6l3"]
+
+[ext_resource type="Script" uid="uid://cs7qxwdbdtk06" path="res://src/editing/actor_design.gd" id="1_jumwb"]
+[ext_resource type="Resource" uid="uid://v5b5hy1pg7ta" path="res://data/actors/skeleton_fighter.tres" id="2_5tpb1"]
+[ext_resource type="Texture2D" uid="uid://c8xi7d8mtyled" path="res://assets/sprites/urizen_onebit_tileset__v2d0.png" id="3_5gh87"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yiy0b"]
+atlas = ExtResource("3_5gh87")
+region = Rect2(1989, 130, 12, 12)
+
+[node name="SkeletonFighter" type="Node2D"]
+position = Vector2(0, 12)
+script = ExtResource("1_jumwb")
+data = ExtResource("2_5tpb1")
+metadata/_custom_type_script = "uid://cs7qxwdbdtk06"
+
+[node name="@Sprite2D@33652" type="Sprite2D" parent="."]
+position = Vector2(6, -6)
+texture = SubResource("AtlasTexture_yiy0b")

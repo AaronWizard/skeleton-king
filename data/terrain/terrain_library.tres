@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://c14e3iocu37mg" path="res://src/maps/terrain/terrain.gd" id="1_2o7c0"]
 [ext_resource type="Script" uid="uid://bsh7cyga2bkcg" path="res://src/maps/terrain/terrain_library.gd" id="2_l175q"]
 
+[sub_resource type="Resource" id="Resource_l175q"]
+script = ExtResource("1_2o7c0")
+blocks_move = true
+metadata/_custom_type_script = "uid://c14e3iocu37mg"
+
 [sub_resource type="Resource" id="Resource_2o7c0"]
 script = ExtResource("1_2o7c0")
 blocks_move = true
 blocks_sight = true
-metadata/_custom_type_script = "uid://c14e3iocu37mg"
-
-[sub_resource type="Resource" id="Resource_l175q"]
-script = ExtResource("1_2o7c0")
-blocks_move = true
 metadata/_custom_type_script = "uid://c14e3iocu37mg"
 
 [resource]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bcnibxeonboeb"]
 
-[ext_resource type="PackedScene" uid="uid://bj4fsrk3qt3jv" path="res://src/maps/map.tscn" id="1_gh0ne"]
-[ext_resource type="Resource" uid="uid://dahoujk76yhuf" path="res://data/terrain/terrain_library.tres" id="2_5q4o7"]
+[ext_resource type="PackedScene" uid="uid://dnpf17kqu168j" path="res://src/game/game.tscn" id="1_eewff"]
+[ext_resource type="PackedScene" uid="uid://c2ix3jhpky8kk" path="res://data/maps/forest.tscn" id="2_gh0ne"]
 
 [node name="Main" type="Node"]
 
-[node name="Map" parent="." instance=ExtResource("1_gh0ne")]
-terrain_library = ExtResource("2_5q4o7")
+[node name="Game" parent="." instance=ExtResource("1_eewff")]
+initial_map_data = ExtResource("2_gh0ne")

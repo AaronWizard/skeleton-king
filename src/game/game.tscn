@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnpf17kqu168j"]
+
+[ext_resource type="PackedScene" uid="uid://bj4fsrk3qt3jv" path="res://src/maps/map.tscn" id="1_qnjlk"]
+[ext_resource type="Script" uid="uid://bl3hkhamfjaac" path="res://src/game/game.gd" id="1_s6lek"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_s6lek")
+
+[node name="Map" parent="." instance=ExtResource("1_qnjlk")]
+metadata/_edit_lock_ = true
