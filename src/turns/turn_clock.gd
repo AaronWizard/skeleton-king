@@ -34,7 +34,7 @@ func clear() -> void:
 func take_turn() -> void:
 	var turn_taker := _turn_takers[_current_index]
 
-	turn_taker.start_turn()
+	turn_taker.start_turn.call_deferred()
 	var action := await turn_taker.turn_ended as TurnAction
 	await _run_turn_action(action)
 

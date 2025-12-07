@@ -72,9 +72,7 @@ func _tile_size_changed() -> void:
 
 func _on_turn_taker_turn_started() -> void:
 	var action: TurnAction = null
-
 	if _controller:
 		@warning_ignore("redundant_await")
 		action = await _controller.get_turn_action()
-
 	turn_taker.end_turn(action)
