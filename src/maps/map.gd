@@ -34,7 +34,6 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 
 
 func has_marker(marker_name: StringName) -> bool:
-	print(NodePath(marker_name))
 	return _marker_layer.has_node(NodePath(marker_name))
 
 

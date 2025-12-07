@@ -8,6 +8,7 @@ extends Node
 
 
 var _player: Actor
+var _turn_clock := TurnClock.new()
 
 
 func _ready() -> void:
@@ -23,3 +24,14 @@ func _load_map(map_data: MapDesign, player_spawn_marker: StringName) -> void:
 	_map.load_map(map_data)
 	var cell := _map.get_marker_cell(player_spawn_marker)
 	_map.add_actor(_player, cell)
+
+	var turn_takers: Array[TurnTaker] = []
+	turn_takers.assign(
+		_map.actors.map(func(actor: Actor): return actor.turn_taker)
+	)
+	_turn_clock.set_turn_takers(turn_takers)
+
+
+func _run() -> void:
+	while _player.stamina.is_alive:
+		_turn_clock.take_turn()
