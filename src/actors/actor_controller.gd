@@ -8,8 +8,8 @@ var actor: Actor:
 		if actor == value:
 			return
 		if actor and actor.is_ancestor_of(self):
-			push_error("Cannot change an actor controller's actor while " \
-					+ "it's still a child of its current actor")
+			push_error("Cannot change an actor controller's actor while it " \
+					+ "is still a child of its current actor")
 			return
 		if value and not value.is_ancestor_of(self):
 			push_error("Cannot change an actor controller's actor to an " \
