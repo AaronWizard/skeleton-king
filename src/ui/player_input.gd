@@ -24,7 +24,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 		).limit_length(1)
 	)
 	var next_cell := player.origin_cell + move_vector
-	if next_cell != player.origin_cell:
+	if (next_cell != player.origin_cell) \
+			and (player.map.actor_can_enter_cell(player, next_cell)):
 		active = false
 		var action := MoveAction.new(player, next_cell)
 		controller.send_player_action(action)

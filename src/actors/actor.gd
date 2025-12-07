@@ -13,6 +13,23 @@ const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 		_init_data()
 
 
+var map: Map:
+	set(value):
+		if map == value:
+			return
+
+		if map and map.is_ancestor_of(self):
+			push_error("Cannot change an actor's map while it is still a " \
+					+ "child of its current map")
+			return
+		if value and not value.is_ancestor_of(self):
+			push_error("Cannot change an actor's map to a map it is not a " \
+					+ "child of")
+			return
+
+		map = value
+
+
 var turn_taker: TurnTaker:
 	get:
 		return $TurnTaker as TurnTaker
@@ -24,7 +41,6 @@ var stamina: Stamina:
 
 
 var _stamina := Stamina.new()
-
 var _controller: ActorController
 
 @onready var _sprite := $Sprite as Sprite2D
