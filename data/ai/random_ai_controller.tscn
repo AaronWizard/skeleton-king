@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcvggibwicbj6"]
+
+[ext_resource type="Script" uid="uid://boqyefw8ut8vq" path="res://src/actors/control/random_ai_control.gd" id="1_yqf14"]
+
+[node name="RandomAIController" type="Node"]
+script = ExtResource("1_yqf14")
+metadata/_custom_type_script = "uid://boqyefw8ut8vq"

@@ -16,6 +16,9 @@ extends TileObject
 			_sprite.texture = data.sprite
 
 
+@export var controller_scene: PackedScene
+
+
 var _sprite: Sprite2D
 
 
@@ -37,6 +40,11 @@ func create_actor() -> Actor:
 	var actor := Actor.create_actor(data)
 	actor.tile_size = tile_size
 	actor.origin_cell = origin_cell
+
+	if controller_scene:
+		var controller := controller_scene.instantiate() as ActorController
+		actor.set_controller(controller)
+
 	return actor
 
 
