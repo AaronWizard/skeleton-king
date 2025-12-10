@@ -9,14 +9,14 @@ var stamina: int:
 	set(value):
 		var old_stamina := _stamina
 
-		_stamina = clampi(_stamina + value, 0, max_stamina)
+		_stamina = clampi(value, 0, max_stamina)
 
 		var delta := _stamina - old_stamina
 		if delta != 0:
 			stamina_changed.emit(delta)
 
 
-var is_alive:
+var is_alive: bool:
 	get:
 		return _stamina > 0
 
