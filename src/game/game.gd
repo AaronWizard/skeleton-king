@@ -43,7 +43,7 @@ func _load_map(map_data: MapDesign, player_spawn_marker: StringName) -> void:
 
 
 func _run() -> void:
-	while _player.stamina.is_alive:
+	while _player.stats.is_alive:
 		await _turn_clock.take_turn()
 
 

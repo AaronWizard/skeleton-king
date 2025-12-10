@@ -6,5 +6,4 @@ extends Resource
 @export var sprite: Texture2D
 @export var faction: StringName
 
-@export_range(1, 1, 1, "or_greater") var attack := 1
-@export_range(1, 1, 1, "or_greater") var stamina := 1
+@export var base_stats: BaseStats

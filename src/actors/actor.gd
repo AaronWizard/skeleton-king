@@ -35,12 +35,12 @@ var turn_taker: TurnTaker:
 		return $TurnTaker as TurnTaker
 
 
-var stamina: Stamina:
+var stats: Stats:
 	get:
-		return _stamina
+		return _stats
 
 
-var _stamina := Stamina.new()
+var _stats: Stats
 var _controller: ActorController
 
 @onready var _sprite := $Sprite as Sprite2D
@@ -77,7 +77,7 @@ func _init_data() -> void:
 	_sprite.texture = null
 	if data:
 		_sprite.texture = data.sprite
-		_stamina.init(data.stamina)
+		_stats = Stats.new(data.base_stats)
 
 
 func _tile_size_changed() -> void:

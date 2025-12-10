@@ -1,7 +1,14 @@
-[gd_resource type="Resource" script_class="ActorData" load_steps=4 format=3 uid="uid://c3lgstyihxicc"]
+[gd_resource type="Resource" script_class="ActorData" load_steps=6 format=3 uid="uid://c3lgstyihxicc"]
 
 [ext_resource type="Script" uid="uid://cexpxoyjyfx82" path="res://src/actors/actor_data.gd" id="1_2u1hr"]
+[ext_resource type="Script" uid="uid://chv2igew1dnoj" path="res://src/actors/stats/base_stats.gd" id="1_27a1c"]
 [ext_resource type="Texture2D" uid="uid://c8xi7d8mtyled" path="res://assets/sprites/urizen_onebit_tileset__v2d0.png" id="2_d3pwk"]
+
+[sub_resource type="Resource" id="Resource_pm8oo"]
+script = ExtResource("1_27a1c")
+max_stamina = 10
+attack = 2
+metadata/_custom_type_script = "uid://chv2igew1dnoj"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_27a1c"]
 atlas = ExtResource("2_d3pwk")
@@ -12,6 +19,5 @@ script = ExtResource("1_2u1hr")
 name = "Skeleton King"
 sprite = SubResource("AtlasTexture_27a1c")
 faction = &"skeletons"
-attack = 2
-stamina = 10
+base_stats = SubResource("Resource_pm8oo")
 metadata/_custom_type_script = "uid://cexpxoyjyfx82"
