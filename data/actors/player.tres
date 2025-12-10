@@ -2,17 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cexpxoyjyfx82" path="res://src/actors/actor_data.gd" id="1_55hq3"]
 [ext_resource type="Script" uid="uid://chv2igew1dnoj" path="res://src/actors/stats/base_stats.gd" id="1_nfr5d"]
-[ext_resource type="Texture2D" uid="uid://c8xi7d8mtyled" path="res://assets/sprites/urizen_onebit_tileset__v2d0.png" id="2_nfr5d"]
+[ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="3_nfr5d"]
 
 [sub_resource type="Resource" id="Resource_r44x8"]
 script = ExtResource("1_nfr5d")
-max_stamina = 10
+max_stamina = 20
 attack = 2
 metadata/_custom_type_script = "uid://chv2igew1dnoj"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70pp1"]
-atlas = ExtResource("2_nfr5d")
-region = Rect2(1989, 0, 12, 12)
+atlas = ExtResource("3_nfr5d")
+region = Rect2(48, 0, 12, 12)
 
 [resource]
 script = ExtResource("1_55hq3")

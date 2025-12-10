@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ActorData" load_steps=6 format=3 uid="uid://l14lt6vprxsu"]
+
+[ext_resource type="Script" uid="uid://chv2igew1dnoj" path="res://src/actors/stats/base_stats.gd" id="1_ad3xp"]
+[ext_resource type="Script" uid="uid://cexpxoyjyfx82" path="res://src/actors/actor_data.gd" id="2_abyi7"]
+[ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="3_l5jye"]
+
+[sub_resource type="Resource" id="Resource_fbcmg"]
+script = ExtResource("1_ad3xp")
+max_stamina = 8
+metadata/_custom_type_script = "uid://chv2igew1dnoj"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad3xp"]
+atlas = ExtResource("3_l5jye")
+region = Rect2(0, 12, 12, 12)
+
+[resource]
+script = ExtResource("2_abyi7")
+name = "Skeleton Brute"
+sprite = SubResource("AtlasTexture_ad3xp")
+faction = &"skeletons"
+base_stats = SubResource("Resource_fbcmg")
+metadata/_custom_type_script = "uid://cexpxoyjyfx82"
