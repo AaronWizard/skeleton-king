@@ -4,12 +4,6 @@ var _turn_takers: Array[TurnTaker] = []
 var _current_index := 0
 
 
-func set_turn_takers(turn_takers: Array[TurnTaker]) -> void:
-	clear()
-	_turn_takers.assign(turn_takers)
-	_current_index = 0
-
-
 func add_turn_taker(turn_taker: TurnTaker) -> void:
 	if turn_taker in _turn_takers:
 		push_error("TurnTaker already in TurnClock")
@@ -29,6 +23,7 @@ func remove_turn_taker(turn_taker: TurnTaker) -> void:
 
 func clear() -> void:
 	_turn_takers.clear()
+	_current_index = 0
 
 
 func take_turn() -> void:

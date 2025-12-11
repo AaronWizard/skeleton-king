@@ -1,6 +1,9 @@
 class_name Map
 extends Node2D
 
+signal actor_added(actor: Actor)
+signal actor_removed(actor: Actor)
+
 @export var terrain_library: TerrainLibrary
 
 
@@ -28,6 +31,7 @@ func add_actor(actor: Actor, cell: Vector2i) -> void:
 	actor.origin_cell = cell
 	_actor_layer.add_child(actor)
 	actor.map = self
+	actor_added.emit(actor)
 
 
 func remove_actor(actor: Actor) -> void:
@@ -36,6 +40,7 @@ func remove_actor(actor: Actor) -> void:
 		return
 	_actor_layer.remove_child(actor)
 	actor.map = null
+	actor_removed.emit(actor)
 
 
 func get_actor_on_cell(cell: Vector2i) -> Actor:

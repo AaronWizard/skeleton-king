@@ -31,15 +31,11 @@ func _init_player() -> void:
 
 
 func _load_map(map_data: MapDesign, player_spawn_marker: StringName) -> void:
+	_turn_clock.clear()
+
 	_map.load_map(map_data)
 	var cell := _map.get_marker_cell(player_spawn_marker)
 	_map.add_actor(_player, cell)
-
-	var turn_takers: Array[TurnTaker] = []
-	turn_takers.assign(
-		_map.actors.map(func(actor: Actor): return actor.turn_taker)
-	)
-	_turn_clock.set_turn_takers(turn_takers)
 
 
 func _run() -> void:
@@ -49,3 +45,11 @@ func _run() -> void:
 
 func _on_player_input_requested() -> void:
 	_player_input.active = true
+
+
+func _on_map_actor_added(actor: Actor) -> void:
+	_turn_clock.add_turn_taker(actor.turn_taker)
+
+
+func _on_map_actor_removed(actor: Actor) -> void:
+	_turn_clock.remove_turn_taker(actor.turn_taker)
