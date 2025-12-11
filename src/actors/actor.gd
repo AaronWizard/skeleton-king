@@ -44,17 +44,13 @@ var _stats: Stats
 var _controller: ActorController
 
 @onready var _sprite := $Sprite as Sprite2D
+@onready var _stamina_bar := $Sprite/StaminaBar as Range
 
 
 static func create_actor(p_data: ActorData) -> Actor:
 	var actor := _ACTOR_SCENE.instantiate() as Actor
 	actor.data = p_data
 	return actor
-
-
-func _ready() -> void:
-	if not Engine.is_editor_hint():
-		pass
 
 
 func set_controller(controller: ActorController) -> void:
@@ -77,7 +73,13 @@ func _init_data() -> void:
 	_sprite.texture = null
 	if data:
 		_sprite.texture = data.sprite
+
 		_stats = Stats.new(data.base_stats)
+
+		_stamina_bar.max_value = stats.max_stamina
+		_stamina_bar.max_value = stats.stamina
+		_stamina_bar.visible = stats.max_stamina != stats.stamina
+		stats.stamina_changed.connect(_on_stamina_changed)
 
 
 func _tile_size_changed() -> void:
@@ -92,3 +94,8 @@ func _on_turn_taker_turn_started() -> void:
 		@warning_ignore("redundant_await")
 		action = await _controller.get_turn_action()
 	turn_taker.end_turn(action)
+
+
+func _on_stamina_changed(_delta: int) -> void:
+	_stamina_bar.value = stats.stamina
+	_stamina_bar.visible = stats.max_stamina != stats.stamina

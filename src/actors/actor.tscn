@@ -11,6 +11,15 @@ metadata/_custom_type_script = "uid://cbojsf0hklx0q"
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(6, -6)
 
+[node name="StaminaBar" type="ProgressBar" parent="Sprite"]
+offset_left = -5.0
+offset_top = -8.0
+offset_right = 5.0
+offset_bottom = -7.0
+theme_type_variation = &"StaminaSmall"
+step = 1.0
+show_percentage = false
+
 [node name="TurnTaker" type="Node" parent="."]
 script = ExtResource("2_8i1u4")
 metadata/_custom_type_script = "uid://38bauea5dnlw"
