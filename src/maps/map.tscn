@@ -8,9 +8,11 @@
 script = ExtResource("1_clcws")
 
 [node name="TerrainLayer" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("2_bwu8q")
 
 [node name="ActorLayer" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("2_ohcw0")
 
 [node name="MarkerLayer" type="Node2D" parent="."]
