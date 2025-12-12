@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnpf17kqu168j"]
+[gd_scene load_steps=6 format=3 uid="uid://dnpf17kqu168j"]
 
 [ext_resource type="PackedScene" uid="uid://bj4fsrk3qt3jv" path="res://src/maps/map.tscn" id="1_qnjlk"]
 [ext_resource type="Script" uid="uid://bl3hkhamfjaac" path="res://src/game/game.gd" id="1_s6lek"]
 [ext_resource type="Script" uid="uid://dasis7y0urj3h" path="res://src/ui/player_input.gd" id="3_kgj8g"]
 [ext_resource type="Resource" uid="uid://dahoujk76yhuf" path="res://data/terrain/terrain_library.tres" id="3_l80un"]
+[ext_resource type="Script" uid="uid://mulmsh7g8ilk" path="res://src/game/bounded_camera.gd" id="5_xptat"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_s6lek")
@@ -15,6 +16,9 @@ metadata/_edit_lock_ = true
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("3_kgj8g")
 metadata/_custom_type_script = "uid://dasis7y0urj3h"
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("5_xptat")
 
 [connection signal="actor_added" from="Map" to="." method="_on_map_actor_added"]
 [connection signal="actor_removed" from="Map" to="." method="_on_map_actor_removed"]

@@ -11,6 +11,7 @@ var _player: Actor
 var _turn_clock := TurnClock.new()
 
 @onready var _player_input := $PlayerInput as PlayerInput
+@onready var _camera := $Camera as BoundedCamera
 
 
 func _ready() -> void:
@@ -36,6 +37,8 @@ func _load_map(map_data: MapDesign, player_spawn_marker: StringName) -> void:
 	_map.load_map(map_data)
 	var cell := _map.get_marker_cell(player_spawn_marker)
 	_map.add_actor(_player, cell)
+
+	_camera.bounds = _map.pixel_rect
 
 
 func _run() -> void:

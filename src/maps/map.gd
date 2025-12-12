@@ -7,6 +7,20 @@ signal actor_removed(actor: Actor)
 @export var terrain_library: TerrainLibrary
 
 
+var pixel_rect: Rect2i:
+	get:
+		var result := Rect2i()
+		for layer: TileMapLayer in _terrain_layer.get_children():
+			var layer_rect := layer.get_used_rect()
+			result = result.merge(
+				Rect2i(
+					layer_rect.position * layer.tile_set.tile_size,
+					layer_rect.size * layer.tile_set.tile_size
+				)
+			)
+		return result
+
+
 var actors: Array[Actor]:
 	get:
 		return _actor_layer.actors
