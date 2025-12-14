@@ -35,9 +35,10 @@ enabled=PackedStringArray("res://addons/skeletonking_mapediting/plugin.cfg")
 [file_customization]
 
 folder_colors={
-"res://assets/": "green",
-"res://data/": "blue",
-"res://src/": "red"
+"res://addons/": "red",
+"res://assets/": "yellow",
+"res://data/": "green",
+"res://src/": "blue"
 }
 
 [gui]
