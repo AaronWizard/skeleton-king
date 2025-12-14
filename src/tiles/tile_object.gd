@@ -33,9 +33,9 @@ extends Node2D
 #endregion Exports
 
 ## The pixel position of the tile object's centre.
-var pixel_centre: Vector2i:
+var pixel_centre: Vector2:
 	get:
-		return (tile_size * Vector2i(1, -1)) / 2.0
+		return (Vector2(tile_size) * Vector2(1, -1)) / 2.0
 
 
 func _draw() -> void:
