@@ -48,11 +48,13 @@ func covers_cell(cell: Vector2i) -> bool:
 	return origin_cell == cell
 
 
-## Called when the origin cell changed.
+## Called when the origin cell changed.[br]
+## Can be overridden.
 func _origin_cell_changed() -> void:
 	pass
 
 
-## Called when the tile size changed.
+## Called when the tile size changed.[br]
+## Can be overridden.
 func _tile_size_changed() -> void:
 	pass
