@@ -1,0 +1,133 @@
+[gd_scene load_steps=9 format=3 uid="uid://2x11hgj8vreo"]
+
+[ext_resource type="Script" uid="uid://dn1vbvbxr38qw" path="res://src/actors/actor_sprite.gd" id="1_25ddq"]
+[ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="2_b63f5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg40r"]
+atlas = ExtResource("2_b63f5")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="Animation" id="Animation_lg40r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_distance")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_stvwg"]
+resource_name = "action_aimed"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_distance")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.2),
+"transitions": PackedFloat32Array(2, 0.5, 1),
+"update": 0,
+"values": [0.0, 0.5, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_set_facing_from_offset_direction"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_5hckx"]
+resource_name = "hit_aimed"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_distance")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10000001, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [0.0, -0.5, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_set_facing_from_offset_direction"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b63f5"]
+resource_name = "move_step"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_distance")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [-1.0, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_set_facing_from_offset_direction"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_stvwg"]
+_data = {
+&"RESET": SubResource("Animation_lg40r"),
+&"action_aimed": SubResource("Animation_stvwg"),
+&"hit_aimed": SubResource("Animation_5hckx"),
+&"move_step": SubResource("Animation_b63f5")
+}
+
+[node name="ActorSprite" type="Node2D"]
+script = ExtResource("1_25ddq")
+texture = SubResource("AtlasTexture_lg40r")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_lg40r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_stvwg")
+}

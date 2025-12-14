@@ -35,6 +35,11 @@ var turn_taker: TurnTaker:
 		return $TurnTaker as TurnTaker
 
 
+var sprite: ActorSprite:
+	get:
+		return _sprite
+
+
 var stats: Stats:
 	get:
 		return _stats
@@ -43,8 +48,8 @@ var stats: Stats:
 var _stats: Stats
 var _controller: ActorController
 
-@onready var _sprite := $Sprite as Sprite2D
-@onready var _stamina_bar := $Sprite/StaminaBar as Range
+@onready var _sprite := $ActorSprite as ActorSprite
+@onready var _stamina_bar := %StaminaBar as Range
 
 
 static func create_actor(p_data: ActorData) -> Actor:
@@ -86,9 +91,13 @@ func _tile_size_changed() -> void:
 	if not is_node_ready():
 		await ready
 	_sprite.position = pixel_centre
+	_sprite.tile_size = tile_size
 
 
 func _on_turn_taker_turn_started() -> void:
+	if _sprite.animation_playing:
+		await _sprite.animation_finished
+
 	var action: TurnAction = null
 	if _controller:
 		@warning_ignore("redundant_await")
