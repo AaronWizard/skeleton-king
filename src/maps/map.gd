@@ -4,6 +4,9 @@ extends Node2D
 signal actor_added(actor: Actor)
 signal actor_removed(actor: Actor)
 
+signal animation_started
+signal animations_finished
+
 @export var terrain_library: TerrainLibrary
 
 
@@ -26,6 +29,13 @@ var actors: Array[Actor]:
 		return _actor_layer.actors
 
 
+var animations_running: bool:
+	get:
+		return _anim_count > 0
+
+
+var _anim_count := 0
+
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
 @onready var _actor_layer := $ActorLayer as ActorLayer
 @onready var _marker_layer := $MarkerLayer
@@ -45,6 +55,10 @@ func add_actor(actor: Actor, cell: Vector2i) -> void:
 	actor.origin_cell = cell
 	_actor_layer.add_child(actor)
 	actor.map = self
+
+	actor.sprite.animation_started.connect(_animation_added)
+	actor.sprite.animation_finished.connect(_animation_finished)
+
 	actor_added.emit(actor)
 
 
@@ -54,6 +68,12 @@ func remove_actor(actor: Actor) -> void:
 		return
 	_actor_layer.remove_child(actor)
 	actor.map = null
+
+	actor.sprite.animation_started.disconnect(_animation_added)
+	actor.sprite.animation_finished.disconnect(_animation_finished)
+	if actor.sprite.animation_playing:
+		_animation_finished()
+
 	actor_removed.emit(actor)
 
 
@@ -98,6 +118,21 @@ func _get_terrain_data(cell: Vector2i) -> Terrain:
 	if terrain_library.library.has(terrain_name):
 		result = terrain_library.library[terrain_name]
 	return result
+
+
+func _animation_added() -> void:
+	_anim_count += 1
+	if _anim_count == 1:
+		animation_started.emit()
+
+
+func _animation_finished() -> void:
+	if _anim_count == 0:
+		push_error("Animations not running")
+		return
+	_anim_count -= 1
+	if _anim_count == 0:
+		animations_finished.emit()
 
 
 static func _clear_layer(layer: Node) -> void:

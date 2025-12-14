@@ -5,6 +5,8 @@ extends Node2D
 signal animation_started
 signal animation_finished
 
+signal action_frame_reached
+
 enum Facing { EAST, WEST }
 
 enum StandardAnims {
@@ -143,3 +145,7 @@ func _signal_anim_start() -> void:
 func _signal_anim_end() -> void:
 	_animation_playing = false
 	animation_finished.emit()
+
+
+func _signal_action_frame() -> void:
+	action_frame_reached.emit()

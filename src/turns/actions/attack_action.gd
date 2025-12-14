@@ -11,4 +11,6 @@ func _init(p_attacker: Actor, p_target: Actor) -> void:
 
 
 func run() -> void:
-	CombatEngine.attack_actor(_attacker, _target)
+	if _attacker.map.animations_running:
+		await _attacker.map.animations_finished
+	await CombatEngine.attack_actor(_attacker, _target)

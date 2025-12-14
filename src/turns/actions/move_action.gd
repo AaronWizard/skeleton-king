@@ -11,4 +11,9 @@ func _init(p_actor: Actor, p_next_cell: Vector2i) -> void:
 
 
 func run() -> void:
+	var delta := _next_cell - _actor.origin_cell
+
 	_actor.origin_cell = _next_cell
+
+	_actor.sprite.offset_direction = delta
+	_actor.sprite.play_standard_anim(ActorSprite.StandardAnims.MOVE_STEP)
