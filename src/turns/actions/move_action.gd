@@ -16,4 +16,5 @@ func run() -> void:
 	_actor.origin_cell = _next_cell
 
 	_actor.sprite.offset_direction = delta
+	_actor.sprite.offset_distance = -1
 	_actor.sprite.play_standard_anim(ActorSprite.StandardAnims.MOVE_STEP)
