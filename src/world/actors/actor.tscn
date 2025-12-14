@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bcifsfm6gsylc"]
 
-[ext_resource type="Script" uid="uid://dts4fho8mun2m" path="res://src/actors/actor.gd" id="1_4yile"]
-[ext_resource type="PackedScene" uid="uid://2x11hgj8vreo" path="res://src/actors/actor_sprite.tscn" id="2_0o3uc"]
-[ext_resource type="Script" uid="uid://38bauea5dnlw" path="res://src/turns/turn_taker.gd" id="2_8i1u4"]
+[ext_resource type="Script" uid="uid://dts4fho8mun2m" path="res://src/world/actors/actor.gd" id="1_4yile"]
+[ext_resource type="PackedScene" uid="uid://2x11hgj8vreo" path="res://src/world/actors/actor_sprite.tscn" id="2_0o3uc"]
+[ext_resource type="Script" uid="uid://38bauea5dnlw" path="res://src/world/turns/turn_taker.gd" id="2_8i1u4"]
 
 [node name="Actor" type="Node2D"]
 position = Vector2(0, 12)

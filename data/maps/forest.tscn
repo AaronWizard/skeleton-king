@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dpfbol1adcken" path="res://src/editing/map_design.gd" id="1_tj7cq"]
 [ext_resource type="TileSet" uid="uid://bdp5lyg86iw6n" path="res://data/terrain/terrain_tileset.tres" id="2_djkcj"]
 [ext_resource type="PackedScene" uid="uid://cyspmqdosy6l3" path="res://data/actors/actordesigns/skeleton_fighter.tscn" id="3_pq1sv"]
-[ext_resource type="Script" uid="uid://cbojsf0hklx0q" path="res://src/tiles/tile_object.gd" id="5_cspjw"]
+[ext_resource type="Script" uid="uid://cbojsf0hklx0q" path="res://src/world/tiles/tile_object.gd" id="5_cspjw"]
 
 [node name="Forest" type="Node2D"]
 y_sort_enabled = true

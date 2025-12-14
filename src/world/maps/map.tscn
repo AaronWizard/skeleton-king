@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bj4fsrk3qt3jv"]
 
-[ext_resource type="Script" uid="uid://ddngxknvol701" path="res://src/maps/map.gd" id="1_clcws"]
-[ext_resource type="Script" uid="uid://cxjaa0s8oga6x" path="res://src/maps/terrain/terrain_layer.gd" id="2_bwu8q"]
-[ext_resource type="Script" uid="uid://dnc3rteg2x6ek" path="res://src/maps/actor_layer.gd" id="2_ohcw0"]
+[ext_resource type="Script" uid="uid://ddngxknvol701" path="res://src/world/maps/map.gd" id="1_clcws"]
+[ext_resource type="Script" uid="uid://cxjaa0s8oga6x" path="res://src/world/maps/terrain/terrain_layer.gd" id="2_bwu8q"]
+[ext_resource type="Script" uid="uid://dnc3rteg2x6ek" path="res://src/world/maps/actor_layer.gd" id="2_ohcw0"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_clcws")
