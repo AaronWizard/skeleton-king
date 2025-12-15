@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpfbol1adcken" path="res://src/editing/map_design.gd" id="1_tj7cq"]
 [ext_resource type="TileSet" uid="uid://bdp5lyg86iw6n" path="res://data/terrain/terrain_tileset.tres" id="2_djkcj"]
-[ext_resource type="PackedScene" uid="uid://cyspmqdosy6l3" path="res://data/actors/actordesigns/skeleton_fighter.tscn" id="3_pq1sv"]
+[ext_resource type="PackedScene" uid="uid://c2d1ucq6uigwt" path="res://data/actors/skeleton_fighter.tscn" id="3_pq1sv"]
 [ext_resource type="Script" uid="uid://cbojsf0hklx0q" path="res://src/world/tiles/tile_object.gd" id="5_cspjw"]
 
 [node name="Forest" type="Node2D"]
@@ -25,16 +25,16 @@ tile_set = ExtResource("2_djkcj")
 y_sort_enabled = true
 
 [node name="SkeletonFighter" parent="Actors" instance=ExtResource("3_pq1sv")]
-position = Vector2(84, 60)
-origin_cell = Vector2i(7, 4)
+position = Vector2(84, 72)
+origin_cell = Vector2i(7, 5)
 
 [node name="SkeletonFighter2" parent="Actors" instance=ExtResource("3_pq1sv")]
-position = Vector2(48, 72)
-origin_cell = Vector2i(4, 5)
+position = Vector2(48, 84)
+origin_cell = Vector2i(4, 6)
 
 [node name="SkeletonFighter3" parent="Actors" instance=ExtResource("3_pq1sv")]
-position = Vector2(120, 72)
-origin_cell = Vector2i(10, 5)
+position = Vector2(120, 84)
+origin_cell = Vector2i(10, 6)
 
 [node name="Markers" type="Node2D" parent="."]
 y_sort_enabled = true
