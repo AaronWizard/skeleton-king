@@ -8,8 +8,6 @@ const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 @export var data: ActorData:
 	set(value):
 		data = value
-		if not is_node_ready():
-			await ready
 		_init_data()
 
 
@@ -75,16 +73,22 @@ func set_controller(controller: ActorController) -> void:
 
 
 func _init_data() -> void:
+	if not is_node_ready():
+		await ready
+
 	_sprite.texture = null
-	if data:
-		_sprite.texture = data.sprite
 
-		_stats = Stats.new(data.base_stats)
+	if not data:
+		return
 
-		_stamina_bar.max_value = stats.max_stamina
-		_stamina_bar.max_value = stats.stamina
-		_stamina_bar.visible = stats.max_stamina != stats.stamina
-		stats.stamina_changed.connect(_on_stamina_changed)
+	_sprite.texture = data.sprite
+
+	_stats = Stats.new(data.base_stats)
+
+	_stamina_bar.max_value = stats.max_stamina
+	_stamina_bar.max_value = stats.stamina
+	_stamina_bar.visible = stats.max_stamina != stats.stamina
+	stats.stamina_changed.connect(_on_stamina_changed)
 
 
 func _tile_size_changed() -> void:
