@@ -1,6 +1,8 @@
 class_name RandomAIController
 extends ActorController
 
+const _ACTION_DELAY := 0.1
+
 const _CARDINALS: Array[Vector2i] = [
 	Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT
 ]
@@ -24,6 +26,7 @@ func get_turn_action() -> TurnAction:
 				possible_moves.append(move)
 
 	if possible_attacks.size() > 0:
+		await get_tree().create_timer(_ACTION_DELAY).timeout
 		result = possible_attacks.pick_random()
 	elif possible_moves.size() > 0:
 		result = possible_moves.pick_random()
