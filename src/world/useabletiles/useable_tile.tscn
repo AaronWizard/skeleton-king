@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj40j07ghclgb"]
+
+[ext_resource type="Script" uid="uid://dynjpgnnmynam" path="res://src/world/useabletiles/useable_tile.gd" id="1_ew8gc"]
+
+[node name="UseableTile" type="Node2D"]
+position = Vector2(0, 12)
+script = ExtResource("1_ew8gc")
+metadata/_custom_type_script = "uid://cbojsf0hklx0q"
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(6, -6)
