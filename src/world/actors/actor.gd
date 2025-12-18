@@ -86,7 +86,7 @@ func _init_data() -> void:
 	_stats = Stats.new(data.base_stats)
 
 	_stamina_bar.max_value = stats.max_stamina
-	_stamina_bar.max_value = stats.stamina
+	_stamina_bar.value = stats.stamina
 	_stamina_bar.visible = stats.max_stamina != stats.stamina
 	stats.stamina_changed.connect(_on_stamina_changed)
 
