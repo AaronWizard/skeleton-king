@@ -1,9 +1,9 @@
 @tool
-class_name DesignUseableTile
+class_name DesignUseableObject
 extends RectTileObject
 
 
-@export var data: UseableTileData:
+@export var data: UseableObjectData:
 	set(value):
 		data = value
 
@@ -46,7 +46,7 @@ func _ready() -> void:
 func _get_configuration_warnings() -> PackedStringArray:
 	var result := PackedStringArray()
 	if not data:
-		result.append("No UseableTileData")
+		result.append("No UseableObjectData")
 	return result
 
 
@@ -58,8 +58,8 @@ func _cell_size_changed() -> void:
 	_position_sprite()
 
 
-func create_useable_tile() -> UseableTile:
-	var useable_tile := UseableTile.create_useable_tile(data, state_index)
+func create_useable_tile() -> UseableObject:
+	var useable_tile := UseableObject.create_useable_tile(data, state_index)
 	useable_tile.tile_size = tile_size
 	useable_tile.origin_cell = origin_cell
 	return useable_tile

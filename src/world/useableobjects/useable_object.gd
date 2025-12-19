@@ -1,11 +1,11 @@
 @tool
-class_name UseableTile
+class_name UseableObject
 extends RectTileObject
 
 const _USEABLE_TILE_SCENE := preload("uid://bj40j07ghclgb")
 
 
-@export var data: UseableTileData:
+@export var data: UseableObjectData:
 	set(value):
 		data = value
 		if data:
@@ -30,9 +30,9 @@ const _USEABLE_TILE_SCENE := preload("uid://bj40j07ghclgb")
 			_sprite.texture = null
 
 
-var current_state: UseableTileState:
+var current_state: UseableObjectState:
 	get:
-		var result: UseableTileState = null
+		var result: UseableObjectState = null
 		if data and not data.states.is_empty():
 			result = data.states[state_index]
 		return result
@@ -41,9 +41,9 @@ var current_state: UseableTileState:
 @onready var _sprite := $Sprite as Sprite2D
 
 
-static func create_useable_tile(p_data: UseableTileData, initial_state: int) \
-		-> UseableTile:
-	var tile := _USEABLE_TILE_SCENE.instantiate() as UseableTile
+static func create_useable_tile(p_data: UseableObjectData, initial_state: int) \
+		-> UseableObject:
+	var tile := _USEABLE_TILE_SCENE.instantiate() as UseableObject
 	tile.data = p_data
 	tile.state_index = initial_state
 	return tile

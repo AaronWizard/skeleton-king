@@ -1,9 +1,9 @@
 @tool
-class_name UseableTileData
+class_name UseableObjectData
 extends Resource
 
 
-@export var states: Array[UseableTileState] = []:
+@export var states: Array[UseableObjectState] = []:
 	set(value):
 		states = value
 		emit_changed()

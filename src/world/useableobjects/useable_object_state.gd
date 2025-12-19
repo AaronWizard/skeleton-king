@@ -1,5 +1,5 @@
 @tool
-class_name UseableTileState
+class_name UseableObjectState
 extends Resource
 
 
