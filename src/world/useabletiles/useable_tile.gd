@@ -2,23 +2,38 @@
 class_name UseableTile
 extends RectTileObject
 
+const _USEABLE_TILE_SCENE := preload("uid://bj40j07ghclgb")
+
 
 @export var data: UseableTileData:
 	set(value):
 		data = value
-		state_index = 0 # Calls _init_current_state()
+		if data:
+			cell_dimensions = data.size
+		else:
+			cell_dimensions = Vector2i.ONE
+		state_index = 0
 
 
-@export_range(0, 1, 1, "or_greater") var state_index := 0:
+@export var state_index := 0:
 	set(value):
-		state_index = wrapi(value, 0, data.state_count)
-		_init_current_state()
+		if data:
+			state_index = wrapi(value, 0, data.states.size())
+		else:
+			state_index = 0
+
+		if not is_node_ready():
+			await ready
+		if current_state:
+			_sprite.texture = current_state.sprite
+		else:
+			_sprite.texture = null
 
 
 var current_state: UseableTileState:
 	get:
 		var result: UseableTileState = null
-		if data.state_count > 0:
+		if data and not data.states.is_empty():
 			result = data.states[state_index]
 		return result
 
@@ -26,18 +41,21 @@ var current_state: UseableTileState:
 @onready var _sprite := $Sprite as Sprite2D
 
 
+static func create_useable_tile(p_data: UseableTileData, initial_state: int) \
+		-> UseableTile:
+	var tile := _USEABLE_TILE_SCENE.instantiate() as UseableTile
+	tile.data = p_data
+	tile.state_index = initial_state
+	return tile
+
+
 func use() -> void:
 	state_index += 1
 
 
-func _init_current_state() -> void:
-	if not is_node_ready():
-		await ready
-
-	_sprite.texture = null
-	if current_state:
-		_sprite.texture = current_state.sprite
-
-
 func _tile_size_changed() -> void:
+	_sprite.position = pixel_centre
+
+
+func _cell_size_changed() -> void:
 	_sprite.position = pixel_centre
