@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bl3hkhamfjaac" path="res://src/game/game.gd" id="1_s6lek"]
 [ext_resource type="Resource" uid="uid://dahoujk76yhuf" path="res://data/terrain/terrain_library.tres" id="3_l80un"]
 [ext_resource type="Script" uid="uid://mulmsh7g8ilk" path="res://src/game/bounded_camera.gd" id="5_xptat"]
-[ext_resource type="PackedScene" uid="uid://diwcsg25lhq6x" path="res://src/game/player_input.tscn" id="5_yarin"]
+[ext_resource type="PackedScene" uid="uid://diwcsg25lhq6x" path="res://src/ui/player_input.tscn" id="5_yarin"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_s6lek")
