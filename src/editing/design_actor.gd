@@ -8,18 +8,22 @@ extends SquareTileObject
 
 @export var data: ActorData:
 	set(value):
-		if data:
-			data.changed.disconnect(_on_data_changed)
-
 		data = value
-		_on_data_changed()
+
+		if not Engine.is_editor_hint():
+			return
+		if not is_node_ready():
+			await ready
 
 		if data:
-			data.changed.connect(_on_data_changed)
+			cell_length = data.size
+			_sprite.texture = data.sprite
+		else:
+			cell_length = 1
+			_sprite.texture = null
 
 
 @export var controller_scene: PackedScene
-
 
 var _sprite: Sprite2D
 
@@ -65,19 +69,6 @@ func _cell_size_changed() -> void:
 func _position_sprite() -> void:
 	if not Engine.is_editor_hint():
 		return
-
 	if not is_node_ready():
 		await ready
 	_sprite.position = pixel_centre
-
-
-func _on_data_changed() -> void:
-	if not Engine.is_editor_hint():
-		return
-
-	if not is_node_ready():
-		await ready
-	_sprite.texture = null
-	if data:
-		cell_length = data.size
-		_sprite.texture = data.sprite
