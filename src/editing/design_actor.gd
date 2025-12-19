@@ -1,8 +1,8 @@
 @tool
-class_name ActorDesign
+class_name DesignActor
 extends SquareTileObject
 
-## A design version of an actor for placing in [MapDesign] scenes while creating
+## A design version of an actor for placing in [DesignMap] scenes while creating
 ## levels.
 
 

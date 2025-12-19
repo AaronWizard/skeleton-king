@@ -16,7 +16,7 @@ var _turn_clock := TurnClock.new()
 
 func _ready() -> void:
 	_init_player()
-	_load_map(initial_map_data.instantiate() as MapDesign, player_span_marker)
+	_load_map(initial_map_data.instantiate() as DesignMap, player_span_marker)
 	_run()
 
 
@@ -31,7 +31,7 @@ func _init_player() -> void:
 	_player_input.controller = controller
 
 
-func _load_map(map_data: MapDesign, player_spawn_marker: StringName) -> void:
+func _load_map(map_data: DesignMap, player_spawn_marker: StringName) -> void:
 	_turn_clock.clear()
 
 	_map.load_map(map_data)

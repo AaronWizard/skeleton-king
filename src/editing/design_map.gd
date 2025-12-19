@@ -1,5 +1,5 @@
 @tool
-class_name MapDesign
+class_name DesignMap
 extends Node2D
 
 ## A design version of a map for editing.
@@ -27,7 +27,7 @@ var actors: Array[Actor]:
 
 		var layer := get_node(_LAYER_NAME_ACTORS)
 		if layer:
-			for design: ActorDesign in layer.get_children():
+			for design: DesignActor in layer.get_children():
 				result.append(design.create_actor())
 
 		return result
@@ -67,8 +67,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var actor_layer := get_node(_LAYER_NAME_ACTORS)
 	if actor_layer:
 		for c in actor_layer.get_children():
-			if c is not ActorDesign:
-				result.append("'%s' is not an ActorDesign" % c.name)
+			if c is not DesignActor:
+				result.append("'%s' is not an DesignActor" % c.name)
 	else:
 		result.append("No Node2D child named '%s'" % _LAYER_NAME_ACTORS)
 

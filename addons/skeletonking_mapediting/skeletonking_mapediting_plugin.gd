@@ -41,7 +41,7 @@ func _selection_changed() -> void:
 
 	var selected_node := selected_nodes[0]
 	if (selected_node is Node2D) \
-			and (selected_node.get_parent() is MapDesign) \
+			and (selected_node.get_parent() is DesignMap) \
 			and (selected_node.name == _LAYER_NAME_TERRAIN):
 		_button.terrain_node = selected_node as Node2D
 		_button.show()

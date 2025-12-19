@@ -41,7 +41,7 @@ var _anim_count := 0
 @onready var _marker_layer := $MarkerLayer
 
 
-func load_map(design_map: MapDesign) -> void:
+func load_map(design_map: DesignMap) -> void:
 	_clear()
 	for tilemap in design_map.terrain:
 		_terrain_layer.add_child(tilemap)
