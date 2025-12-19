@@ -9,13 +9,13 @@ extends SquareTileObject
 @export var data: ActorData:
 	set(value):
 		if data:
-			data.changed.disconnect(_update_sprite)
+			data.changed.disconnect(_on_data_changed)
 
 		data = value
-		_update_sprite()
+		_on_data_changed()
 
 		if data:
-			data.changed.connect(_update_sprite)
+			data.changed.connect(_on_data_changed)
 
 
 @export var controller_scene: PackedScene
@@ -38,6 +38,7 @@ func _ready() -> void:
 		add_child(_sprite)
 		move_child(_sprite, 0)
 		if data:
+			cell_length = data.size
 			_sprite.texture = data.sprite
 
 
@@ -70,7 +71,7 @@ func _position_sprite() -> void:
 	_sprite.position = pixel_centre
 
 
-func _update_sprite() -> void:
+func _on_data_changed() -> void:
 	if not Engine.is_editor_hint():
 		return
 
@@ -78,4 +79,5 @@ func _update_sprite() -> void:
 		await ready
 	_sprite.texture = null
 	if data:
+		cell_length = data.size
 		_sprite.texture = data.sprite

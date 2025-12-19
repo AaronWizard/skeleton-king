@@ -81,7 +81,10 @@ func _init_data() -> void:
 	if not data:
 		return
 
+	cell_length = data.size
+
 	_sprite.texture = data.sprite
+	_sprite.position = pixel_centre
 
 	_stats = Stats.new(data.base_stats)
 
