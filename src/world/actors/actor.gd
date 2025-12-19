@@ -43,6 +43,11 @@ var stats: Stats:
 		return _stats
 
 
+var remote_transform: RemoteTransform2D:
+	get:
+		return %RemoteTransform as RemoteTransform2D
+
+
 var _stats: Stats
 var _controller: ActorController
 

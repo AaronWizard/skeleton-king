@@ -30,6 +30,8 @@ func _init_player() -> void:
 	_player_input.player = _player
 	_player_input.controller = controller
 
+	_player.remote_transform.remote_path = _camera.get_path()
+
 
 func _load_map(map_data: DesignMap, player_spawn_marker: StringName) -> void:
 	_turn_clock.clear()

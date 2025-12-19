@@ -13,4 +13,11 @@ func _init(p_attacker: Actor, p_target: Actor) -> void:
 func run() -> void:
 	if _attacker.map.animations_running:
 		await _attacker.map.animations_finished
+
+	_attacker.remote_transform.update_position = false
+	_target.remote_transform.update_position = false
+
 	await CombatEngine.attack_actor(_attacker, _target)
+
+	_attacker.remote_transform.update_position = true
+	_target.remote_transform.update_position = true
