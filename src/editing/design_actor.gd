@@ -45,6 +45,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func create_actor() -> Actor:
 	var actor := Actor.create_actor(data)
+	actor.name = name
 	actor.tile_size = tile_size
 	actor.origin_cell = origin_cell
 

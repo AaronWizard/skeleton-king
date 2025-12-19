@@ -56,6 +56,19 @@ static func create_actor(p_data: ActorData) -> Actor:
 	return actor
 
 
+func _tile_size_changed() -> void:
+	if not is_node_ready():
+		await ready
+	_sprite.position = pixel_centre
+	_sprite.tile_size = tile_size
+
+
+func _cell_size_changed() -> void:
+	if not is_node_ready():
+		await ready
+	_sprite.position = pixel_centre
+
+
 func set_controller(controller: ActorController) -> void:
 	if _controller == controller:
 		return
@@ -92,19 +105,6 @@ func _init_data() -> void:
 	_stamina_bar.value = stats.stamina
 	_stamina_bar.visible = stats.max_stamina != stats.stamina
 	stats.stamina_changed.connect(_on_stamina_changed)
-
-
-func _tile_size_changed() -> void:
-	if not is_node_ready():
-		await ready
-	_sprite.position = pixel_centre
-	_sprite.tile_size = tile_size
-
-
-func _cell_size_changed() -> void:
-	if not is_node_ready():
-		await ready
-	_sprite.position = pixel_centre
 
 
 func _on_turn_taker_turn_started() -> void:

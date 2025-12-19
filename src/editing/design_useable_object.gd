@@ -58,11 +58,12 @@ func _cell_size_changed() -> void:
 	_position_sprite()
 
 
-func create_useable_tile() -> UseableObject:
-	var useable_tile := UseableObject.create_useable_tile(data, state_index)
-	useable_tile.tile_size = tile_size
-	useable_tile.origin_cell = origin_cell
-	return useable_tile
+func create_useable_object() -> UseableObject:
+	var object := UseableObject.create_useable_object(data, state_index)
+	object.name = name
+	object.tile_size = tile_size
+	object.origin_cell = origin_cell
+	return object
 
 
 func _position_sprite() -> void:

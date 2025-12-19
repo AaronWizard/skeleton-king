@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bj4fsrk3qt3jv"]
+[gd_scene load_steps=5 format=3 uid="uid://bj4fsrk3qt3jv"]
 
 [ext_resource type="Script" uid="uid://ddngxknvol701" path="res://src/world/maps/map.gd" id="1_clcws"]
-[ext_resource type="Script" uid="uid://cxjaa0s8oga6x" path="res://src/world/maps/terrain_layer.gd" id="2_bwu8q"]
-[ext_resource type="Script" uid="uid://dnc3rteg2x6ek" path="res://src/world/maps/actor_layer.gd" id="2_ohcw0"]
+[ext_resource type="Script" uid="uid://cxjaa0s8oga6x" path="res://src/world/maps/layers/terrain_layer.gd" id="2_bwu8q"]
+[ext_resource type="Script" uid="uid://dnc3rteg2x6ek" path="res://src/world/maps/layers/actor_layer.gd" id="2_ohcw0"]
+[ext_resource type="Script" uid="uid://dhvhl8gvhl86u" path="res://src/world/maps/layers/useable_object_layer.gd" id="3_60pys"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_clcws")
@@ -10,6 +11,10 @@ script = ExtResource("1_clcws")
 [node name="TerrainLayer" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("2_bwu8q")
+
+[node name="UseableObjectLayer" type="Node2D" parent="."]
+script = ExtResource("3_60pys")
+metadata/_custom_type_script = "uid://dhvhl8gvhl86u"
 
 [node name="ActorLayer" type="Node2D" parent="."]
 y_sort_enabled = true

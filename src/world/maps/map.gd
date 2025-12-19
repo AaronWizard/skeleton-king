@@ -29,6 +29,11 @@ var actors: Array[Actor]:
 		return _actor_layer.actors
 
 
+var useable_objects: Array[UseableObject]:
+	get:
+		return _useable_object_layer.objects
+
+
 var animations_running: bool:
 	get:
 		return _anim_count > 0
@@ -37,6 +42,7 @@ var animations_running: bool:
 var _anim_count := 0
 
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
+@onready var _useable_object_layer := $UseableObjectLayer as UseableObjectLayer
 @onready var _actor_layer := $ActorLayer as ActorLayer
 @onready var _marker_layer := $MarkerLayer
 
@@ -49,6 +55,8 @@ func load_map(design_map: DesignMap) -> void:
 	_clear()
 	for tilemap in design_map.terrain:
 		_terrain_layer.add_child(tilemap)
+	for object in design_map.useable_objects:
+		_useable_object_layer.add_child(object)
 	for actor in design_map.actors:
 		add_actor(actor, actor.origin_cell)
 	for marker in design_map.markers:
@@ -83,6 +91,10 @@ func remove_actor(actor: Actor) -> void:
 
 func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return _actor_layer.get_actor_on_cell(cell)
+
+
+func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
+	return _useable_object_layer.get_object_on_cell(cell)
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:

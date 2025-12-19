@@ -5,6 +5,7 @@ extends Node2D
 ## A design version of a map for editing.
 
 const _LAYER_NAME_TERRAIN := "Terrain"
+const _LAYER_NAME_USEABLE_OBJECTS := "UseableObjects"
 const _LAYER_NAME_ACTORS := "Actors"
 const _LAYER_NAME_MARKERS := "Markers"
 
@@ -12,82 +13,79 @@ const _LAYER_NAME_MARKERS := "Markers"
 var terrain: Array[TileMapLayer]:
 	get:
 		var result: Array[TileMapLayer] = []
+		result.assign(_get_layer_data(_LAYER_NAME_TERRAIN, "duplicate"))
+		return result
 
-		var layer := get_node(_LAYER_NAME_TERRAIN)
-		if layer:
-			for tilemap: TileMapLayer in layer.get_children():
-				result.append(tilemap.duplicate())
 
+var useable_objects: Array[UseableObject]:
+	get:
+		var result: Array[UseableObject] = []
+		result.assign(
+			_get_layer_data(
+				_LAYER_NAME_USEABLE_OBJECTS, "create_useable_object"
+			)
+		)
 		return result
 
 
 var actors: Array[Actor]:
 	get:
 		var result: Array[Actor] = []
-
-		var layer := get_node(_LAYER_NAME_ACTORS)
-		if layer:
-			for design: DesignActor in layer.get_children():
-				result.append(design.create_actor())
-
+		result.assign(_get_layer_data(_LAYER_NAME_ACTORS, "create_actor"))
 		return result
 
 
 var markers: Array[SquareTileObject]:
 	get:
 		var result: Array[SquareTileObject] = []
-
-		var layer := get_node(_LAYER_NAME_MARKERS)
-		if layer:
-			for marker: SquareTileObject in layer.get_children():
-				result.append(marker.duplicate())
-
+		result.assign(_get_layer_data(_LAYER_NAME_MARKERS, "duplicate"))
 		return result
 
 
 func _ready() -> void:
 	y_sort_enabled = true
-	_init_node(_LAYER_NAME_TERRAIN)
-	_init_node(_LAYER_NAME_ACTORS)
-	_init_node(_LAYER_NAME_MARKERS)
+	_init_node(_LAYER_NAME_TERRAIN, 0)
+	_init_node(_LAYER_NAME_USEABLE_OBJECTS, 1)
+	_init_node(_LAYER_NAME_ACTORS, 2)
+	_init_node(_LAYER_NAME_MARKERS, 3)
 	update_configuration_warnings()
 
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var result := PackedStringArray()
 
-	var terrain_layer := get_node(_LAYER_NAME_TERRAIN)
-	if terrain_layer:
-		for c in terrain_layer.get_children():
-			if c is not TileMapLayer:
-				result.append("'%s' is not a TileMapLayer" % c.name)
-	else:
-		result.append("No Node2D child named '%s'" % _LAYER_NAME_TERRAIN)
-
-	var actor_layer := get_node(_LAYER_NAME_ACTORS)
-	if actor_layer:
-		for c in actor_layer.get_children():
-			if c is not DesignActor:
-				result.append("'%s' is not an DesignActor" % c.name)
-	else:
-		result.append("No Node2D child named '%s'" % _LAYER_NAME_ACTORS)
-
-	var marker_layer := get_node(_LAYER_NAME_MARKERS)
-	if marker_layer:
-		for c in marker_layer.get_children():
-			if c is not SquareTileObject:
-				result.append("'%s' is not a SquareTileObject" % c.name)
-	else:
-		result.append("No Node2D child named '%s'" % _LAYER_NAME_MARKERS)
+	_check_layer(_LAYER_NAME_TERRAIN, "TileMapLayer", null, result)
+	_check_layer(_LAYER_NAME_USEABLE_OBJECTS, "", DesignUseableObject, result)
+	_check_layer(_LAYER_NAME_ACTORS, "", DesignActor, result)
+	_check_layer(_LAYER_NAME_MARKERS, "", SquareTileObject, result)
 
 	return result
 
 
-func _init_node(child_name: String) -> void:
+func _check_layer(layer_name: String, expected_class: String,
+		expected_script: Script, warnings: PackedStringArray) -> void:
+	var layer := get_node(layer_name) as Node2D
+	if layer:
+		for c in layer.get_children():
+			if expected_class and not c.is_class(expected_class):
+				warnings.append(
+					"'%s' is not of class %s" \
+					% [c.name, expected_class]
+				)
+			elif expected_script and c.get_script() != expected_script:
+				warnings.append(
+					"'%s' is not of class %s" \
+					% [c.name, expected_script.get_global_name()]
+				)
+	else:
+		warnings.append("No Node2D child named '%s'" % layer_name)
+
+
+func _init_node(layer_name: String, index: int) -> void:
 	var layer: Node2D = null
 
-	if has_node(child_name):
-		var child := get_node(child_name)
+	if has_node(layer_name):
+		var child := get_node(layer_name)
 		if child is not Node2D:
 			remove_child(child)
 		else:
@@ -95,8 +93,29 @@ func _init_node(child_name: String) -> void:
 
 	if not layer:
 		layer = Node2D.new()
-		layer.name = child_name
+		layer.name = layer_name
 		layer.y_sort_enabled = true
 
 		add_child(layer)
 		layer.owner = self
+		move_child(layer, index)
+
+	if layer.get_index() != index:
+		move_child(layer, index)
+
+
+func _get_layer_data(layer_name: String, method_name: String) -> Array:
+	var result := []
+
+	var layer := get_node(layer_name)
+	for object in layer.get_children():
+		var data = object.call(method_name)
+		if not data:
+			push_error(
+				"'%s': '%s' did not create data with '%s'" \
+				% [layer_name, object.name, method_name]
+			)
+		else:
+			result.append(data)
+
+	return result

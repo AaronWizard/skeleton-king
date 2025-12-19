@@ -41,12 +41,12 @@ var current_state: UseableObjectState:
 @onready var _sprite := $Sprite as Sprite2D
 
 
-static func create_useable_tile(p_data: UseableObjectData, initial_state: int) \
+static func create_useable_object(p_data: UseableObjectData, initial_state: int) \
 		-> UseableObject:
-	var tile := _USEABLE_TILE_SCENE.instantiate() as UseableObject
-	tile.data = p_data
-	tile.state_index = initial_state
-	return tile
+	var object := _USEABLE_TILE_SCENE.instantiate() as UseableObject
+	object.data = p_data
+	object.state_index = initial_state
+	return object
 
 
 func use() -> void:
@@ -54,8 +54,12 @@ func use() -> void:
 
 
 func _tile_size_changed() -> void:
+	if not is_node_ready():
+		await ready
 	_sprite.position = pixel_centre
 
 
 func _cell_size_changed() -> void:
+	if not is_node_ready():
+		await ready
 	_sprite.position = pixel_centre
