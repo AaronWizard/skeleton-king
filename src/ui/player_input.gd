@@ -28,18 +28,19 @@ func _process(_delta: float) -> void:
 
 	var move_vector := _get_move_vec()
 	var next_cell := player.origin_cell + move_vector
-
-	var action: TurnAction
-
-	action = _try_move(next_cell)
-	if action:
-		_end_turn(action)
+	if next_cell == player.origin_cell:
 		return
 
-	action = _try_attack(next_cell)
+	var action: TurnAction = null
+
+	var attempts: Array[Callable] = [_try_move, _try_attack, _try_use]
+	for attempt in attempts:
+		action = attempt.call(next_cell) as TurnAction
+		if action:
+			break
+
 	if action:
 		_end_turn(action)
-		return
 
 
 func _get_move_vec() -> Vector2i:
@@ -70,6 +71,14 @@ func _try_attack(next_cell: Vector2i) -> TurnAction:
 	var other_actor := player.map.get_actor_on_cell(next_cell)
 	if other_actor and other_actor.data.faction != player.data.faction:
 		result = AttackAction.new(player, other_actor)
+	return result
+
+
+func _try_use(next_cell: Vector2i) -> TurnAction:
+	var result: TurnAction = null
+	var object := player.map.get_useable_object_on_cell(next_cell)
+	if object:
+		result = UseObjectAction.new(object, player.map)
 	return result
 
 
