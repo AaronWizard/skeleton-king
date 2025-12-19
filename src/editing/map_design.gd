@@ -33,13 +33,13 @@ var actors: Array[Actor]:
 		return result
 
 
-var markers: Array[TileObject]:
+var markers: Array[SquareTileObject]:
 	get:
-		var result: Array[TileObject] = []
+		var result: Array[SquareTileObject] = []
 
 		var layer := get_node(_LAYER_NAME_MARKERS)
 		if layer:
-			for marker: TileObject in layer.get_children():
+			for marker: SquareTileObject in layer.get_children():
 				result.append(marker.duplicate())
 
 		return result
@@ -75,8 +75,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var marker_layer := get_node(_LAYER_NAME_MARKERS)
 	if marker_layer:
 		for c in marker_layer.get_children():
-			if c is not TileObject:
-				result.append("'%s' is not a TileObject" % c.name)
+			if c is not SquareTileObject:
+				result.append("'%s' is not a SquareTileObject" % c.name)
 	else:
 		result.append("No Node2D child named '%s'" % _LAYER_NAME_MARKERS)
 

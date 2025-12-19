@@ -95,18 +95,6 @@ var _animation_playing := false
 @onready var _animation_player := $AnimationPlayer as AnimationPlayer
 
 
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		var tile_size_f := Vector2(tile_size)
-
-		var self_rect := Rect2(-tile_size_f / 2, tile_size_f)
-		draw_rect(self_rect, Color.CORNFLOWER_BLUE, false)
-
-		var offset_rect := self_rect
-		offset_rect.position += _sprite.position
-		draw_rect(offset_rect, Color.MEDIUM_ORCHID, false)
-
-
 func reset_offset() -> void:
 	_offset_direction = Vector2.ZERO
 	_offset_distance = 0.0
@@ -127,7 +115,6 @@ func _set_cell_offset() -> void:
 	if not is_node_ready():
 		await ready
 	_sprite.position = offset_direction * offset_distance * Vector2(tile_size)
-	queue_redraw()
 
 
 func _set_facing_from_offset_direction() -> void:
@@ -149,3 +136,11 @@ func _signal_anim_end() -> void:
 
 func _signal_action_frame() -> void:
 	action_frame_reached.emit()
+
+
+func _tile_size_changed() -> void:
+	_set_cell_offset()
+
+
+func _cell_size_changed() -> void:
+	_set_cell_offset()

@@ -1,6 +1,6 @@
 @tool
 class_name Actor
-extends TileObject
+extends SquareTileObject
 
 const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 
@@ -96,6 +96,12 @@ func _tile_size_changed() -> void:
 		await ready
 	_sprite.position = pixel_centre
 	_sprite.tile_size = tile_size
+
+
+func _cell_size_changed() -> void:
+	if not is_node_ready():
+		await ready
+	_sprite.position = pixel_centre
 
 
 func _on_turn_taker_turn_started() -> void:

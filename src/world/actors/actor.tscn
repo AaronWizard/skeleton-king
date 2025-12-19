@@ -1,16 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcifsfm6gsylc"]
+[gd_scene load_steps=6 format=3 uid="uid://bcifsfm6gsylc"]
 
 [ext_resource type="Script" uid="uid://dts4fho8mun2m" path="res://src/world/actors/actor.gd" id="1_4yile"]
 [ext_resource type="PackedScene" uid="uid://2x11hgj8vreo" path="res://src/world/actors/actor_sprite.tscn" id="2_0o3uc"]
 [ext_resource type="Script" uid="uid://38bauea5dnlw" path="res://src/world/turns/turn_taker.gd" id="2_8i1u4"]
+[ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="3_s1apx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg40r"]
+atlas = ExtResource("3_s1apx")
+region = Rect2(0, 0, 12, 12)
 
 [node name="Actor" type="Node2D"]
 position = Vector2(0, 12)
 script = ExtResource("1_4yile")
-metadata/_custom_type_script = "uid://cbojsf0hklx0q"
 
 [node name="ActorSprite" parent="." instance=ExtResource("2_0o3uc")]
 position = Vector2(6, -6)
+texture = SubResource("AtlasTexture_lg40r")
+
+[node name="Sprite" parent="ActorSprite" index="0"]
+texture = SubResource("AtlasTexture_lg40r")
 
 [node name="StaminaBar" type="ProgressBar" parent="ActorSprite/Sprite" index="0"]
 unique_name_in_owner = true

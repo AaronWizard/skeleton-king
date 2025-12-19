@@ -1,11 +1,9 @@
 @tool
 class_name ActorDesign
-extends TileObject
+extends SquareTileObject
 
 ## A design version of an actor for placing in [MapDesign] scenes while creating
 ## levels.
-
-const _SPRITE_NAME := "Sprite"
 
 
 @export var data: ActorData:
@@ -28,21 +26,19 @@ var _sprite: Sprite2D
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var result := PackedStringArray()
-	if (get_child_count() == 0) or (get_child(0) is not Sprite2D):
-		result.append("No Sprite2D node")
 	if not data:
 		result.append("No ActorData")
 	return result
 
 
 func _ready() -> void:
-	if get_child_count(true) > 0:
-		var sprite := get_child(0, true) as Sprite2D
-		if sprite:
-			_sprite = sprite
-
-	if not _sprite:
-		_init_sprite()
+	if Engine.is_editor_hint():
+		_sprite = Sprite2D.new()
+		_sprite.position = pixel_centre
+		add_child(_sprite)
+		move_child(_sprite, 0)
+		if data:
+			_sprite.texture = data.sprite
 
 
 func create_actor() -> Actor:
@@ -58,24 +54,26 @@ func create_actor() -> Actor:
 
 
 func _tile_size_changed() -> void:
+	_position_sprite()
+
+
+func _cell_size_changed() -> void:
+	_position_sprite()
+
+
+func _position_sprite() -> void:
+	if not Engine.is_editor_hint():
+		return
+
 	if not is_node_ready():
 		await ready
 	_sprite.position = pixel_centre
 
 
-func _init_sprite() -> void:
-	_sprite = Sprite2D.new()
-	_sprite.name = _SPRITE_NAME
-	_sprite.position = pixel_centre
-	add_child(_sprite)
-	_sprite.owner = self
-	move_child(_sprite, 0)
-
-	if data:
-		_sprite.texture = data.sprite
-
-
 func _update_sprite() -> void:
+	if not Engine.is_editor_hint():
+		return
+
 	if not is_node_ready():
 		await ready
 	_sprite.texture = null

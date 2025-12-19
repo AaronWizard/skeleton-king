@@ -6,31 +6,27 @@
 [ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="4_vvrpj"]
 [ext_resource type="PackedScene" uid="uid://dcvggibwicbj6" path="res://data/ai/random_ai_controller.tscn" id="5_5troq"]
 
-[sub_resource type="Resource" id="Resource_6vtlx"]
+[sub_resource type="Resource" id="Resource_s2m6r"]
 script = ExtResource("2_5troq")
 max_stamina = 6
 attack = 2
 metadata/_custom_type_script = "uid://chv2igew1dnoj"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aa4bs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5troq"]
 atlas = ExtResource("4_vvrpj")
 region = Rect2(0, 0, 12, 12)
 
-[sub_resource type="Resource" id="Resource_onduk"]
+[sub_resource type="Resource" id="Resource_qkul8"]
 script = ExtResource("3_qkul8")
 name = "Skeleton Fighter"
-sprite = SubResource("AtlasTexture_aa4bs")
+sprite = SubResource("AtlasTexture_5troq")
 faction = &"skeletons"
-base_stats = SubResource("Resource_6vtlx")
+base_stats = SubResource("Resource_s2m6r")
 metadata/_custom_type_script = "uid://cexpxoyjyfx82"
 
 [node name="SkeletonFighter" type="Node2D"]
+position = Vector2(0, 12)
 script = ExtResource("1_s2m6r")
-data = SubResource("Resource_onduk")
+data = SubResource("Resource_qkul8")
 controller_scene = ExtResource("5_5troq")
-origin_cell = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://cs7qxwdbdtk06"
-
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(6, -6)
-texture = SubResource("AtlasTexture_aa4bs")

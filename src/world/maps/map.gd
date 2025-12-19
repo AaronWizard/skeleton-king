@@ -101,7 +101,7 @@ func get_marker_cell(marker_name: StringName) -> Vector2i:
 
 	var result := Vector2.ZERO
 	var tile_object := _marker_layer.get_node(NodePath(marker_name)) \
-			as TileObject
+			as SquareTileObject
 	if tile_object:
 		result = tile_object.origin_cell
 	return result

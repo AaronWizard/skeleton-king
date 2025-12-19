@@ -1,6 +1,6 @@
 @tool
 class_name UseableTile
-extends TileObject
+extends RectTileObject
 
 
 @export var data: UseableTileData:
