@@ -29,11 +29,9 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 	var result := true
-
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
 		var other_actor := get_actor_on_cell(covered_cell)
-		if other_actor and (other_actor != actor):
-			result = false
+		result = not other_actor or (other_actor == actor)
+		if not result:
 			break
-
 	return result

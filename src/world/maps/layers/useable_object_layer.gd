@@ -25,3 +25,13 @@ func get_object_on_cell(cell: Vector2i) -> UseableObject:
 			result = o
 			break
 	return result
+
+
+func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
+	var result := true
+	for covered_cell in actor.get_covered_cells_at_cell(cell):
+		var object := get_object_on_cell(cell)
+		result = not object or not object.current_state.blocks_move
+		if not result:
+			break
+	return result

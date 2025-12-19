@@ -98,15 +98,9 @@ func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
-	var result := _actor_layer.actor_can_enter_cell(actor, cell)
-	if result:
-		for covered_cell in actor.get_covered_cells_at_cell(cell):
-			var terrain_data := _terrain_layer.get_terrain_data(covered_cell)
-			result = not terrain_data or not terrain_data.blocks_move
-			if not result:
-				break
-
-	return result
+	return _actor_layer.actor_can_enter_cell(actor, cell) \
+		and _terrain_layer.actor_can_enter_cell(actor, cell) \
+		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
 
 func has_marker(marker_name: StringName) -> bool:
