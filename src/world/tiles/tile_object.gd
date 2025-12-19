@@ -106,6 +106,14 @@ func covers_cell(cell: Vector2i) -> bool:
 	return cell_rect.has_point(cell)
 
 
+func get_covered_cells_at_cell(cell: Vector2i) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	for x in range(_cell_size.x):
+		for y in range(_cell_size.y):
+			result.append(Vector2i(x, y) + cell)
+	return result
+
+
 func _set_position(new_origin_cell: Vector2i) -> void:
 	position = (new_origin_cell + Vector2i(0, _cell_size.y)) * tile_size
 

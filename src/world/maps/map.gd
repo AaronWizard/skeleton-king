@@ -41,6 +41,10 @@ var _anim_count := 0
 @onready var _marker_layer := $MarkerLayer
 
 
+func _ready() -> void:
+	_terrain_layer.terrain_library = terrain_library
+
+
 func load_map(design_map: DesignMap) -> void:
 	_clear()
 	for tilemap in design_map.terrain:
@@ -82,12 +86,14 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
-	var result := false
-	var terrain_data := _get_terrain_data(cell)
-	result = not terrain_data or not terrain_data.blocks_move
+	var result := _actor_layer.actor_can_enter_cell(actor, cell)
 	if result:
-		var other_actor := get_actor_on_cell(cell)
-		result = (not other_actor) or (other_actor == actor)
+		for covered_cell in actor.get_covered_cells_at_cell(cell):
+			var terrain_data := _terrain_layer.get_terrain_data(covered_cell)
+			result = not terrain_data or not terrain_data.blocks_move
+			if not result:
+				break
+
 	return result
 
 
@@ -110,14 +116,6 @@ func get_marker_cell(marker_name: StringName) -> Vector2i:
 func _clear() -> void:
 	_clear_layer(_terrain_layer)
 	_clear_layer(_actor_layer)
-
-
-func _get_terrain_data(cell: Vector2i) -> Terrain:
-	var result: Terrain = null
-	var terrain_name := _terrain_layer.get_terrain_name(cell)
-	if terrain_library.library.has(terrain_name):
-		result = terrain_library.library[terrain_name]
-	return result
 
 
 func _animation_added() -> void:
