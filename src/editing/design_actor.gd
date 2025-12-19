@@ -28,22 +28,19 @@ extends SquareTileObject
 var _sprite: Sprite2D
 
 
-func _get_configuration_warnings() -> PackedStringArray:
-	var result := PackedStringArray()
-	if not data:
-		result.append("No ActorData")
-	return result
-
-
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		_sprite = Sprite2D.new()
 		_sprite.position = pixel_centre
 		add_child(_sprite)
 		move_child(_sprite, 0)
-		if data:
-			cell_length = data.size
-			_sprite.texture = data.sprite
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var result := PackedStringArray()
+	if not data:
+		result.append("No ActorData")
+	return result
 
 
 func create_actor() -> Actor:
