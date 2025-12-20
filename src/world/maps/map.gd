@@ -1,3 +1,4 @@
+@icon("uid://33e4vppa4045")
 class_name Map
 extends Node2D
 

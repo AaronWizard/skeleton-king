@@ -1,3 +1,4 @@
+@icon("uid://c5ymkqiptishk")
 @tool
 class_name UseableObject
 extends RectTileObject

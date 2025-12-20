@@ -1,3 +1,4 @@
+@icon("uid://33e4vppa4045")
 @tool
 class_name DesignMap
 extends Node2D

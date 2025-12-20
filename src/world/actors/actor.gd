@@ -1,3 +1,4 @@
+@icon("uid://qd00bs8lhyes")
 @tool
 class_name Actor
 extends SquareTileObject

@@ -1,3 +1,4 @@
+@icon("uid://cbnjt51pc0ii7")
 @tool
 @abstract
 class_name TileObject
