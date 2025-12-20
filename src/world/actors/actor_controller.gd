@@ -1,3 +1,4 @@
+@icon("uid://2dhkpmvjvk3j")
 @abstract
 class_name ActorController
 extends Node
