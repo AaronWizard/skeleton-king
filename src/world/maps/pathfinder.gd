@@ -78,6 +78,26 @@ func _update_other_grids() -> void:
 		grid.fill_solid_region(right_border, true)
 
 
+func debug_draw(canvas_item: CanvasItem, actor_size: Vector2i,
+		tile_size: Vector2) -> void:
+	var grid := _base_grid
+	if actor_size != Vector2i.ONE:
+		grid = _grids[actor_size]
+
+	for x in range(grid.region.position.x, grid.region.end.x):
+		for y in range(grid.region.position.y, grid.region.end.y):
+			var cell := Vector2i(x, y)
+			if grid.is_point_solid(cell):
+				var tile_rect := Rect2(
+					Vector2(cell) * tile_size,
+					tile_size
+				)
+				canvas_item.draw_rect(
+					tile_rect,
+					Color.DEEP_PINK * Color(1, 1, 1, 0.25)
+				)
+
+
 static func _create_grid(region: Rect2i) -> AStarGrid2D:
 	var result := AStarGrid2D.new()
 	result.region = region
