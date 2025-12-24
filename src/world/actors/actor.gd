@@ -13,6 +13,7 @@ signal moved(old_cell: Vector2i)
 		data = value
 		_init_data()
 
+#region Properties
 
 var map: Map:
 	set(value):
@@ -50,6 +51,7 @@ var remote_transform: RemoteTransform2D:
 	get:
 		return %RemoteTransform as RemoteTransform2D
 
+#endregion Properties
 
 var _stats: Stats
 var _controller: ActorController
@@ -63,6 +65,12 @@ static func create_actor(p_data: ActorData) -> Actor:
 	actor.data = p_data
 	return actor
 
+
+static func are_enemies(actor_a: Actor, actor_b: Actor) -> bool:
+	return (actor_a != actor_b) \
+			and (actor_a.data.faction != actor_b.data.faction)
+
+#region TileObject
 
 func _origin_cell_changed(old_cell: Vector2i) -> void:
 	moved.emit(old_cell)
@@ -80,6 +88,7 @@ func _cell_size_changed() -> void:
 		await ready
 	_sprite.position = pixel_centre
 
+#endregion TileObject
 
 func set_controller(controller: ActorController) -> void:
 	if _controller == controller:
