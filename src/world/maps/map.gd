@@ -32,7 +32,7 @@ var _animation_tracker := AnimationTracker.new()
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
 @onready var _useable_object_layer := $UseableObjectLayer as UseableObjectLayer
 @onready var _actor_layer := $ActorLayer as ActorLayer
-@onready var _marker_layer := $MarkerLayer
+@onready var _marker_layer := $MarkerLayer as MarkerLayer
 
 @onready var _pathfinder_debug_drawer \
 		:= $PathfinderDebugDrawer as PathfinderDebugDrawer
@@ -75,9 +75,7 @@ func add_actor(actor: Actor, cell: Vector2i) -> void:
 	actor.origin_cell = cell
 	_actor_layer.add_child(actor)
 	actor.map = self
-
 	_animation_tracker.observe_actor(actor)
-
 	actor_added.emit(actor)
 
 
@@ -87,18 +85,12 @@ func remove_actor(actor: Actor) -> void:
 		return
 	_actor_layer.remove_child(actor)
 	actor.map = null
-
 	_animation_tracker.unobserve_actor(actor)
-
 	actor_removed.emit(actor)
 
 
 func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return _actor_layer.get_actor_on_cell(cell)
-
-
-func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
-	return _useable_object_layer.get_object_on_cell(cell)
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
@@ -108,25 +100,23 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 
 #endregion Actors
 
+func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
+	return _useable_object_layer.get_object_on_cell(cell)
+
+
 func get_terrain(cell: Vector2i) -> Terrain:
 	return _terrain_layer.get_terrain(cell)
 
+#region Markers
 
 func has_marker(marker_name: StringName) -> bool:
-	return _marker_layer.has_node(NodePath(marker_name))
+	return _marker_layer.has_marker(marker_name)
 
 
 func get_marker_cell(marker_name: StringName) -> Vector2i:
-	if not has_marker(marker_name):
-		push_error("No marker with name '%s'" % marker_name)
+	return _marker_layer.get_marker_cell(marker_name)
 
-	var result := Vector2.ZERO
-	var tile_object := _marker_layer.get_node(NodePath(marker_name)) \
-			as SquareTileObject
-	if tile_object:
-		result = tile_object.origin_cell
-	return result
-
+#endregion Markers
 
 func _clear() -> void:
 	_clear_layer(_terrain_layer)
