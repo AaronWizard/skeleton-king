@@ -1,5 +1,7 @@
 extends Node
 
+const _PLAYER_NODE_NAME := "Player"
+
 @export var initial_map_data: PackedScene
 @export var player_span_marker: StringName
 @export var player_data: ActorData
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 func _init_player() -> void:
 	_player = Actor.create_actor(player_data)
+	_player.name = _PLAYER_NODE_NAME
 
 	var controller := PlayerController.new()
 	_player.set_controller(controller)
