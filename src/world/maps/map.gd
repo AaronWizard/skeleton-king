@@ -13,14 +13,21 @@ signal animations_finished
 
 var pixel_rect: Rect2i:
 	get:
+		var top_layer := _terrain_layer.get_children().back() as TileMapLayer
+		var tile_size := top_layer.tile_set.tile_size
+		var result := cell_rect
+		result.position *= tile_size
+		result.size *= tile_size
+		return result
+
+
+var cell_rect: Rect2i:
+	get:
 		var result := Rect2i()
 		for layer: TileMapLayer in _terrain_layer.get_children():
 			var layer_rect := layer.get_used_rect()
 			result = result.merge(
-				Rect2i(
-					layer_rect.position * layer.tile_set.tile_size,
-					layer_rect.size * layer.tile_set.tile_size
-				)
+				Rect2i(layer_rect.position, layer_rect.size)
 			)
 		return result
 
@@ -42,6 +49,8 @@ var animations_running: bool:
 
 var _anim_count := 0
 
+var _pathfinder: Pathfinder
+
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
 @onready var _useable_object_layer := $UseableObjectLayer as UseableObjectLayer
 @onready var _actor_layer := $ActorLayer as ActorLayer
@@ -54,8 +63,11 @@ func _ready() -> void:
 
 func load_map(design_map: DesignMap) -> void:
 	_clear()
+
 	for tilemap in design_map.terrain:
 		_terrain_layer.add_child(tilemap)
+	_init_pathfinder()
+
 	for object in design_map.useable_objects:
 		_useable_object_layer.add_child(object)
 	for actor in design_map.actors:
@@ -63,11 +75,13 @@ func load_map(design_map: DesignMap) -> void:
 	for marker in design_map.markers:
 		_marker_layer.add_child(marker)
 
-
 func add_actor(actor: Actor, cell: Vector2i) -> void:
 	actor.origin_cell = cell
 	_actor_layer.add_child(actor)
 	actor.map = self
+
+	_pathfinder.init_grid_for_actor_size(actor.cell_rect.size)
+	_pathfinder.set_rect_solid(actor.cell_rect, true)
 
 	actor.sprite.animation_started.connect(_animation_added)
 	actor.sprite.animation_finished.connect(_animation_finished)
@@ -81,6 +95,8 @@ func remove_actor(actor: Actor) -> void:
 		return
 	_actor_layer.remove_child(actor)
 	actor.map = null
+
+	_pathfinder.set_rect_solid(actor.cell_rect, false)
 
 	actor.sprite.animation_started.disconnect(_animation_added)
 	actor.sprite.animation_finished.disconnect(_animation_finished)
@@ -104,6 +120,10 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
 
+func get_terrain(cell: Vector2i) -> Terrain:
+	return _terrain_layer.get_terrain(cell)
+
+
 func has_marker(marker_name: StringName) -> bool:
 	return _marker_layer.has_node(NodePath(marker_name))
 
@@ -122,7 +142,22 @@ func get_marker_cell(marker_name: StringName) -> Vector2i:
 
 func _clear() -> void:
 	_clear_layer(_terrain_layer)
+	_clear_layer(_useable_object_layer)
 	_clear_layer(_actor_layer)
+	_clear_layer(_marker_layer)
+	_pathfinder = null
+
+
+# Initializes pathfinder and sets walls based on terrain.
+func _init_pathfinder() -> void:
+	_pathfinder = Pathfinder.new(cell_rect)
+	var rect := cell_rect
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.position.y):
+			var cell := Vector2i(x, y)
+			var terrain := get_terrain(cell)
+			if terrain:
+				_pathfinder.set_cell_solid(Vector2i(x, y), terrain.blocks_move)
 
 
 func _animation_added() -> void:

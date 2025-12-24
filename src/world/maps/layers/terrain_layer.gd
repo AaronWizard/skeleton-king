@@ -15,7 +15,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return result
 
 
-func get_terrain_data(cell: Vector2i) -> Terrain:
+func get_terrain(cell: Vector2i) -> Terrain:
 	if not terrain_library:
 		return null
 
@@ -29,7 +29,7 @@ func get_terrain_data(cell: Vector2i) -> Terrain:
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 	var result := true
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
-		var terrain_data := get_terrain_data(covered_cell)
+		var terrain_data := get_terrain(covered_cell)
 		result = not terrain_data or not terrain_data.blocks_move
 		if not result:
 			break
