@@ -69,7 +69,7 @@ func add_actor(actor: Actor, cell: Vector2i) -> void:
 	_actor_layer.add_child(actor)
 	actor.map = self
 
-	_pathfinder.init_grid_for_actor_size(actor.cell_rect.size)
+	_pathfinder.init_grid_for_actor_size(actor.cell_size)
 	_pathfinder.set_rect_solid(actor.cell_rect, true)
 
 	actor.sprite.animation_started.connect(_animation_added)

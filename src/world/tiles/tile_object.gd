@@ -63,11 +63,19 @@ extends Node2D
 
 #region Properties
 
+## The size of the tile object in cells.
+var cell_size: Vector2i:
+	get:
+		return _cell_size
+
+
+## The rectangle the tile object covers on the grid.
 var cell_rect: Rect2i:
 	get:
 		return Rect2i(origin_cell, _cell_size)
 
 
+## The center of the tile object in pixels.
 var pixel_centre: Vector2:
 	get:
 		return Vector2(
