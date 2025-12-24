@@ -98,6 +98,22 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 		and _terrain_layer.actor_can_enter_cell(actor, cell) \
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
+
+func find_path(actor: Actor, end: Vector2i) -> Array[Vector2i]:
+	_pathfinder.set_rect_solid(actor.cell_rect, false)
+
+	var other_actor := get_actor_on_cell(end)
+	if other_actor:
+		_pathfinder.set_rect_solid(other_actor.cell_rect, false)
+
+	var result := _pathfinder.find_path(actor.origin_cell, end, actor.cell_size)
+
+	_pathfinder.set_rect_solid(actor.cell_rect, false)
+	if other_actor:
+		_pathfinder.set_rect_solid(other_actor.cell_rect, true)
+
+	return result
+
 #endregion Actors
 
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
