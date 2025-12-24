@@ -38,6 +38,7 @@ var _pathfinder: Pathfinder
 
 func _ready() -> void:
 	_terrain_layer.terrain_library = terrain_library
+	_actor_layer.actor_moved.connect(_on_actor_moved)
 
 
 func load_map(design_map: DesignMap) -> void:
@@ -108,6 +109,11 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 		and _terrain_layer.actor_can_enter_cell(actor, cell) \
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
+
+func _on_actor_moved(actor: Actor, old_cell: Vector2i) -> void:
+	_pathfinder.set_rect_solid(Rect2i(old_cell, actor.cell_size), false)
+	_pathfinder.set_rect_solid(actor.cell_rect, true)
+
 #endregion Actors
 
 func get_terrain(cell: Vector2i) -> Terrain:
@@ -143,7 +149,7 @@ func _init_pathfinder() -> void:
 	var rect := get_cell_rect()
 	_pathfinder = Pathfinder.new(rect)
 	for x in range(rect.position.x, rect.end.x):
-		for y in range(rect.position.y, rect.position.y):
+		for y in range(rect.position.y, rect.end.y):
 			var cell := Vector2i(x, y)
 			var terrain := get_terrain(cell)
 			if terrain:

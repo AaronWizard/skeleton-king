@@ -5,6 +5,8 @@ extends SquareTileObject
 
 const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 
+signal moved(old_cell: Vector2i)
+
 
 @export var data: ActorData:
 	set(value):
@@ -60,6 +62,10 @@ static func create_actor(p_data: ActorData) -> Actor:
 	var actor := _ACTOR_SCENE.instantiate() as Actor
 	actor.data = p_data
 	return actor
+
+
+func _origin_cell_changed(old_cell: Vector2i) -> void:
+	moved.emit(old_cell)
 
 
 func _tile_size_changed() -> void:
