@@ -23,12 +23,11 @@ var useable_objects: Array[UseableObject]:
 
 var animations_running: bool:
 	get:
-		return _anim_count > 0
+		return _animation_tracker.animations_running
 
-
-var _anim_count := 0
 
 var _pathfinder: Pathfinder
+var _animation_tracker := AnimationTracker.new()
 
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
 @onready var _useable_object_layer := $UseableObjectLayer as UseableObjectLayer
@@ -41,6 +40,8 @@ var _pathfinder: Pathfinder
 
 func _ready() -> void:
 	_terrain_layer.terrain_library = terrain_library
+	_animation_tracker.animation_started.connect(animation_started.emit)
+	_animation_tracker.animations_finished.connect(animations_finished.emit)
 
 
 func load_map(design_map: DesignMap) -> void:
@@ -75,8 +76,7 @@ func add_actor(actor: Actor, cell: Vector2i) -> void:
 	_actor_layer.add_child(actor)
 	actor.map = self
 
-	actor.sprite.animation_started.connect(_animation_added)
-	actor.sprite.animation_finished.connect(_animation_finished)
+	_animation_tracker.observe_actor(actor)
 
 	actor_added.emit(actor)
 
@@ -88,10 +88,7 @@ func remove_actor(actor: Actor) -> void:
 	_actor_layer.remove_child(actor)
 	actor.map = null
 
-	actor.sprite.animation_started.disconnect(_animation_added)
-	actor.sprite.animation_finished.disconnect(_animation_finished)
-	if actor.sprite.animation_playing:
-		_animation_finished()
+	_animation_tracker.unobserve_actor(actor)
 
 	actor_removed.emit(actor)
 
@@ -137,21 +134,6 @@ func _clear() -> void:
 	_clear_layer(_actor_layer)
 	_clear_layer(_marker_layer)
 	_pathfinder = null
-
-
-func _animation_added() -> void:
-	_anim_count += 1
-	if _anim_count == 1:
-		animation_started.emit()
-
-
-func _animation_finished() -> void:
-	if _anim_count == 0:
-		push_error("Animations not running")
-		return
-	_anim_count -= 1
-	if _anim_count == 0:
-		animations_finished.emit()
 
 
 static func _clear_layer(layer: Node) -> void:
