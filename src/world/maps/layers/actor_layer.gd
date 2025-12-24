@@ -2,6 +2,8 @@
 class_name ActorLayer
 extends Node2D
 
+signal actor_added(actor: Actor)
+signal actor_removed(actor: Actor)
 signal actor_moved(actor: Actor, old_cell: Vector2i)
 
 
@@ -51,9 +53,13 @@ func _on_actor_added(node: Node) -> void:
 	actor.moved.connect(_on_actor_moved.bind(actor))
 	actor.tree_exited.connect(_on_actor_removed.bind(actor))
 
+	actor_added.emit(actor)
+
 
 func _on_actor_removed(actor: Actor) -> void:
 	actor.moved.disconnect(_on_actor_moved)
+	actor.tree_exited.disconnect(_on_actor_removed)
+	actor_removed.emit(actor)
 
 
 func _on_actor_moved(old_cell: Vector2i, actor: Actor) -> void:

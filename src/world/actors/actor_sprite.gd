@@ -57,8 +57,6 @@ const _STANDARD_ANIMS: Dictionary[StandardAnims, StringName] = {
 
 @export var cell_offset: Vector2:
 	get:
-		if not is_node_ready():
-			await ready
 		return _offset_direction * _offset_distance
 	set(value):
 		_offset_direction = value.normalized()

@@ -4,6 +4,8 @@ class_name Pathfinder
 ##
 ## A class for finding paths on a grid map. Handles actors with different sizes.
 
+const _DEBUG_DRAW_COLOUR := Color.DEEP_PINK * Color(1, 1, 1, 0.25)
+
 var _map_region: Rect2i
 
 # Represents the base terrain. Used by 1x1 actors.
@@ -80,22 +82,10 @@ func _update_other_grids() -> void:
 
 func debug_draw(canvas_item: CanvasItem, actor_size: Vector2i,
 		tile_size: Vector2) -> void:
-	var grid := _base_grid
-	if actor_size != Vector2i.ONE:
-		grid = _grids[actor_size]
-
-	for x in range(grid.region.position.x, grid.region.end.x):
-		for y in range(grid.region.position.y, grid.region.end.y):
-			var cell := Vector2i(x, y)
-			if grid.is_point_solid(cell):
-				var tile_rect := Rect2(
-					Vector2(cell) * tile_size,
-					tile_size
-				)
-				canvas_item.draw_rect(
-					tile_rect,
-					Color.DEEP_PINK * Color(1, 1, 1, 0.25)
-				)
+	if (actor_size != Vector2i.ONE) and _grids.has(actor_size):
+		var other_grid := _grids[actor_size]
+		_debug_draw_grid(canvas_item, other_grid, tile_size)
+	_debug_draw_grid(canvas_item, _base_grid, tile_size)
 
 
 static func _create_grid(region: Rect2i) -> AStarGrid2D:
@@ -107,3 +97,16 @@ static func _create_grid(region: Rect2i) -> AStarGrid2D:
 	result.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	result.update()
 	return result
+
+
+static func _debug_draw_grid(canvas_item: CanvasItem, grid: AStarGrid2D,
+		tile_size: Vector2) -> void:
+	for x in range(grid.region.position.x, grid.region.end.x):
+		for y in range(grid.region.position.y, grid.region.end.y):
+			var cell := Vector2i(x, y)
+			if grid.is_point_solid(cell):
+				var tile_rect := Rect2(
+					Vector2(cell) * tile_size,
+					tile_size
+				)
+				canvas_item.draw_rect(tile_rect, _DEBUG_DRAW_COLOUR)

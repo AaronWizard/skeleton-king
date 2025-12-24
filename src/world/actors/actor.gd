@@ -98,15 +98,15 @@ func set_controller(controller: ActorController) -> void:
 
 
 func _init_data() -> void:
-	if not is_node_ready():
-		await ready
-
-	_sprite.texture = null
-
 	if not data:
 		return
 
 	cell_length = data.size
+
+	if not is_node_ready():
+		await ready
+
+	_sprite.texture = null
 
 	_sprite.texture = data.sprite
 	_sprite.position = pixel_centre

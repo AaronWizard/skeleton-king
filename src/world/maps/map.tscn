@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj4fsrk3qt3jv"]
+[gd_scene load_steps=6 format=3 uid="uid://bj4fsrk3qt3jv"]
 
 [ext_resource type="Script" uid="uid://ddngxknvol701" path="res://src/world/maps/map.gd" id="1_clcws"]
 [ext_resource type="Script" uid="uid://cxjaa0s8oga6x" path="res://src/world/maps/layers/terrain_layer.gd" id="2_bwu8q"]
 [ext_resource type="Script" uid="uid://dnc3rteg2x6ek" path="res://src/world/maps/layers/actor_layer.gd" id="2_ohcw0"]
 [ext_resource type="Script" uid="uid://dhvhl8gvhl86u" path="res://src/world/maps/layers/useable_object_layer.gd" id="3_60pys"]
+[ext_resource type="Script" uid="uid://d4nrbr1bnuyg8" path="res://src/world/maps/pathfinder_debug_drawer.gd" id="5_lbjay"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_clcws")
@@ -21,3 +22,7 @@ y_sort_enabled = true
 script = ExtResource("2_ohcw0")
 
 [node name="MarkerLayer" type="Node2D" parent="."]
+
+[node name="PathfinderDebugDrawer" type="Node2D" parent="."]
+script = ExtResource("5_lbjay")
+metadata/_custom_type_script = "uid://d4nrbr1bnuyg8"
