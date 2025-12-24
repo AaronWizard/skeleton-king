@@ -11,27 +11,6 @@ signal animations_finished
 @export var terrain_library: TerrainLibrary
 
 
-var pixel_rect: Rect2i:
-	get:
-		var top_layer := _terrain_layer.get_children().back() as TileMapLayer
-		var tile_size := top_layer.tile_set.tile_size
-		var result := cell_rect
-		result.position *= tile_size
-		result.size *= tile_size
-		return result
-
-
-var cell_rect: Rect2i:
-	get:
-		var result := Rect2i()
-		for layer: TileMapLayer in _terrain_layer.get_children():
-			var layer_rect := layer.get_used_rect()
-			result = result.merge(
-				Rect2i(layer_rect.position, layer_rect.size)
-			)
-		return result
-
-
 var actors: Array[Actor]:
 	get:
 		return _actor_layer.actors
@@ -74,6 +53,16 @@ func load_map(design_map: DesignMap) -> void:
 		add_actor(actor, actor.origin_cell)
 	for marker in design_map.markers:
 		_marker_layer.add_child(marker)
+
+
+func get_pixel_rect() -> Rect2i:
+	return _terrain_layer.get_pixel_rect()
+
+
+func get_cell_rect() -> Rect2i:
+	return _terrain_layer.get_cell_rect()
+
+#region Actors
 
 func add_actor(actor: Actor, cell: Vector2i) -> void:
 	actor.origin_cell = cell
@@ -119,6 +108,7 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 		and _terrain_layer.actor_can_enter_cell(actor, cell) \
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
+#endregion Actors
 
 func get_terrain(cell: Vector2i) -> Terrain:
 	return _terrain_layer.get_terrain(cell)
@@ -150,8 +140,8 @@ func _clear() -> void:
 
 # Initializes pathfinder and sets walls based on terrain.
 func _init_pathfinder() -> void:
-	_pathfinder = Pathfinder.new(cell_rect)
-	var rect := cell_rect
+	var rect := get_cell_rect()
+	_pathfinder = Pathfinder.new(rect)
 	for x in range(rect.position.x, rect.end.x):
 		for y in range(rect.position.y, rect.position.y):
 			var cell := Vector2i(x, y)

@@ -40,7 +40,7 @@ func _load_map(map_data: DesignMap, player_spawn_marker: StringName) -> void:
 	var cell := _map.get_marker_cell(player_spawn_marker)
 	_map.add_actor(_player, cell)
 
-	_camera.bounds = _map.pixel_rect
+	_camera.bounds = _map.get_pixel_rect()
 
 
 func _run() -> void:

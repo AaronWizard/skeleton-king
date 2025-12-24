@@ -7,6 +7,25 @@ const _TERRAIN_DATA_LAYER_NAME := "terrain"
 @export var terrain_library: TerrainLibrary
 
 
+func get_pixel_rect() -> Rect2i:
+	var top_layer := get_children().back() as TileMapLayer
+	var tile_size := top_layer.tile_set.tile_size
+	var result := get_cell_rect()
+	result.position *= tile_size
+	result.size *= tile_size
+	return result
+
+
+func get_cell_rect() -> Rect2i:
+	var result := Rect2i()
+	for layer: TileMapLayer in get_children():
+		var layer_rect := layer.get_used_rect()
+		result = result.merge(
+			Rect2i(layer_rect.position, layer_rect.size)
+		)
+	return result
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var result := PackedStringArray()
 	for c in get_children():
