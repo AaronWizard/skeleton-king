@@ -1,5 +1,7 @@
 extends Node
 
+const _PLAYER_NODE_NAME := "Player"
+
 @export var initial_map_data: PackedScene
 @export var player_span_marker: StringName
 @export var player_data: ActorData
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 func _init_player() -> void:
 	_player = Actor.create_actor(player_data)
+	_player.name = _PLAYER_NODE_NAME
 
 	var controller := PlayerController.new()
 	_player.set_controller(controller)
@@ -40,7 +43,7 @@ func _load_map(map_data: DesignMap, player_spawn_marker: StringName) -> void:
 	var cell := _map.get_marker_cell(player_spawn_marker)
 	_map.add_actor(_player, cell)
 
-	_camera.bounds = _map.pixel_rect
+	_camera.bounds = _map.get_pixel_rect()
 
 
 func _run() -> void:

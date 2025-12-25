@@ -5,12 +5,15 @@ extends SquareTileObject
 
 const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 
+signal moved(old_cell: Vector2i)
+
 
 @export var data: ActorData:
 	set(value):
 		data = value
 		_init_data()
 
+#region Properties
 
 var map: Map:
 	set(value):
@@ -48,6 +51,7 @@ var remote_transform: RemoteTransform2D:
 	get:
 		return %RemoteTransform as RemoteTransform2D
 
+#endregion Properties
 
 var _stats: Stats
 var _controller: ActorController
@@ -62,6 +66,16 @@ static func create_actor(p_data: ActorData) -> Actor:
 	return actor
 
 
+static func are_enemies(actor_a: Actor, actor_b: Actor) -> bool:
+	return (actor_a != actor_b) \
+			and (actor_a.data.faction != actor_b.data.faction)
+
+#region TileObject
+
+func _origin_cell_changed(old_cell: Vector2i) -> void:
+	moved.emit(old_cell)
+
+
 func _tile_size_changed() -> void:
 	if not is_node_ready():
 		await ready
@@ -74,6 +88,7 @@ func _cell_size_changed() -> void:
 		await ready
 	_sprite.position = pixel_centre
 
+#endregion TileObject
 
 func set_controller(controller: ActorController) -> void:
 	if _controller == controller:
@@ -92,15 +107,15 @@ func set_controller(controller: ActorController) -> void:
 
 
 func _init_data() -> void:
-	if not is_node_ready():
-		await ready
-
-	_sprite.texture = null
-
 	if not data:
 		return
 
 	cell_length = data.size
+
+	if not is_node_ready():
+		await ready
+
+	_sprite.texture = null
 
 	_sprite.texture = data.sprite
 	_sprite.position = pixel_centre

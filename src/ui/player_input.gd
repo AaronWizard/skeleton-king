@@ -55,6 +55,9 @@ func _get_move_vec() -> Vector2i:
 	if Input.is_action_pressed("move_west"):
 		result += Vector2i.LEFT
 
+	if result.length_squared() > 1:
+		result = Vector2i.ZERO
+
 	return result
 
 

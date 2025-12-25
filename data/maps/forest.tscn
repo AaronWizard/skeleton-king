@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://c2ix3jhpky8kk"]
+[gd_scene load_steps=7 format=4 uid="uid://c2ix3jhpky8kk"]
 
 [ext_resource type="Script" uid="uid://dpfbol1adcken" path="res://src/editing/design_map.gd" id="1_tj7cq"]
 [ext_resource type="TileSet" uid="uid://bdp5lyg86iw6n" path="res://data/terrain/terrain_tileset.tres" id="2_djkcj"]
 [ext_resource type="PackedScene" uid="uid://bj1c22i7ri5rc" path="res://data/useableobjects/designs/wide_door.tscn" id="3_cspjw"]
 [ext_resource type="PackedScene" uid="uid://gwk50nqgbhdh" path="res://data/useableobjects/designs/torch.tscn" id="4_pq1sv"]
 [ext_resource type="Script" uid="uid://cwbs47ncovgtb" path="res://src/world/tiles/square_tile_object.gd" id="5_cspjw"]
+[ext_resource type="PackedScene" uid="uid://mpmyg8s0e4mx" path="res://data/actors/designs/skeleton_fighter.tscn" id="5_pieup"]
 
 [node name="Forest" type="Node2D"]
 y_sort_enabled = true
@@ -74,11 +75,30 @@ grid_colour = Color(0.93333334, 0.50980395, 0.93333334, 1)
 [node name="Actors" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="SkeletonFighter" parent="Actors" instance=ExtResource("5_pieup")]
+position = Vector2(48, 96)
+origin_cell = Vector2i(4, 7)
+
+[node name="SkeletonFighter2" parent="Actors" instance=ExtResource("5_pieup")]
+position = Vector2(24, 120)
+origin_cell = Vector2i(2, 9)
+grid_colour = Color(0.93333334, 0.50980395, 0.93333334, 1)
+
+[node name="SkeletonFighter3" parent="Actors" instance=ExtResource("5_pieup")]
+position = Vector2(84, 96)
+origin_cell = Vector2i(7, 7)
+grid_colour = Color(0.93333334, 0.50980395, 0.93333334, 1)
+
+[node name="SkeletonFighter4" parent="Actors" instance=ExtResource("5_pieup")]
+position = Vector2(108, 120)
+origin_cell = Vector2i(9, 9)
+grid_colour = Color(0.93333334, 0.50980395, 0.93333334, 1)
+
 [node name="Markers" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="PlayerSpawn" type="Node2D" parent="Markers"]
-position = Vector2(60, 576)
+position = Vector2(60, 216)
 script = ExtResource("5_cspjw")
-origin_cell = Vector2i(5, 47)
+origin_cell = Vector2i(5, 17)
 metadata/_custom_type_script = "uid://cwbs47ncovgtb"

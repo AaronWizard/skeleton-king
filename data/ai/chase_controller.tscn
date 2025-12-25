@@ -1,0 +1,25 @@
+[gd_scene load_steps=9 format=3 uid="uid://clvffh4lto2ut"]
+
+[ext_resource type="Script" uid="uid://daff3vqk4f4te" path="res://src/world/control/behaviour_tree_controller.gd" id="1_am4y6"]
+[ext_resource type="Script" uid="uid://cqeh3iku4tfpg" path="res://src/world/control/behaviour_trees/bt_node.gd" id="2_ctwdv"]
+[ext_resource type="Script" uid="uid://dn4pcs0r0ke50" path="res://src/world/control/behaviour_trees/actions/attack_nearest_enemy.gd" id="3_q44vc"]
+[ext_resource type="Script" uid="uid://djs0te22jfrjn" path="res://src/world/control/behaviour_trees/actions/approach_nearest_enemy.gd" id="4_gx8u1"]
+[ext_resource type="Script" uid="uid://7lgar10kfvua" path="res://src/world/control/behaviour_trees/bt_selector_node.gd" id="5_18ev3"]
+
+[sub_resource type="Resource" id="Resource_jeo2h"]
+script = ExtResource("3_q44vc")
+metadata/_custom_type_script = "uid://dn4pcs0r0ke50"
+
+[sub_resource type="Resource" id="Resource_ctwdv"]
+script = ExtResource("4_gx8u1")
+metadata/_custom_type_script = "uid://djs0te22jfrjn"
+
+[sub_resource type="Resource" id="Resource_itiox"]
+script = ExtResource("5_18ev3")
+children = Array[ExtResource("2_ctwdv")]([SubResource("Resource_jeo2h"), SubResource("Resource_ctwdv")])
+metadata/_custom_type_script = "uid://7lgar10kfvua"
+
+[node name="ChaseController" type="Node"]
+script = ExtResource("1_am4y6")
+behaviour_tree = SubResource("Resource_itiox")
+metadata/_custom_type_script = "uid://daff3vqk4f4te"

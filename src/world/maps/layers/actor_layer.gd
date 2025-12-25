@@ -2,12 +2,20 @@
 class_name ActorLayer
 extends Node2D
 
+signal actor_added(actor: Actor)
+signal actor_removed(actor: Actor)
+signal actor_moved(actor: Actor, old_cell: Vector2i)
+
 
 var actors: Array[Actor]:
 	get:
 		var result: Array[Actor] = []
 		result.assign(get_children())
 		return result
+
+
+func _ready() -> void:
+	child_entered_tree.connect(_on_actor_added)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -35,3 +43,24 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
 		if not result:
 			break
 	return result
+
+
+func _on_actor_added(node: Node) -> void:
+	var actor := node as Actor
+	if not actor:
+		push_error("%s is not an actor" % node.name)
+
+	actor.moved.connect(_on_actor_moved.bind(actor))
+	actor.tree_exited.connect(_on_actor_removed.bind(actor))
+
+	actor_added.emit(actor)
+
+
+func _on_actor_removed(actor: Actor) -> void:
+	actor.moved.disconnect(_on_actor_moved)
+	actor.tree_exited.disconnect(_on_actor_removed)
+	actor_removed.emit(actor)
+
+
+func _on_actor_moved(old_cell: Vector2i, actor: Actor) -> void:
+	actor_moved.emit(actor, old_cell)
