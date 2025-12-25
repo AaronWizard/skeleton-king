@@ -1,4 +1,4 @@
-class_name ActorQueries
+class_name WorldQueries
 
 
 static func get_closest_enemy(actor: Actor) -> Actor:

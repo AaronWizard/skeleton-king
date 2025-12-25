@@ -7,7 +7,7 @@ extends BehaviourTreeNode
 func get_action(actor: Actor) -> TurnAction:
 	var result: TurnAction = null
 
-	var enemy := ActorQueries.get_closest_enemy(actor)
+	var enemy := WorldQueries.get_closest_enemy(actor)
 	if enemy:
 		var delta := (enemy.origin_cell - actor.origin_cell).abs()
 		var dist := delta.x
