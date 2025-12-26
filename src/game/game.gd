@@ -15,6 +15,8 @@ var _turn_clock := TurnClock.new()
 @onready var _player_input := $PlayerInput as PlayerInput
 @onready var _camera := $Camera as BoundedCamera
 
+@onready var _no_player_turn_passer := $NoPlayerTurnPasser as Timer
+
 
 func _ready() -> void:
 	_init_player()
@@ -49,6 +51,7 @@ func _load_map(map_data: DesignMap, player_spawn_marker: StringName) -> void:
 func _run() -> void:
 	while _player.stats.is_alive:
 		await _turn_clock.take_turn()
+	_no_player_turn_passer.start()
 
 
 func _on_player_input_requested() -> void:
@@ -61,3 +64,8 @@ func _on_map_actor_added(actor: Actor) -> void:
 
 func _on_map_actor_removed(actor: Actor) -> void:
 	_turn_clock.remove_turn_taker(actor.turn_taker)
+
+
+func _on_no_player_turn_passer_timeout() -> void:
+	await _turn_clock.take_turn()
+	_no_player_turn_passer.start()

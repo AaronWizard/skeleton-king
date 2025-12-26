@@ -18,5 +18,10 @@ metadata/_edit_lock_ = true
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("5_xptat")
 
+[node name="NoPlayerTurnPasser" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [connection signal="actor_added" from="Map" to="." method="_on_map_actor_added"]
 [connection signal="actor_removed" from="Map" to="." method="_on_map_actor_removed"]
+[connection signal="timeout" from="NoPlayerTurnPasser" to="." method="_on_no_player_turn_passer_timeout"]
