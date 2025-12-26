@@ -15,12 +15,10 @@ static func _create_pathfinder_from_terrain(terrain_layer: TerrainLayer) \
 		-> Pathfinder:
 	var rect := terrain_layer.get_cell_rect()
 	var result := Pathfinder.new(rect)
-	for x in range(rect.position.x, rect.end.x):
-		for y in range(rect.position.y, rect.end.y):
-			var cell := Vector2i(x, y)
-			var terrain := terrain_layer.get_terrain(cell)
-			if terrain:
-				result.set_cell_solid(Vector2i(x, y), terrain.blocks_move)
+	for cell in TileGeometry.cells_in_rect(rect):
+		var terrain := terrain_layer.get_terrain(cell)
+		if terrain:
+			result.set_cell_solid(cell, terrain.blocks_move)
 	return result
 
 

@@ -59,15 +59,14 @@ func _update_other_grids() -> void:
 		grid.clear()
 		grid.region = region
 		grid.update()
-		for x in range(region.position.x, region.end.x):
-			for y in range(region.position.y, region.end.y):
-				var cell := Vector2i(x, y)
-				if _base_grid.is_point_solid(cell):
-					var block_rect := Rect2i(
-						cell - actor_size + Vector2i.ONE,
-						actor_size
-					)
-					grid.fill_solid_region(block_rect, true)
+
+		for cell in TileGeometry.cells_in_rect(region):
+			if _base_grid.is_point_solid(cell):
+				var block_rect := Rect2i(
+					cell - actor_size + Vector2i.ONE,
+					actor_size
+				)
+				grid.fill_solid_region(block_rect, true)
 		var bottom_border := Rect2i(
 			Vector2i(region.position.x, region.end.y - actor_size.y + 1),
 			Vector2i(region.size.x, actor_size.y - 1)
@@ -101,12 +100,10 @@ static func _create_grid(region: Rect2i) -> AStarGrid2D:
 
 static func _debug_draw_grid(canvas_item: CanvasItem, grid: AStarGrid2D,
 		tile_size: Vector2) -> void:
-	for x in range(grid.region.position.x, grid.region.end.x):
-		for y in range(grid.region.position.y, grid.region.end.y):
-			var cell := Vector2i(x, y)
-			if grid.is_point_solid(cell):
-				var tile_rect := Rect2(
-					Vector2(cell) * tile_size,
-					tile_size
-				)
-				canvas_item.draw_rect(tile_rect, _DEBUG_DRAW_COLOUR)
+	for cell in TileGeometry.cells_in_rect(grid.region):
+		if grid.is_point_solid(cell):
+			var tile_rect := Rect2(
+				Vector2(cell) * tile_size,
+				tile_size
+			)
+			canvas_item.draw_rect(tile_rect, _DEBUG_DRAW_COLOUR)

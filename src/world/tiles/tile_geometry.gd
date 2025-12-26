@@ -28,3 +28,12 @@ static func rects_are_adjacent(a: Rect2i, b: Rect2i) -> bool:
 		return true
 
 	return false
+
+
+## Get all cells covered by [param rect].
+static func cells_in_rect(rect: Rect2i) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.end.y):
+			result.append(Vector2i(x, y))
+	return result
