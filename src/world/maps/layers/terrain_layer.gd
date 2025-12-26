@@ -7,8 +7,17 @@ const _TERRAIN_DATA_LAYER_NAME := "terrain"
 @export var terrain_library: TerrainLibrary
 
 
+var mouse_cell: Vector2i:
+	get:
+		var tilemap := get_child(0) as TileMapLayer
+		var mouse_pos := tilemap.get_local_mouse_position()
+		var result := tilemap.local_to_map(mouse_pos)
+		return result
+
+
 var _rect := Rect2i(Vector2i.ZERO, Vector2i(-1, -1))
 var _tile_size := Vector2i(-1, -1)
+
 
 func get_pixel_rect() -> Rect2i:
 	if _tile_size.x == -1:

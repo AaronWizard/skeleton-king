@@ -26,6 +26,11 @@ var animations_running: bool:
 		return _animation_tracker.animations_running
 
 
+var mouse_cell: Vector2i:
+	get:
+		return _terrain_layer.mouse_cell
+
+
 var _pathfinder: Pathfinder
 var _animation_tracker := AnimationTracker.new()
 
