@@ -14,6 +14,7 @@ terrain_library = ExtResource("3_l80un")
 metadata/_edit_lock_ = true
 
 [node name="PlayerInput" parent="." instance=ExtResource("5_yarin")]
+cheats_enabled = true
 
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("5_xptat")
