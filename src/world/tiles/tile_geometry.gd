@@ -1,5 +1,10 @@
 class_name TileGeometry
 
+const CARDINALS: Array[Vector2i] = [
+	Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT
+]
+
+
 ## Get the [url=https://en.wikipedia.org/wiki/Taxicab_geometry]manhattan
 ## distance[/url] between two tile cells: the number of cells needed to move
 ## from [param start] to [param end] while only moving in the four cardinal
