@@ -97,9 +97,6 @@ func actor_can_enter_cell(actor: Actor, cell: Vector2i,
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
 
-func find_path(actor: Actor, end: Vector2i) -> Array[Vector2i]:
-	return ActorPathfinder.find_path(actor, end)
-
 #endregion Actors
 
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:

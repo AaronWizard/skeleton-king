@@ -78,7 +78,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 					actor.cell_rect, _target_enemy.cell_rect):
 				return AttackAction.new(actor, _target_enemy)
 			else:
-				var path := actor.map.find_path(
+				var path := ActorPathfinder.find_path(
 						actor, _target_enemy.origin_cell)
 				if not path.is_empty():
 					return MoveAction.new(self.actor, path[0])
@@ -93,7 +93,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 
 	_State.RETURN:
 		func () -> TurnAction:
-			var path := actor.map.find_path(actor, _initial_cell)
+			var path := ActorPathfinder.find_path(actor, _initial_cell)
 			if not path.is_empty():
 				return MoveAction.new(self.actor, path[0])
 			return null
@@ -146,7 +146,7 @@ func _start_wander(center_cell: Vector2i) -> TurnAction:
 		var target := cells[-1]
 		cells.pop_back()
 		if actor.map.actor_can_enter_cell(actor, target):
-			var path := actor.map.find_path(actor, target)
+			var path := ActorPathfinder.find_path(actor, target)
 			if not path.is_empty():
 				_search_cell = target
 				result = MoveAction.new(actor, path[0])
@@ -158,7 +158,7 @@ func _start_wander(center_cell: Vector2i) -> TurnAction:
 func _continue_wander() -> TurnAction:
 	var result: TurnAction = null
 	if actor.map.actor_can_enter_cell(actor, _search_cell):
-		var path := actor.map.find_path(actor, _search_cell)
+		var path := ActorPathfinder.find_path(actor, _search_cell)
 		if not path.is_empty():
 			result = MoveAction.new(actor, path[0])
 	return result
