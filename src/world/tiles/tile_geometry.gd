@@ -9,9 +9,9 @@ const CARDINALS: Array[Vector2i] = [
 ## distance[/url] between two tile cells: the number of cells needed to move
 ## from [param start] to [param end] while only moving in the four cardinal
 ## directions.
-static func manhattan_distance(start: Vector2i, end: Vector2i) -> int:
+static func manhattan_distance(start: Vector2, end: Vector2) -> float:
 	var diff := (end - start).abs()
-	return int(diff.x + diff.y)
+	return diff.x + diff.y
 
 
 ## Tests if two rectangles are adjacent but not overlapping. The rectangles
