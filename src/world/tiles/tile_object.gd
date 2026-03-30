@@ -13,6 +13,7 @@ extends Node2D
 ## The pixel position is the object's [b]bottom left[/b] point.
 @export var origin_cell: Vector2i:
 	get:
+		@warning_ignore("integer_division")
 		return (Vector2i(position) / tile_size) - Vector2i(0, _cell_size.y)
 	set(value):
 		var old_cell := origin_cell

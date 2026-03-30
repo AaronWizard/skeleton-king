@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ActorData" load_steps=6 format=3 uid="uid://febqrfnygkw7"]
+[gd_resource type="Resource" script_class="ActorData" format=3 uid="uid://febqrfnygkw7"]
 
 [ext_resource type="Script" uid="uid://chv2igew1dnoj" path="res://src/world/actors/stats/base_stats.gd" id="1_nfr5d"]
 [ext_resource type="Script" uid="uid://cexpxoyjyfx82" path="res://src/world/actors/actor_data.gd" id="2_r44x8"]

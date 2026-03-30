@@ -25,7 +25,9 @@ static func find_path_to_rect(actor: Actor, end_rect: Rect2i) \
 	return _find_path(
 		actor, [end_actor],
 		func (cell: Vector2i) -> float:
+			@warning_ignore("integer_division")
 			var actor_centre := cell + (actor.cell_size / 2)
+			@warning_ignore("integer_division")
 			var end_centre := end_rect.position + (end_rect.size / 2)
 			return TileGeometry.manhattan_distance(actor_centre, end_centre),
 		func (cell: Vector2i) -> bool:
