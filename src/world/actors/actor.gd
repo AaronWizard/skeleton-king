@@ -6,6 +6,7 @@ extends SquareTileObject
 const _ACTOR_SCENE := preload("uid://bcifsfm6gsylc")
 
 signal moved(old_cell: Vector2i)
+signal map_changed(old_map: Map)
 
 
 @export var data: ActorData:
@@ -29,7 +30,9 @@ var map: Map:
 					+ "child of")
 			return
 
+		var old_map := map
 		map = value
+		map_changed.emit(old_map)
 
 
 var turn_taker: TurnTaker:

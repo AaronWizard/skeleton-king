@@ -42,3 +42,11 @@ static func cells_in_rect(rect: Rect2i) -> Array[Vector2i]:
 		for y in range(rect.position.y, rect.end.y):
 			result.append(Vector2i(x, y))
 	return result
+
+
+## Gets the square of the distance between the centres of two rectangles.
+static func rect_distance_squared(a: Rect2i, b: Rect2i) -> float:
+	var center_a := Vector2(a.position) + (a.size / 2.0)
+	var center_b := Vector2(b.position) + (b.size / 2.0)
+
+	return center_a.distance_squared_to(center_b)

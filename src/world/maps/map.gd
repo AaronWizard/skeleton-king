@@ -31,6 +31,12 @@ var mouse_cell: Vector2i:
 		return _terrain_layer.mouse_cell
 
 
+var events: MapEvents:
+	get:
+		return _map_events
+
+
+var _map_events := MapEvents.new()
 var _animation_tracker := AnimationTracker.new()
 
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer

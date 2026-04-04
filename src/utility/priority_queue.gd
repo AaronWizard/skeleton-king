@@ -35,6 +35,11 @@ func is_empty() -> bool:
 	return _heap.is_empty()
 
 
+## Clears the queue.
+func clear() -> void:
+	_heap.clear()
+
+
 # Move an item up the heap
 func _bubble_up(index: int) -> void:
 	while index > 0:
