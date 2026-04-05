@@ -13,6 +13,7 @@ extends Node2D
 ## The pixel position is the object's [b]bottom left[/b] point.
 @export var origin_cell: Vector2i:
 	get:
+		@warning_ignore("integer_division")
 		return (Vector2i(position) / tile_size) - Vector2i(0, _cell_size.y)
 	set(value):
 		var old_cell := origin_cell
@@ -116,11 +117,7 @@ func covers_cell(cell: Vector2i) -> bool:
 
 
 func get_covered_cells_at_cell(cell: Vector2i) -> Array[Vector2i]:
-	var result: Array[Vector2i] = []
-	for x in range(_cell_size.x):
-		for y in range(_cell_size.y):
-			result.append(Vector2i(x, y) + cell)
-	return result
+	return TileGeometry.cells_in_rect(Rect2i(cell, cell_size))
 
 
 func _set_position(new_origin_cell: Vector2i) -> void:

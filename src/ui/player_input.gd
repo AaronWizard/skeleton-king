@@ -1,6 +1,8 @@
 class_name PlayerInput
 extends Node
 
+@export var cheats_enabled := false
+
 var player: Actor
 var controller: PlayerController
 
@@ -21,6 +23,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not _timer.is_stopped():
 		return
+
+	if cheats_enabled and Input.is_action_just_pressed("click"):
+		player.origin_cell = player.map.mouse_cell
 
 	if Input.is_action_just_pressed("wait"):
 		_end_turn(null)

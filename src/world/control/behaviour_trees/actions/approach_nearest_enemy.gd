@@ -14,7 +14,7 @@ func get_action(actor: Actor) -> TurnAction:
 		if delta.max_axis_index() == Vector2i.Axis.AXIS_Y:
 			dist = delta.y
 		if dist <= sight_range:
-			var path := actor.map.find_path(actor, enemy.origin_cell)
+			var path := ActorPathfinder.find_path(actor, enemy.origin_cell)
 			if path.size() > 1:
 				result = MoveAction.new(actor, path[1])
 

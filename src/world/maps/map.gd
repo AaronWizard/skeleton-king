@@ -26,16 +26,23 @@ var animations_running: bool:
 		return _animation_tracker.animations_running
 
 
-var _pathfinder: Pathfinder
+var mouse_cell: Vector2i:
+	get:
+		return _terrain_layer.mouse_cell
+
+
+var events: MapEvents:
+	get:
+		return _map_events
+
+
+var _map_events := MapEvents.new()
 var _animation_tracker := AnimationTracker.new()
 
 @onready var _terrain_layer := $TerrainLayer as TerrainLayer
 @onready var _useable_object_layer := $UseableObjectLayer as UseableObjectLayer
 @onready var _actor_layer := $ActorLayer as ActorLayer
 @onready var _marker_layer := $MarkerLayer as MarkerLayer
-
-@onready var _pathfinder_debug_drawer \
-		:= $PathfinderDebugDrawer as PathfinderDebugDrawer
 
 
 func _ready() -> void:
@@ -56,10 +63,6 @@ func load_map(design_map: DesignMap) -> void:
 		add_actor(actor, actor.origin_cell)
 	for marker in design_map.markers:
 		_marker_layer.add_child(marker)
-
-	_pathfinder = PathfinderFactory.create_pathfinder(
-			_terrain_layer, _useable_object_layer, _actor_layer)
-	_pathfinder_debug_drawer.pathfinder = _pathfinder
 
 
 func get_pixel_rect() -> Rect2i:
@@ -93,26 +96,12 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return _actor_layer.get_actor_on_cell(cell)
 
 
-func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
-	return _actor_layer.actor_can_enter_cell(actor, cell) \
+func actor_can_enter_cell(actor: Actor, cell: Vector2i,
+		actors_to_ignore: Array[Actor] = []) -> bool:
+	return _actor_layer.actor_can_enter_cell(actor, cell, actors_to_ignore) \
 		and _terrain_layer.actor_can_enter_cell(actor, cell) \
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
-
-func find_path(actor: Actor, end: Vector2i) -> Array[Vector2i]:
-	_pathfinder.set_rect_solid(actor.cell_rect, false)
-
-	var other_actor := get_actor_on_cell(end)
-	if other_actor:
-		_pathfinder.set_rect_solid(other_actor.cell_rect, false)
-
-	var result := _pathfinder.find_path(actor.origin_cell, end, actor.cell_size)
-
-	_pathfinder.set_rect_solid(actor.cell_rect, false)
-	if other_actor:
-		_pathfinder.set_rect_solid(other_actor.cell_rect, true)
-
-	return result
 
 #endregion Actors
 
@@ -139,7 +128,6 @@ func _clear() -> void:
 	_clear_layer(_useable_object_layer)
 	_clear_layer(_actor_layer)
 	_clear_layer(_marker_layer)
-	_pathfinder = null
 
 
 static func _clear_layer(layer: Node) -> void:
