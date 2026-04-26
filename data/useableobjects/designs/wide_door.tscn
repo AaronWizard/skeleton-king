@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bj1c22i7ri5rc"]
+[gd_scene format=3 uid="uid://bj1c22i7ri5rc"]
 
 [ext_resource type="Script" uid="uid://3cs5pfg71ocl" path="res://src/editing/design_useable_object.gd" id="1_lupx8"]
 [ext_resource type="Resource" uid="uid://b7b12aj7tg5su" path="res://data/useableobjects/wide_door.tres" id="2_45rwr"]
 
-[node name="WideDoor" type="Node2D"]
+[node name="WideDoor" type="Node2D" unique_id=1888606765]
 position = Vector2(0, 12)
 script = ExtResource("1_lupx8")
 data = ExtResource("2_45rwr")

@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bj40j07ghclgb"]
+[gd_scene format=3 uid="uid://bj40j07ghclgb"]
 
 [ext_resource type="Script" uid="uid://dynjpgnnmynam" path="res://src/world/useableobjects/useable_object.gd" id="1_8h3d8"]
 
-[node name="UseableTile" type="Node2D"]
+[node name="UseableTile" type="Node2D" unique_id=913497018]
 position = Vector2(0, 12)
 script = ExtResource("1_8h3d8")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=838719855]
 position = Vector2(6, -6)

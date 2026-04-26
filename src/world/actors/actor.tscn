@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcifsfm6gsylc"]
+[gd_scene format=3 uid="uid://bcifsfm6gsylc"]
 
 [ext_resource type="Script" uid="uid://dts4fho8mun2m" path="res://src/world/actors/actor.gd" id="1_4yile"]
 [ext_resource type="PackedScene" uid="uid://2x11hgj8vreo" path="res://src/world/actors/actor_sprite.tscn" id="2_0o3uc"]
@@ -9,18 +9,18 @@
 atlas = ExtResource("3_s1apx")
 region = Rect2(0, 0, 12, 12)
 
-[node name="Actor" type="Node2D"]
+[node name="Actor" type="Node2D" unique_id=870114958]
 position = Vector2(0, 12)
 script = ExtResource("1_4yile")
 
-[node name="ActorSprite" parent="." instance=ExtResource("2_0o3uc")]
+[node name="ActorSprite" parent="." unique_id=43627121 instance=ExtResource("2_0o3uc")]
 position = Vector2(6, -6)
 texture = SubResource("AtlasTexture_lg40r")
 
 [node name="Sprite" parent="ActorSprite" index="0"]
 texture = SubResource("AtlasTexture_lg40r")
 
-[node name="StaminaBar" type="ProgressBar" parent="ActorSprite/Sprite" index="0"]
+[node name="StaminaBar" type="ProgressBar" parent="ActorSprite/Sprite" index="0" unique_id=1626327295]
 unique_name_in_owner = true
 visible = false
 offset_left = -5.0
@@ -32,10 +32,10 @@ max_value = 20.0
 step = 1.0
 show_percentage = false
 
-[node name="RemoteTransform" type="RemoteTransform2D" parent="ActorSprite/Sprite" index="1"]
+[node name="RemoteTransform" type="RemoteTransform2D" parent="ActorSprite/Sprite" index="1" unique_id=965553519]
 unique_name_in_owner = true
 
-[node name="TurnTaker" type="Node" parent="."]
+[node name="TurnTaker" type="Node" parent="." unique_id=1817424609]
 script = ExtResource("2_8i1u4")
 metadata/_custom_type_script = "uid://38bauea5dnlw"
 

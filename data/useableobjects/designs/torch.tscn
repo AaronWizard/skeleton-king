@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://gwk50nqgbhdh"]
+[gd_scene format=3 uid="uid://gwk50nqgbhdh"]
 
 [ext_resource type="Script" uid="uid://3cs5pfg71ocl" path="res://src/editing/design_useable_object.gd" id="1_wdx4l"]
 [ext_resource type="Resource" uid="uid://bj3nr5ppo8i7c" path="res://data/useableobjects/torch.tres" id="2_ri75e"]
 
-[node name="Torch" type="Node2D"]
+[node name="Torch" type="Node2D" unique_id=166040128]
 position = Vector2(0, 12)
 script = ExtResource("1_wdx4l")
 data = ExtResource("2_ri75e")

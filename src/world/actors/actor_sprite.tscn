@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://2x11hgj8vreo"]
+[gd_scene format=3 uid="uid://2x11hgj8vreo"]
 
 [ext_resource type="Script" uid="uid://dn1vbvbxr38qw" path="res://src/world/actors/actor_sprite.gd" id="1_25ddq"]
 [ext_resource type="Texture2D" uid="uid://bbhebklyn0std" path="res://assets/sprites/actors.png" id="2_b63f5"]
@@ -109,14 +109,12 @@ _data = {
 &"move_step": SubResource("Animation_b63f5")
 }
 
-[node name="ActorSprite" type="Node2D"]
+[node name="ActorSprite" type="Node2D" unique_id=2141935645]
 script = ExtResource("1_25ddq")
 texture = SubResource("AtlasTexture_lg40r")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=827095168]
 texture = SubResource("AtlasTexture_lg40r")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_stvwg")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=678500804]
+libraries/ = SubResource("AnimationLibrary_stvwg")
