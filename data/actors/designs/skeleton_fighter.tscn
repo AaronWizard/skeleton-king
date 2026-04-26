@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cs7qxwdbdtk06" path="res://src/editing/design_actor.gd" id="1_keymv"]
 [ext_resource type="Resource" uid="uid://1asxmmi6b8ig" path="res://data/actors/skeleton_fighter.tres" id="2_3xosw"]
-[ext_resource type="PackedScene" uid="uid://c5tl6emu61jl" path="res://data/ai/simple_ai_controller.tscn" id="3_keymv"]
+[ext_resource type="PackedScene" uid="uid://c5tl6emu61jl" path="res://data/ai/ai_guard_controller.tscn" id="3_keymv"]
 
 [node name="SkeletonFighter" type="Node2D" unique_id=334821632]
 position = Vector2(0, 12)

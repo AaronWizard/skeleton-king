@@ -1,4 +1,4 @@
-class_name SimpleAIController
+class_name AIGuardController
 extends ActorController
 
 enum _State

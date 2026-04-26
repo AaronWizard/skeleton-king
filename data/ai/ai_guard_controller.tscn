@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c5tl6emu61jl"]
+
+[ext_resource type="Script" uid="uid://cmsot23vk57cw" path="res://src/world/control/ai/ai_guard_controller.gd" id="1_7ynhc"]
+
+[node name="AIGuardController" type="Node" unique_id=271924185]
+script = ExtResource("1_7ynhc")
+metadata/_custom_type_script = "uid://cmsot23vk57cw"
