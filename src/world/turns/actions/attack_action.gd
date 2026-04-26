@@ -10,7 +10,13 @@ func _init(p_attacker: Actor, p_target: Actor) -> void:
 	_target = p_target
 
 
-func run() -> void:
+func _run() -> bool:
+	if not _attacker or not _attacker.stats.is_alive:
+		return false
+	if not _target or not _target.stats.is_alive \
+			or not Actor.are_enemies(_attacker, _target):
+		return false
+
 	if _attacker.map.animations_running:
 		await _attacker.map.animations_finished
 
@@ -21,3 +27,5 @@ func run() -> void:
 
 	_attacker.remote_transform.update_position = true
 	_target.remote_transform.update_position = true
+
+	return true

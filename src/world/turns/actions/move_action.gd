@@ -10,7 +10,10 @@ func _init(p_actor: Actor, p_next_cell: Vector2i) -> void:
 	_next_cell = p_next_cell
 
 
-func run() -> void:
+func _run() -> bool:
+	if not _actor.map.actor_can_enter_cell(_actor, _next_cell):
+		return false
+
 	var delta := _next_cell - _actor.origin_cell
 
 	_actor.origin_cell = _next_cell
@@ -18,3 +21,5 @@ func run() -> void:
 	_actor.sprite.offset_direction = delta
 	_actor.sprite.offset_distance = -1
 	_actor.sprite.play_standard_anim(ActorSprite.StandardAnims.MOVE_STEP)
+
+	return true

@@ -10,7 +10,12 @@ func _init(p_object: UseableObject, p_map: Map) -> void:
 	_map = p_map
 
 
-func run() -> void:
+func _run() -> bool:
+	if not _object:
+		return false
+
 	if _map.animations_running:
 		await _map.animations_finished
 	_object.use()
+
+	return true

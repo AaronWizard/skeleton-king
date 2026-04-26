@@ -36,16 +36,19 @@ func _process(_delta: float) -> void:
 	if next_cell == player.origin_cell:
 		return
 
-	var action: TurnAction = null
+	var move_action := MoveAction.new(player, next_cell)
+	var attack_action := AttackAction.new(
+			player, player.map.get_actor_on_cell(next_cell))
+	var use_action := UseObjectAction.new(
+			player.map.get_useable_object_on_cell(next_cell), player.map)
 
-	var attempts: Array[Callable] = [_try_move, _try_attack, _try_use]
-	for attempt in attempts:
-		action = attempt.call(next_cell) as TurnAction
-		if action:
-			break
+	var action := move_action.with_alternative(
+		attack_action.with_alternative(
+			use_action.wait_if_failed(false)
+		)
+	)
 
-	if action:
-		_end_turn(action)
+	_end_turn(action)
 
 
 func _get_move_vec() -> Vector2i:
@@ -63,30 +66,6 @@ func _get_move_vec() -> Vector2i:
 	if result.length_squared() > 1:
 		result = Vector2i.ZERO
 
-	return result
-
-
-func _try_move(next_cell: Vector2i) -> TurnAction:
-	var result: TurnAction = null
-	if (next_cell != player.origin_cell) \
-			and (player.map.actor_can_enter_cell(player, next_cell)):
-		result = MoveAction.new(player, next_cell)
-	return result
-
-
-func _try_attack(next_cell: Vector2i) -> TurnAction:
-	var result: TurnAction = null
-	var other_actor := player.map.get_actor_on_cell(next_cell)
-	if other_actor and other_actor.data.faction != player.data.faction:
-		result = AttackAction.new(player, other_actor)
-	return result
-
-
-func _try_use(next_cell: Vector2i) -> TurnAction:
-	var result: TurnAction = null
-	var object := player.map.get_useable_object_on_cell(next_cell)
-	if object:
-		result = UseObjectAction.new(object, player.map)
 	return result
 
 
