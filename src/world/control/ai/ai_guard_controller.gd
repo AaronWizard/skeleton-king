@@ -215,15 +215,14 @@ func _on_map_changed(old_map: Map) -> void:
 		actor.map.events.custom_event_sent.connect(_on_map_custom_event_sent)
 
 
-func _on_map_custom_event_sent(event_type_id: StringName, source_rect: Rect2i,
-		data: Dictionary[StringName, Variant]) -> void:
-	if event_type_id != _YELL_EVENT_ID:
+func _on_map_custom_event_sent(event: MapEvents.CustomEvent) -> void:
+	if event.id != _YELL_EVENT_ID:
 		return
-	if TileGeometry.rect_distance_squared(actor.cell_rect, source_rect) \
+	if TileGeometry.rect_distance_squared(actor.cell_rect, event.source_rect) \
 			> _YELL_SENSE_RANGE_SQUARED:
 		return
 
-	var enemy_cell := data[_YELL_DATA_ENEMY_LOCATION] as Vector2i
+	var enemy_cell := event.data[_YELL_DATA_ENEMY_LOCATION] as Vector2i
 	print("%s heard about enemy at %s" % [actor.name, enemy_cell])
 
 	var enemy_cell_distance_squared := enemy_cell.distance_squared_to(
