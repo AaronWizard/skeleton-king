@@ -17,7 +17,7 @@ script = ExtResource("1_4yile")
 position = Vector2(6, -6)
 texture = SubResource("AtlasTexture_lg40r")
 
-[node name="Sprite" parent="ActorSprite" index="0"]
+[node name="Sprite" parent="ActorSprite" index="0" unique_id=827095168]
 texture = SubResource("AtlasTexture_lg40r")
 
 [node name="StaminaBar" type="ProgressBar" parent="ActorSprite/Sprite" index="0" unique_id=1626327295]
