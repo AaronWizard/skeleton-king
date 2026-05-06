@@ -10,7 +10,7 @@ func _init(p_object: UseableObject, p_map: Map) -> void:
 	_map = p_map
 
 
-func _run() -> bool:
+func run() -> bool:
 	if not _object:
 		return false
 

@@ -139,7 +139,7 @@ func _on_turn_taker_turn_started() -> void:
 	if _controller:
 		@warning_ignore("redundant_await")
 		action = await _controller.get_turn_action()
-	turn_taker.end_turn(action)
+	turn_taker.choose_action(action)
 
 
 func _on_stamina_changed(_delta: int) -> void:

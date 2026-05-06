@@ -42,12 +42,10 @@ func _process(_delta: float) -> void:
 	var use_action := UseObjectAction.new(
 			player.map.get_useable_object_on_cell(next_cell), player.map)
 
-	var action := move_action.with_alternative(
-		attack_action.with_alternative(
-			use_action.wait_if_failed(false)
-		)
+	var action := CompositeTurnAction.new(
+		[move_action, attack_action, use_action]
 	)
-
+	action.wait_if_failed = false
 	_end_turn(action)
 
 

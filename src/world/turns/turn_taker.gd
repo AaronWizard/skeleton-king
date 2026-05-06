@@ -2,7 +2,7 @@ class_name TurnTaker
 extends Node
 
 signal turn_started
-signal turn_ended(action: TurnAction)
+signal turn_action_chosen(action: TurnAction)
 
 
 var turn_running:
@@ -21,9 +21,9 @@ func start_turn() -> void:
 	turn_started.emit()
 
 
-func end_turn(action: TurnAction) -> void:
+func choose_action(action: TurnAction) -> void:
 	if not _turn_running:
 		push_error("Turn not running")
 		return
 	_turn_running = false
-	turn_ended.emit(action)
+	turn_action_chosen.emit(action)

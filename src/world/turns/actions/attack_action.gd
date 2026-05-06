@@ -10,7 +10,7 @@ func _init(p_attacker: Actor, p_target: Actor) -> void:
 	_target = p_target
 
 
-func _run() -> bool:
+func run() -> bool:
 	if not _attacker or not _attacker.stats.is_alive:
 		return false
 	if not _target or not _target.stats.is_alive \

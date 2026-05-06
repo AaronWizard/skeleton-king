@@ -10,7 +10,7 @@ func _init(p_actor: Actor, p_next_cell: Vector2i) -> void:
 	_next_cell = p_next_cell
 
 
-func _run() -> bool:
+func run() -> bool:
 	if not _actor.map.actor_can_enter_cell(_actor, _next_cell, false):
 		return false
 
