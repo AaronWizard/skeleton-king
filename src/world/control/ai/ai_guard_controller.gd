@@ -102,7 +102,10 @@ var _state_actions: Dictionary[_State, Callable] = {
 	_State.SEARCH:
 		func () -> TurnAction:
 			if actor.cell_rect.intersects(_search_rect):
-				return _pick_new_search_rect(_target_last_rect.position)
+				@warning_ignore("integer_division")
+				return _pick_new_search_rect(
+					_target_last_rect.position + (_target_last_rect.size / 2)
+				)
 			else:
 				return _head_to_rect(_search_rect),
 
