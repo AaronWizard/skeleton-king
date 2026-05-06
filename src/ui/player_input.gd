@@ -55,13 +55,13 @@ func _get_move_vec() -> Vector2i:
 	var result := Vector2i.ZERO
 
 	if Input.is_action_pressed("move_north"):
-		result += Vector2i.UP
+		result += Directions.cardinal_to_dir(Directions.Cardinal.NORTH)
 	if Input.is_action_pressed("move_east"):
-		result += Vector2i.RIGHT
+		result += Directions.cardinal_to_dir(Directions.Cardinal.EAST)
 	if Input.is_action_pressed("move_south"):
-		result += Vector2i.DOWN
+		result += Directions.cardinal_to_dir(Directions.Cardinal.SOUTH)
 	if Input.is_action_pressed("move_west"):
-		result += Vector2i.LEFT
+		result += Directions.cardinal_to_dir(Directions.Cardinal.WEST)
 
 	if result.length_squared() > 1:
 		result = Vector2i.ZERO
