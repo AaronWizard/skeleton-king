@@ -11,7 +11,7 @@ func _init(p_actor: Actor, p_next_cell: Vector2i) -> void:
 
 
 func _run() -> bool:
-	if not _actor.map.actor_can_enter_cell(_actor, _next_cell):
+	if not _actor.map.actor_can_enter_cell(_actor, _next_cell, false):
 		return false
 
 	var delta := _next_cell - _actor.origin_cell

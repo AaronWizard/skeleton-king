@@ -35,14 +35,14 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return result
 
 
-func actor_can_enter_cell(actor: Actor, cell: Vector2i,
-		actors_to_ignore: Array[Actor]) -> bool:
+func actor_can_enter_cell(
+		actor: Actor, cell: Vector2i, ignore_other_actors: bool) -> bool:
 	var result := true
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
 		var other_actor := get_actor_on_cell(covered_cell)
 		result = not other_actor \
 			or (other_actor == actor) \
-			or (other_actor in actors_to_ignore)
+			or ignore_other_actors
 		if not result:
 			break
 	return result

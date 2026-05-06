@@ -96,9 +96,9 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return _actor_layer.get_actor_on_cell(cell)
 
 
-func actor_can_enter_cell(actor: Actor, cell: Vector2i,
-		actors_to_ignore: Array[Actor] = []) -> bool:
-	return _actor_layer.actor_can_enter_cell(actor, cell, actors_to_ignore) \
+func actor_can_enter_cell(
+		actor: Actor, cell: Vector2i, ignore_other_actors: bool) -> bool:
+	return _actor_layer.actor_can_enter_cell(actor, cell, ignore_other_actors) \
 		and _terrain_layer.actor_can_enter_cell(actor, cell) \
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
