@@ -104,10 +104,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 			if actor.cell_rect.intersects(_search_rect):
 				return _pick_new_search_rect(_target_last_rect.position)
 			else:
-				var head_action := _head_to_rect(_search_rect)
-				if not head_action:
-					print(actor.name, " failed to head towards ", _search_rect)
-				return head_action,
+				return _head_to_rect(_search_rect),
 
 	_State.RETURN:
 		func () -> TurnAction:
@@ -174,9 +171,6 @@ func _pick_new_search_rect(center_cell: Vector2i) -> TurnAction:
 				result = MoveAction.new(actor, path[0])
 				break
 
-	if not result:
-		print(actor.name, " failed to pick new search rect")
-
 	return result
 
 
@@ -189,7 +183,6 @@ func _head_to_rect(rect: Rect2i) -> TurnAction:
 
 
 func _yell_for_help(enemy_rect: Rect2i) -> void:
-	print(actor.name, " yelled about enemy at ", enemy_rect)
 	actor.map.events.send_custom_event(
 		_YELL_EVENT_ID,
 		actor.cell_rect,
@@ -207,8 +200,6 @@ func _process_heared_targets() -> bool:
 
 	if _search_count == 0:
 		_search_count = 1
-
-	print(actor.name, " heared about enemy at ", _search_rect)
 
 	return true
 
