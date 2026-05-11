@@ -36,7 +36,6 @@ var _state := _State.IDLE
 var _state_transitions: Dictionary[_State, Callable] = {
 	_State.IDLE:
 		func () -> _State:
-			_set_target_enemy()
 			if _target_enemy:
 				return _State.CHASE
 
@@ -47,7 +46,6 @@ var _state_transitions: Dictionary[_State, Callable] = {
 
 	_State.CHASE:
 		func () -> _State:
-			_set_target_enemy()
 			if _target_enemy:
 				return _State.CHASE
 
@@ -57,7 +55,6 @@ var _state_transitions: Dictionary[_State, Callable] = {
 
 	_State.SEARCH:
 		func () -> _State:
-			_set_target_enemy()
 			if _target_enemy:
 				return _State.CHASE
 
@@ -73,7 +70,6 @@ var _state_transitions: Dictionary[_State, Callable] = {
 
 	_State.RETURN:
 		func () -> _State:
-			_set_target_enemy()
 			if _target_enemy:
 				return _State.CHASE
 
@@ -127,11 +123,12 @@ func _ready() -> void:
 
 
 func get_turn_action() -> TurnAction:
+	_check_for_enemy()
 	_state = _state_transitions[_state].call()
 	return _state_actions[_state].call()
 
 
-func _set_target_enemy() -> void:
+func _check_for_enemy() -> void:
 	var enemy := WorldQueries.get_closest_enemy(actor)
 	if enemy and _can_see_actor(enemy):
 		_target_enemy = enemy
