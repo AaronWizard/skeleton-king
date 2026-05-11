@@ -37,6 +37,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 	_State.IDLE:
 		func () -> _State:
 			if _target_enemy:
+				_yell_for_help(_target_last_rect)
 				return _State.CHASE
 
 			if _process_alert_target():
@@ -56,6 +57,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 	_State.SEARCH:
 		func () -> _State:
 			if _target_enemy:
+				_yell_for_help(_target_last_rect)
 				return _State.CHASE
 
 			if _process_alert_target():
@@ -71,6 +73,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 	_State.RETURN:
 		func () -> _State:
 			if _target_enemy:
+				_yell_for_help(_target_last_rect)
 				return _State.CHASE
 
 			if _process_alert_target():
@@ -133,7 +136,6 @@ func _check_for_enemy() -> void:
 	if enemy and _can_see_actor(enemy):
 		_target_enemy = enemy
 		_target_last_rect = _target_enemy.cell_rect
-		_yell_for_help(_target_last_rect)
 	else:
 		_target_enemy = null
 
