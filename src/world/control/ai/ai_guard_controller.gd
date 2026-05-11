@@ -27,7 +27,8 @@ var _target_last_rect: Rect2i
 var _search_rect: Rect2i
 var _search_count := 0
 
-var _targets_heard_about := PriorityQueue.new()
+var _closest_alert_target: Rect2i
+var _closest_alert_target_dist_sqr := -1.0
 
 var _state := _State.IDLE
 
@@ -39,7 +40,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heard_targets():
+			if _process_alert_target():
 				return _State.SEARCH
 
 			return _State.IDLE,
@@ -60,7 +61,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heard_targets():
+			if _process_alert_target():
 				return _State.SEARCH
 
 			if actor.cell_rect.intersects(_search_rect):
@@ -76,7 +77,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heard_targets():
+			if _process_alert_target():
 				return _State.SEARCH
 
 			if actor.origin_cell == _initial_cell:
@@ -193,13 +194,14 @@ func _yell_for_help(enemy_rect: Rect2i) -> void:
 	)
 
 
-func _process_heard_targets() -> bool:
-	if _targets_heard_about.is_empty():
+func _process_alert_target() -> bool:
+	if _closest_alert_target_dist_sqr < 0:
 		return false
 
-	var target := _targets_heard_about.pop() as Rect2i
-	_targets_heard_about.clear()
-	_search_rect = target
+	_search_rect = _closest_alert_target
+
+	_closest_alert_target = Rect2i()
+	_closest_alert_target_dist_sqr = -1.0
 
 	if _search_count == 0:
 		_search_count = 1
@@ -225,4 +227,7 @@ func _on_map_custom_event_sent(event: MapEvents.CustomEvent) -> void:
 	var dist_sqrd := TileGeometry.rect_distance_squared(
 			actor.cell_rect, enemy_rect)
 
-	_targets_heard_about.push(enemy_rect, dist_sqrd)
+	if (_closest_alert_target_dist_sqr < 0) \
+			or (dist_sqrd < _closest_alert_target_dist_sqr):
+		_closest_alert_target = enemy_rect
+		_closest_alert_target_dist_sqr = dist_sqrd
