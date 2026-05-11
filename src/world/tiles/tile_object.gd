@@ -49,8 +49,8 @@ extends Node2D
 
 @export var origin_colour := Color.VIOLET:
 	set(value):
-		if grid_colour != value:
-			grid_colour = value
+		if origin_colour != value:
+			origin_colour = value
 			queue_redraw()
 
 
