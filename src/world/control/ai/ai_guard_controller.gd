@@ -113,7 +113,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 		func () -> TurnAction:
 			var path := ActorPathfinder.find_path_to_cell(actor, _initial_cell)
 			if not path.is_empty():
-				return MoveAction.new(self.actor, path[0])
+				return MoveAction.new(actor, path[0])
 			return null
 }
 
