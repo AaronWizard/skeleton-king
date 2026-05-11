@@ -39,7 +39,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heared_targets():
+			if _process_heard_targets():
 				return _State.SEARCH
 
 			return _State.IDLE,
@@ -60,7 +60,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heared_targets():
+			if _process_heard_targets():
 				return _State.SEARCH
 
 			if actor.cell_rect.intersects(_search_rect):
@@ -76,7 +76,7 @@ var _state_transitions: Dictionary[_State, Callable] = {
 			if _target_enemy:
 				return _State.CHASE
 
-			if _process_heared_targets():
+			if _process_heard_targets():
 				return _State.SEARCH
 
 			if actor.origin_cell == _initial_cell:
@@ -193,7 +193,7 @@ func _yell_for_help(enemy_rect: Rect2i) -> void:
 	)
 
 
-func _process_heared_targets() -> bool:
+func _process_heard_targets() -> bool:
 	if _targets_heard_about.is_empty():
 		return false
 
