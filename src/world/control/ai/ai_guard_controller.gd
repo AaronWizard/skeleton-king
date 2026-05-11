@@ -164,9 +164,7 @@ func _pick_new_search_rect(center_cell: Vector2i) -> TurnAction:
 	var cells := TileGeometry.cells_in_rect(wander_rect)
 	cells.erase(actor.origin_cell)
 	cells.shuffle()
-	while not cells.is_empty():
-		var target := cells[-1]
-		cells.pop_back()
+	for target in cells:
 		if actor.map.actor_can_enter_cell(actor, target, true):
 			var path := ActorPathfinder.find_path_to_cell(actor, target)
 			if not path.is_empty():
