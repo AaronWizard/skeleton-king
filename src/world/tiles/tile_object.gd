@@ -4,6 +4,13 @@
 class_name TileObject
 extends Node2D
 
+## A node aligned with a grid.
+##
+## A node aligned with a grid.[br]
+## It may have a width and size, and its origin cell
+## is its [b]top left[/b] cell. For the purposes of y-sorting, its true pixel
+## position is at its [b]bottom left[/b].
+
 #region Exports
 
 @export_group("Position and size")
@@ -25,6 +32,7 @@ extends Node2D
 			queue_redraw()
 
 
+## The size in pixels of the grid cells the tile object is aligned to.
 @export var tile_size := Vector2i(12, 12):
 	set(value):
 		var old_size := tile_size
@@ -40,6 +48,7 @@ extends Node2D
 
 @export_group("Editor")
 
+## The colour of the grid outlines.
 @export var grid_colour := Color.CORNFLOWER_BLUE:
 	set(value):
 		if grid_colour != value:
@@ -47,6 +56,7 @@ extends Node2D
 			queue_redraw()
 
 
+## The colour of the outlines surrounding the origin cell.
 @export var origin_colour := Color.VIOLET:
 	set(value):
 		if origin_colour != value:
@@ -54,6 +64,7 @@ extends Node2D
 			queue_redraw()
 
 
+## Whether or not to show the grid in-game.
 @export var show_grid_in_game := false:
 	set(value):
 		if show_grid_in_game != value:
@@ -112,10 +123,13 @@ func _draw() -> void:
 	draw_rect(origin_rect, origin_colour, false)
 
 
+## Checks if [param cell] is covered by the tile object.
 func covers_cell(cell: Vector2i) -> bool:
 	return cell_rect.has_point(cell)
 
 
+## Gets the cell positions the tile object would cover if its
+## [member origin_cell] was equal to [param cell].
 func get_covered_cells_at_cell(cell: Vector2i) -> Array[Vector2i]:
 	return TileGeometry.cells_in_rect(Rect2i(cell, cell_size))
 
