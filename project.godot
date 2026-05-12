@@ -17,7 +17,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Skeleton King"
 run/main_scene="uid://bcnibxeonboeb"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://c2svpuutk8b7s"
+config/macos_native_icon="res://icon/icon.icns"
+config/windows_native_icon="res://icon/icon.ico"
 
 [display]
 
@@ -40,9 +42,10 @@ enabled=PackedStringArray("res://addons/skeletonking_mapediting/plugin.cfg")
 
 folder_colors={
 "res://addons/": "red",
-"res://assets/": "yellow",
-"res://data/": "green",
-"res://editor/": "blue",
+"res://assets/": "orange",
+"res://data/": "yellow",
+"res://editor/": "green",
+"res://icon/": "blue",
 "res://src/": "purple"
 }
 
