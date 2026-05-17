@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpf17kqu168j" path="res://src/game/game.tscn" id="1_eewff"]
 [ext_resource type="PackedScene" uid="uid://c2ix3jhpky8kk" path="res://data/maps/forest.tscn" id="2_gh0ne"]
 [ext_resource type="Resource" uid="uid://febqrfnygkw7" path="res://data/actors/player.tres" id="3_5q4o7"]
+[ext_resource type="PackedScene" uid="uid://3co5156nk6bi" path="res://src/debug_overlay.tscn" id="4_3cfgd"]
 
 [node name="Main" type="Node" unique_id=168555076]
 
@@ -25,3 +26,6 @@ render_target_update_mode = 4
 initial_map_data = ExtResource("2_gh0ne")
 player_span_marker = &"PlayerSpawn"
 player_data = ExtResource("3_5q4o7")
+
+[node name="DebugOverlay" parent="." unique_id=400647069 node_paths=PackedStringArray("game") instance=ExtResource("4_3cfgd")]
+game = NodePath("../SubViewportContainer/SubViewport/Game")

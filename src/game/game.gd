@@ -1,3 +1,4 @@
+class_name Game
 extends Node
 
 const _PLAYER_NODE_NAME := "Player"
@@ -5,6 +6,12 @@ const _PLAYER_NODE_NAME := "Player"
 @export var initial_map_data: PackedScene
 @export var player_span_marker: StringName
 @export var player_data: ActorData
+
+
+var map: Map:
+	get:
+		return _map
+
 
 @onready var _map := $Map as Map
 

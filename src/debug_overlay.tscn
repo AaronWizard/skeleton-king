@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://3co5156nk6bi"]
+
+[ext_resource type="Script" uid="uid://chkc8xh1nsem5" path="res://src/debug_overlay.gd" id="1_v0sve"]
+
+[node name="DebugOverlay" type="Node2D" unique_id=2047033151]
+script = ExtResource("1_v0sve")
+
+[node name="MouseInfo" type="Node2D" parent="." unique_id=1506808243]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MouseInfo" unique_id=1609641253]
+offset_right = 22.0
+offset_bottom = 14.0
+theme_override_constants/separation = 0
+
+[node name="ActorName" type="Label" parent="MouseInfo/VBoxContainer" unique_id=1931173619]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 6
+text = "ActorName"
+
+[node name="MouseCell" type="Label" parent="MouseInfo/VBoxContainer" unique_id=1383562885]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 6
+text = "1,1"
