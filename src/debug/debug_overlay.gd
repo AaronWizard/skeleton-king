@@ -11,7 +11,7 @@ extends Node2D
 
 
 func _ready() -> void:
-	visible = active
+	visible = OS.is_debug_build() and active
 	set_process(active)
 
 	if active:

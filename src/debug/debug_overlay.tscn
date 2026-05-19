@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3co5156nk6bi"]
 
-[ext_resource type="Script" uid="uid://chkc8xh1nsem5" path="res://src/debug_overlay.gd" id="1_v0sve"]
+[ext_resource type="Script" uid="uid://chkc8xh1nsem5" path="res://src/debug/debug_overlay.gd" id="1_v0sve"]
 
 [node name="DebugOverlay" type="Node2D" unique_id=2047033151]
 script = ExtResource("1_v0sve")
