@@ -19,6 +19,7 @@ const _MAX_SEARCH_COUNT := 3
 
 const _YELL_EVENT_ID := &"guard_saw_enemy_event"
 const _YELL_DATA_ENEMY_LOCATION := &"enemy_location"
+const _YELL_DATA_SOURCE_ACTOR := &"source_actor"
 
 var _initial_cell: Vector2i
 var _target_enemy: Actor = null
@@ -188,6 +189,10 @@ func _yell_for_help(enemy_rect: Rect2i) -> void:
 		_YELL_EVENT_ID,
 		actor.cell_rect,
 		{_YELL_DATA_ENEMY_LOCATION: enemy_rect}
+		{
+			_YELL_DATA_ENEMY_LOCATION: enemy_rect,
+			_YELL_DATA_SOURCE_ACTOR: actor
+		}
 	)
 
 
@@ -216,6 +221,12 @@ func _on_map_changed(old_map: Map) -> void:
 func _on_map_custom_event_sent(event: MapEvents.CustomEvent) -> void:
 	if event.id != _YELL_EVENT_ID:
 		return
+	if _state == _State.CHASE:
+		return
+
+	if (event.data[_YELL_DATA_SOURCE_ACTOR] as Actor) == actor:
+		return
+
 	if TileGeometry.rect_distance_squared(actor.cell_rect, event.source_rect) \
 			> _YELL_SENSE_RANGE_SQUARED:
 		return
