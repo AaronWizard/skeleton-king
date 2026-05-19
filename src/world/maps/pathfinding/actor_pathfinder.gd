@@ -4,11 +4,16 @@ class_name ActorPathfinder
 
 const _PATHFIND_COST_OTHER_ACTOR := 10.0
 
+
 ## Finds a path for [param actor] from its current origin cell to
 ## [param end_cell].[br]
-## Returns an empty list if no path could be found.
-static func find_path_to_cell(actor: Actor, end_cell: Vector2i) \
-		-> Array[Vector2i]:
+## Returns an empty list if no path could be found.[br]
+## If [param actors_are_walls] is true, cells occupied by actors other than
+## [param actor] are treated as unenterable walls. If [param actors_are_walls]
+## is false, cells occupied by actors are treated as enterable but with a higher
+## move cost than empty cells.
+static func find_path_to_cell(actor: Actor, end_cell: Vector2i,
+		actors_are_walls: bool) -> Array[Vector2i]:
 	var heuristic_func := \
 		func (cell: Vector2i) -> float:
 			return TileGeometry.manhattan_distance(cell, end_cell)
@@ -17,14 +22,21 @@ static func find_path_to_cell(actor: Actor, end_cell: Vector2i) \
 		func (cell: Vector2i) -> bool:
 			return cell == end_cell
 
-	return _find_path(actor, heuristic_func, reached_goal_func)
+	return _find_path(
+		actor, actors_are_walls,
+		heuristic_func, reached_goal_func
+	)
 
 
 ## Finds a path for [param actor] from its current origin cell to any cell that
 ## would cause the actor to overlap with [param end_rect].[br]
-## Returns an empty list if no path could be found.
-static func find_path_to_rect(actor: Actor, end_rect: Rect2i) \
-		-> Array[Vector2i]:
+## Returns an empty list if no path could be found.[br]
+## If [param actors_are_walls] is true, cells occupied by actors other than
+## [param actor] are treated as unenterable walls. If [param actors_are_walls]
+## is false, cells occupied by actors are treated as enterable but with a higher
+## move cost than empty cells.
+static func find_path_to_rect(actor: Actor, end_rect: Rect2i,
+		actors_are_walls: bool) -> Array[Vector2i]:
 	var heuristic_func := \
 		func (cell: Vector2i) -> float:
 			@warning_ignore("integer_division")
@@ -38,13 +50,17 @@ static func find_path_to_rect(actor: Actor, end_rect: Rect2i) \
 			var actor_rect := Rect2i(cell, actor.cell_size)
 			return end_rect.intersects(actor_rect)
 
-	return _find_path(actor, heuristic_func, reached_goal_func)
+	return _find_path(
+		actor, actors_are_walls,
+		heuristic_func, reached_goal_func
+	)
 
 
 # heuristic_func(cell: Vector2i) -> float
 # reached_goal_func(cell: vector2i) -> bool
-static func _find_path(actor: Actor, heuristic_func: Callable,
-		reached_goal_func: Callable) -> Array[Vector2i]:
+static func _find_path(actor: Actor, actors_are_walls: bool,
+		heuristic_func: Callable, reached_goal_func: Callable) \
+		-> Array[Vector2i]:
 	var frontier := PriorityQueue.new()
 	frontier.push(actor.origin_cell, 0)
 
@@ -58,7 +74,7 @@ static func _find_path(actor: Actor, heuristic_func: Callable,
 		if reached_goal_func.call(current):
 			return _build_path(current, came_from)
 
-		for neighbor in _get_neighbors(current, actor):
+		for neighbor in _get_neighbors(current, actor, actors_are_walls):
 			var new_cost := cost_so_far[current] + _cell_cost(neighbor, actor)
 			if not cost_so_far.has(neighbor) \
 					or (new_cost < cost_so_far[neighbor]):
@@ -70,11 +86,13 @@ static func _find_path(actor: Actor, heuristic_func: Callable,
 	return []
 
 
-static func _get_neighbors(cell: Vector2i, actor: Actor) -> Array[Vector2i]:
+static func _get_neighbors(cell: Vector2i, actor: Actor,
+		actors_are_walls: bool) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	for dir in Directions.get_cardinal_dirs():
 		var next_cell := cell + dir
-		if actor.map.actor_can_enter_cell(actor, next_cell, true):
+		if actor.map.actor_can_enter_cell(
+				actor, next_cell, not actors_are_walls):
 			result.append(next_cell)
 	return result
 

@@ -16,6 +16,7 @@ const _YELL_SENSE_RANGE := 5
 const _YELL_SENSE_RANGE_SQUARED := _YELL_SENSE_RANGE * _YELL_SENSE_RANGE
 
 const _MAX_SEARCH_COUNT := 3
+const _MAX_SEARCH_COUNT := 2
 
 const _YELL_EVENT_ID := &"guard_saw_enemy_event"
 const _YELL_DATA_ENEMY_LOCATION := &"enemy_location"
@@ -113,6 +114,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 	_State.RETURN:
 		func () -> TurnAction:
 			var path := ActorPathfinder.find_path_to_cell(actor, _initial_cell)
+			var path := ActorPathfinder.find_path_to_cell(actor, _initial_cell, false)
 			if not path.is_empty():
 				return MoveAction.new(actor, path[0])
 			return null
@@ -168,6 +170,7 @@ func _pick_new_search_rect(center_cell: Vector2i) -> TurnAction:
 	for target in cells:
 		if actor.map.actor_can_enter_cell(actor, target, true):
 			var path := ActorPathfinder.find_path_to_cell(actor, target)
+			var path := ActorPathfinder.find_path_to_cell(actor, target, true)
 			if not path.is_empty():
 				_search_rect = Rect2i(target, Vector2i.ONE)
 				result = MoveAction.new(actor, path[0])
@@ -179,6 +182,7 @@ func _pick_new_search_rect(center_cell: Vector2i) -> TurnAction:
 func _head_to_rect(rect: Rect2i) -> TurnAction:
 	var result: TurnAction = null
 	var path := ActorPathfinder.find_path_to_rect(actor, rect)
+	var path := ActorPathfinder.find_path_to_rect(actor, rect, false)
 	if not path.is_empty():
 		result = MoveAction.new(actor, path[0])
 	return result
