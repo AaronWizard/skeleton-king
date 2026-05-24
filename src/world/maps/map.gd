@@ -103,6 +103,10 @@ func actor_can_enter_cell(
 		and _useable_object_layer.actor_can_enter_cell(actor, cell)
 
 
+func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
+	return _actor_layer.get_actors_in_rect(rect)
+
+
 #endregion Actors
 
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:

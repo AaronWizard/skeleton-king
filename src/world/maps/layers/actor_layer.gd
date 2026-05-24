@@ -48,6 +48,14 @@ func actor_can_enter_cell(
 	return result
 
 
+func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
+	var result: Array[Actor] = []
+	for a in actors:
+		if a.cell_rect.intersects(rect):
+			result.append(a)
+	return result
+
+
 func _on_actor_added(node: Node) -> void:
 	var actor := node as Actor
 	if not actor:
