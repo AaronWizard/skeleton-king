@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://rllhv05xvj5j"]
+
+[ext_resource type="Script" uid="uid://c8tdp346fycop" path="res://src/ui/target.gd" id="1_ya1ya"]
+[ext_resource type="Texture2D" uid="uid://bpee61ndrjo22" path="res://src/ui/target.png" id="2_tv6g6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkyvd"]
+atlas = ExtResource("2_tv6g6")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tv6g6"]
+load_path = "res://.godot/imported/target.png-395ed9978e9f6b7db42585bf9c2204db.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6l0m"]
+atlas = SubResource("CompressedTexture2D_tv6g6")
+region = Rect2(8, 0, 4, 4)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bkyvd"]
+load_path = "res://.godot/imported/target.png-395ed9978e9f6b7db42585bf9c2204db.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dx7vb"]
+atlas = SubResource("CompressedTexture2D_bkyvd")
+region = Rect2(8, 8, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxkxi"]
+atlas = SubResource("CompressedTexture2D_bkyvd")
+region = Rect2(0, 8, 4, 4)
+
+[sub_resource type="Animation" id="Animation_bkyvd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NWSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, -2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SESprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, -3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SWSprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_tv6g6"]
+resource_name = "target"
+length = 0.5333367
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NWSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-2, -2), Vector2(-3, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-3, -2), Vector2(-2, -3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SESprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-3, -3), Vector2(-2, -2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SWSprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-2, -3), Vector2(-3, -2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bkyvd"]
+_data = {
+&"RESET": SubResource("Animation_bkyvd"),
+&"target": SubResource("Animation_tv6g6")
+}
+
+[node name="Target" type="Node2D" unique_id=1840973967]
+position = Vector2(0, 12)
+script = ExtResource("1_ya1ya")
+metadata/_custom_type_script = "uid://cur0e7bh4a3o5"
+
+[node name="NWSprite" type="Sprite2D" parent="." unique_id=1029228773]
+position = Vector2(0, -12)
+texture = SubResource("AtlasTexture_bkyvd")
+centered = false
+offset = Vector2(-2, -2)
+
+[node name="NESprite" type="Sprite2D" parent="." unique_id=2118624166]
+position = Vector2(12, -12)
+texture = SubResource("AtlasTexture_a6l0m")
+centered = false
+offset = Vector2(-3, -2)
+
+[node name="SESprite" type="Sprite2D" parent="." unique_id=1475057795]
+position = Vector2(12, 0)
+texture = SubResource("AtlasTexture_dx7vb")
+centered = false
+offset = Vector2(-3, -3)
+
+[node name="SWSprite" type="Sprite2D" parent="." unique_id=246256306]
+texture = SubResource("AtlasTexture_bxkxi")
+centered = false
+offset = Vector2(-2, -3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=897130709]
+libraries/ = SubResource("AnimationLibrary_bkyvd")
+autoplay = &"target"

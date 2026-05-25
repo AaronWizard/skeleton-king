@@ -1,0 +1,35 @@
+[gd_resource type="TileSet" format=3 uid="uid://droi4n81cgyrx"]
+
+[ext_resource type="Texture2D" uid="uid://bdondy1xymhgu" path="res://src/ui/target_range.png" id="1_47rk5"]
+[ext_resource type="Texture2D" uid="uid://ciwta14ne6cq" path="res://src/ui/aoe.png" id="2_1y0bi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j2t6a"]
+texture = ExtResource("1_47rk5")
+texture_region_size = Vector2i(12, 12)
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jdhh3"]
+texture = ExtResource("2_1y0bi")
+texture_region_size = Vector2i(12, 12)
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(12, 12)
+sources/0 = SubResource("TileSetAtlasSource_j2t6a")
+sources/1 = SubResource("TileSetAtlasSource_jdhh3")
