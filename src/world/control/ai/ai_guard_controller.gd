@@ -76,19 +76,19 @@ func get_turn_action() -> TurnAction:
 #region State Checks
 
 func _state_check_idle() -> _State:
-	_check_for_enemy()
+	_track_enemy()
 	if _target_enemy:
 		_yell_for_help(_investigate_target)
 		return _State.CHASE
 
-	if _will_investigate_alert_target():
+	if _update_investigate_target_from_alert():
 		return _State.INVESTIGATE
 
 	return _State.IDLE
 
 
 func _state_check_chase() -> _State:
-	_check_for_enemy()
+	_track_enemy()
 	if _target_enemy:
 		return _State.CHASE
 	else:
@@ -97,13 +97,13 @@ func _state_check_chase() -> _State:
 
 
 func _state_check_investigate() -> _State:
-	_check_for_enemy()
+	_track_enemy()
 	if _target_enemy:
 		_yell_for_help(_investigate_target)
 		return _State.CHASE
 
 	# Investigate closer target when alerted about one
-	_will_investigate_alert_target()
+	_update_investigate_target_from_alert()
 
 	var ally_at_target := func (other_actor: Actor) -> bool:
 		return (actor != other_actor) \
@@ -126,12 +126,12 @@ func _state_check_investigate() -> _State:
 
 
 func _state_check_search() -> _State:
-	_check_for_enemy()
+	_track_enemy()
 	if _target_enemy:
 		_yell_for_help(_investigate_target)
 		return _State.CHASE
 
-	if _will_investigate_alert_target():
+	if _update_investigate_target_from_alert():
 		return _State.INVESTIGATE
 
 	if actor.origin_cell == _search_cell:
@@ -144,12 +144,12 @@ func _state_check_search() -> _State:
 
 
 func _state_check_return() -> _State:
-	_check_for_enemy()
+	_track_enemy()
 	if _target_enemy:
 		_yell_for_help(_investigate_target)
 		return _State.CHASE
 
-	if _will_investigate_alert_target():
+	if _update_investigate_target_from_alert():
 		return _State.INVESTIGATE
 
 	if actor.origin_cell == _initial_cell:
@@ -188,7 +188,7 @@ func _state_action_return() -> TurnAction:
 #endregion State Actions
 
 
-func _check_for_enemy() -> void:
+func _track_enemy() -> void:
 	var enemy := WorldQueries.get_closest_enemy(actor)
 	if enemy and _can_see_actor(enemy):
 		_target_enemy = enemy
@@ -265,7 +265,7 @@ func _yell_for_help(enemy_rect: Rect2i) -> void:
 	)
 
 
-func _will_investigate_alert_target() -> bool:
+func _update_investigate_target_from_alert() -> bool:
 	if _closest_alert_target_dist_sqr < 0:
 		# We've not been alerted
 		return false
