@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="16"
+   height="16"
+   viewBox="0 0 0.48 0.48"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ability.svg"
+   inkscape:version="1.4.4 (dcaf3e7d, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="35.2"
+     inkscape:cx="6.2357955"
+     inkscape:cy="7.6420455"
+     inkscape:window-width="2019"
+     inkscape:window-height="1179"
+     inkscape:window-x="177"
+     inkscape:window-y="52"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.03"
+       spacingy="0.03"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="4"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     d="m 0.424987,0.05504271 a 0.02400093,0.02400467 0 0 1 0,0.03394261 L 0.38766558,0.12631257 A 0.02400093,0.02400467 0 0 1 0.3537283,0.09237 L 0.3910497,0.05504272 a 0.02400093,0.02400467 0 0 1 0.0339373,-1e-8 z m 0.0310332,0.13699468 h -0.052802 a 0.02400096,0.0240047 0 0 0 0,0.0480094 h 0.052802 a 0.02400096,0.0240047 0 0 0 0,-0.0480094 z M 0.28801368,0.07681497 V 0.02400468 a 0.02400095,0.02400469 0 0 0 -0.0480019,0 v 0.05281029 a 0.02400095,0.02400469 0 0 0 0.0480019,0 z m 0.0405376,0.11800696 -0.0432017,-0.0432084 a 0.02553699,0.02554097 0 0 0 -0.0360014,0 l -0.0432017,0.0432084 0.0793711,0.0793834 0.0432017,-0.0432084 a 0.02553699,0.02554097 0 0 0 -1.6773e-4,-0.0362231 z m -0.32106046,0.23452566 0.04320167,0.0432084 a 0.02548899,0.02549297 0 0 0 0.03600141,0 l 0.16234226,-0.1623436 -0.079227,-0.0793354 -0.1623183,0.16236763 a 0.02548899,0.02549297 0 0 0 -4e-8,0.036103 z"
+     id="path1"
+     style="stroke-width:0.0240028;fill:#4b70ea;fill-opacity:1" />
+</svg>
