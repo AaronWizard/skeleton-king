@@ -18,7 +18,6 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1142172528]
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
 size = Vector2i(180, 180)
 render_target_update_mode = 4
 
