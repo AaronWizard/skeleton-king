@@ -58,26 +58,33 @@ static func cells_in_range_of_rect(rect: Rect2i, min_dist: int, max_dist: int) \
 
 	var result: Array[Vector2i] = []
 
-	var left := rect.position.x
-	var top := rect.position.y
-	var right := rect.end.x - 1
-	var bottom := rect.end.y - 1
+	# Get coordinate values of rect edges.
+	var left_edge := rect.position.x
+	var top_edge := rect.position.y
+	var right_edge := rect.end.x - 1
+	var bottom_edge := rect.end.y - 1
 
-	for x in range(left - max_dist, right + max_dist + 1):
-		for y in range(top - max_dist, bottom + max_dist + 1):
+	# Loop through cells in bounding box resulting from expanding rect by
+	# max_dist in all directions.
+	for x in range(left_edge - max_dist, right_edge + max_dist + 1):
+		for y in range(top_edge - max_dist, bottom_edge + max_dist + 1):
+			# Distance between x and left or right side of rect, or zero if x is
+			# inside rect.
 			var dx := 0
-			if x < left:
-				dx = left - x
-			elif x > right:
-				dx = x - right
+			if x < left_edge:
+				dx = left_edge - x
+			elif x > right_edge:
+				dx = x - right_edge
 
+			# Distance between y and top or bottom of rect, or zero if y is
+			# inside rect.
 			var dy := 0
-			if y < top:
-				dy = top - y
-			elif y > bottom:
-				dy = y - bottom
+			if y < top_edge:
+				dy = top_edge - y
+			elif y > bottom_edge:
+				dy = y - bottom_edge
 
-			var dist := dx + dy
+			var dist := dx + dy # Manhattan distance
 			if (dist >= min_dist) and (dist <= max_dist):
 				result.append(Vector2i(x, y))
 
