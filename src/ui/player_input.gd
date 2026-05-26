@@ -37,8 +37,7 @@ func _process(_delta: float) -> void:
 		return
 
 	var move_action := MoveAction.new(player, next_cell)
-	var attack_action := AttackAction.new(
-			player, player.map.get_actor_on_cell(next_cell))
+	var attack_action := player.abilities.create_attack_action(next_cell)
 	var use_action := UseObjectAction.new(
 			player.map.get_useable_object_on_cell(next_cell), player.map)
 

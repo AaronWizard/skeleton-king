@@ -166,9 +166,8 @@ func _state_action_idle() -> TurnAction:
 
 
 func _state_action_chase() -> TurnAction:
-	if TileGeometry.rects_are_adjacent(
-			actor.cell_rect, _target_enemy.cell_rect):
-		return AttackAction.new(actor, _target_enemy)
+	if actor.abilities.can_attack(_target_enemy.origin_cell):
+		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
 	else:
 		return _head_to_rect(_target_enemy.cell_rect)
 
