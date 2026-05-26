@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bew3mgmobynch"]
 
-[ext_resource type="Script" uid="uid://dydlcjxvnpem" path="res://src/ui/targeting_grid.gd" id="1_adrps"]
-[ext_resource type="PackedScene" uid="uid://rllhv05xvj5j" path="res://src/ui/target.tscn" id="1_ur2e0"]
-[ext_resource type="TileSet" uid="uid://droi4n81cgyrx" path="res://src/ui/tileset_targeting_grid.tres" id="2_pvg8m"]
+[ext_resource type="Script" uid="uid://dydlcjxvnpem" path="res://src/ui/game/targeting_grid.gd" id="1_adrps"]
+[ext_resource type="PackedScene" uid="uid://rllhv05xvj5j" path="res://src/ui/game/target.tscn" id="1_ur2e0"]
+[ext_resource type="TileSet" uid="uid://droi4n81cgyrx" path="res://src/ui/game/tileset_targeting_grid.tres" id="2_pvg8m"]
 
 [node name="TargetingGrid" type="Node2D" unique_id=1982052024]
 script = ExtResource("1_adrps")
