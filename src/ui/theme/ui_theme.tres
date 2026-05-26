@@ -4,6 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://c2uquev72jt6a" path="res://src/ui/theme/stylebox_button_disabled.tres" id="1_se6k4"]
 [ext_resource type="StyleBox" uid="uid://d0bge2l45goct" path="res://src/ui/theme/stylebox_button_pressed.tres" id="2_dqgna"]
 [ext_resource type="StyleBox" uid="uid://ctr1w3bu4rp5m" path="res://src/ui/theme/stylebox_panel.tres" id="4_gdngm"]
+[ext_resource type="FontFile" uid="uid://cpmu2nlhpsyv" path="res://src/ui/theme/fonts/Vaticanus.otf" id="4_mmdsi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjtra"]
 bg_color = Color(0.85490197, 0, 0, 1)
@@ -12,11 +13,25 @@ bg_color = Color(0.85490197, 0, 0, 1)
 bg_color = Color(1, 0.8862745, 0.15686275, 1)
 
 [resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.49803922, 0.49411765, 0.49411765, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 8
+Button/fonts/font = ExtResource("4_mmdsi")
 Button/styles/disabled = ExtResource("1_se6k4")
 Button/styles/hover = ExtResource("1_gi2wc")
 Button/styles/normal = ExtResource("1_gi2wc")
 Button/styles/pressed = ExtResource("2_dqgna")
 HBoxContainer/constants/separation = 0
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = -1
+Label/constants/outline_size = 2
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("4_mmdsi")
 PanelContainer/styles/panel = ExtResource("4_gdngm")
 StaminaSmall/base_type = &"ProgressBar"
 StaminaSmall/styles/background = SubResource("StyleBoxFlat_cjtra")
