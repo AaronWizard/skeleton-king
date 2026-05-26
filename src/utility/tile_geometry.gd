@@ -45,3 +45,40 @@ static func rect_distance_squared(a: Rect2i, b: Rect2i) -> float:
 	var center_b := Vector2(b.position) + (b.size / 2.0)
 
 	return center_a.distance_squared_to(center_b)
+
+
+## Gets all cells that are between [param min_dist] and [param max_dist] cells
+## away from [param rect] using Manhattan distance.
+static func cells_in_range_of_rect(rect: Rect2i, min_dist: int, max_dist: int) \
+		-> Array[Vector2i]:
+	if min_dist > max_dist:
+		push_error("min_dist %d is greater than max_dist %d" \
+				% [min_dist, max_dist])
+		return []
+
+	var result: Array[Vector2i] = []
+
+	var left := rect.position.x
+	var top := rect.position.y
+	var right := rect.end.x - 1
+	var bottom := rect.end.y - 1
+
+	for x in range(left - max_dist, right + max_dist + 1):
+		for y in range(top - max_dist, bottom + max_dist + 1):
+			var dx := 0
+			if x < left:
+				dx = left - x
+			elif x > right:
+				dx = x - right
+
+			var dy := 0
+			if y < top:
+				dy = top - y
+			elif y > bottom:
+				dy = y - bottom
+
+			var dist := dx + dy
+			if (dist >= min_dist) and (dist <= max_dist):
+				result.append(Vector2i(x, y))
+
+	return result
