@@ -16,7 +16,7 @@ func show_targeting(target: Rect2i,
 		target_range: Array[Vector2i], aoe: Array[Vector2i]) -> void:
 	clear()
 
-	_target.position = target.position
+	_target.origin_cell = target.position
 	_target.cell_dimensions = target.size
 	_target.visible = true
 
