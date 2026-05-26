@@ -4,22 +4,13 @@ extends Resource
 
 ## An actor's ability.
 
-## The type of target the ability uses.
-enum TargetType {
-	## The ability's target is a single cell.
-	CELL,
-	## The ability's target is a whole actor. If a cell covered by an actor is
-	## used for the target, it is converted to the actor's origin cell.
-	ACTOR
-}
-
 ## The name of the ability.
 @export var name: String
 ## The ability's icon.
 @export var icon: Texture2D
 
 ## The type of target the ability uses.
-@export var target_type: TargetType
+@export var target_type: AbilityTargetType.Type
 
 ## The base target range.
 @export var target_range_shape: TargetRangeShape
@@ -88,12 +79,26 @@ func get_aoe(target: Vector2i, actor: Actor, for_ui := false) \
 	return result
 
 
+func target_valid(actor: Actor, target: Vector2i) -> bool:
+	return target in get_target_range(actor)
+
+
 ## Runs the ability with a given source actor and target.[br]
 ## Assumes [param target] is a valid target.
 func run(actor: Actor, target: Vector2i) -> void:
+	if actor.map.animations_running:
+		await actor.map.animations_finished
+
 	var aoe := get_aoe(target, actor)
-	var data := AbilityData.new(actor, actor.origin_cell, target, aoe)
+	var data := AbilityData.new(
+			actor, actor.origin_cell, target, target_type, aoe)
 
 	for e in effects:
 		@warning_ignore("redundant_await")
 		await e.run(data)
+
+
+## Creates an [AbilityAction] that makes [param actor] use this ability at
+## [param target].
+func create_turn_action(actor: Actor, target: Vector2i) -> TurnAction:
+	return AbilityAction.new(actor, self, target)
