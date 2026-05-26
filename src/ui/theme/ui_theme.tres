@@ -1,0 +1,20 @@
+[gd_resource type="Theme" format=3 uid="uid://dgasiq7nygwpe"]
+
+[ext_resource type="StyleBox" uid="uid://ci2dlddw3cbes" path="res://src/ui/theme/stylebox_button.tres" id="1_gi2wc"]
+[ext_resource type="StyleBox" uid="uid://c2uquev72jt6a" path="res://src/ui/theme/stylebox_button_disabled.tres" id="1_se6k4"]
+[ext_resource type="StyleBox" uid="uid://d0bge2l45goct" path="res://src/ui/theme/stylebox_button_pressed.tres" id="2_dqgna"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjtra"]
+bg_color = Color(0.85490197, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wksio"]
+bg_color = Color(1, 0.8862745, 0.15686275, 1)
+
+[resource]
+Button/styles/disabled = ExtResource("1_se6k4")
+Button/styles/hover = ExtResource("1_gi2wc")
+Button/styles/normal = ExtResource("1_gi2wc")
+Button/styles/pressed = ExtResource("2_dqgna")
+StaminaSmall/base_type = &"ProgressBar"
+StaminaSmall/styles/background = SubResource("StyleBoxFlat_cjtra")
+StaminaSmall/styles/fill = SubResource("StyleBoxFlat_wksio")
