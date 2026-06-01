@@ -10,22 +10,24 @@ var controller: PlayerController
 
 
 var active := false:
-	get:
-		return is_processing()
 	set(value):
+		active = value
 		set_process(value)
+		set_process_unhandled_input(value)
 
 
 func _ready() -> void:
 	active = false
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if cheats_enabled and event.is_action_pressed("click"):
+		player.origin_cell = player.map.mouse_cell
+
+
 func _process(_delta: float) -> void:
 	if not _timer.is_stopped():
 		return
-
-	if cheats_enabled and Input.is_action_just_pressed("click"):
-		player.origin_cell = player.map.mouse_cell
 
 	if Input.is_action_just_pressed("wait"):
 		_end_turn(null)
