@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://einmvlq3r18s"]
+
+[ext_resource type="Texture2D" uid="uid://c41o3fnrwub25" path="res://src/ui/cancel.png" id="1_74nb3"]
+[ext_resource type="Script" uid="uid://me5vjmnut4r7" path="res://src/ui/game/ability_info.gd" id="1_ccxwy"]
+
+[node name="AbilityInfo" type="HBoxContainer" unique_id=644404204]
+offset_right = 46.0
+offset_bottom = 19.0
+script = ExtResource("1_ccxwy")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=970550427]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer" unique_id=1451872328]
+layout_mode = 2
+text = "Ability"
+
+[node name="Cancel" type="Button" parent="." unique_id=2090378462]
+layout_mode = 2
+icon = ExtResource("1_74nb3")
+
+[connection signal="pressed" from="Cancel" to="." method="_on_cancel_pressed"]

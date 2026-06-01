@@ -1,6 +1,8 @@
 class_name PlayerInput
 extends Node
 
+signal turn_ended
+
 @export var cheats_enabled := false
 
 var player: Actor
@@ -72,3 +74,4 @@ func _end_turn(action: TurnAction) -> void:
 	active = false
 	_timer.start()
 	controller.send_player_action(action)
+	turn_ended.emit()

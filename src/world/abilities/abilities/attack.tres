@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dgsy362030rue" path="res://src/world/abilities/ability.gd" id="3_nsasd"]
 [ext_resource type="Script" uid="uid://bryu51cvawmr7" path="res://src/world/abilities/effects/anim_attack_effect.gd" id="4_7w8ew"]
 [ext_resource type="Script" uid="uid://c0chsdsq7ruvp" path="res://src/world/abilities/target_range_filter.gd" id="4_wc1no"]
+[ext_resource type="Texture2D" uid="uid://bvwdlh8p8gfmb" path="res://src/world/abilities/abilities/attack.png" id="5_7w8ew"]
 [ext_resource type="Script" uid="uid://bmytpp1b3x3nh" path="res://src/world/abilities/target_filters/actor_range_filter.gd" id="5_nsasd"]
 [ext_resource type="Script" uid="uid://bd56gshtl32q2" path="res://src/world/abilities/target_ranges/distance_range_shape.gd" id="6_wc1no"]
 
@@ -31,6 +32,7 @@ metadata/_custom_type_script = "uid://bd56gshtl32q2"
 [resource]
 script = ExtResource("3_nsasd")
 name = "Attack"
+icon = ExtResource("5_7w8ew")
 target_type = 1
 target_range_shape = SubResource("Resource_7w8ew")
 target_range_filters = Array[ExtResource("4_wc1no")]([SubResource("Resource_gm67b")])

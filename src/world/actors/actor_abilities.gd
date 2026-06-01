@@ -15,6 +15,11 @@ var attack: Ability:
 		return _ATTACK_ABILITY
 
 
+var all_abilities: Array[Ability]:
+	get:
+		return [attack]
+
+
 func can_attack(target: Vector2i) -> bool:
 	return attack.target_valid(_actor, target)
 

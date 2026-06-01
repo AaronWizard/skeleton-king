@@ -3,10 +3,45 @@
 [ext_resource type="PackedScene" uid="uid://diwcsg25lhq6x" path="res://src/ui/game/player_input.tscn" id="1_jlfe0"]
 [ext_resource type="Script" uid="uid://coravmrhrsmk0" path="res://src/ui/game/game_ui.gd" id="1_uoilq"]
 [ext_resource type="PackedScene" uid="uid://bew3mgmobynch" path="res://src/ui/game/targeting_grid.tscn" id="2_r30kv"]
+[ext_resource type="PackedScene" uid="uid://il8e5kuyw0lr" path="res://src/ui/game/ability_buttons.tscn" id="4_pvegd"]
+[ext_resource type="PackedScene" uid="uid://einmvlq3r18s" path="res://src/ui/game/ability_info.tscn" id="5_vdao0"]
 
-[node name="GameUI" type="Node2D" unique_id=176659282]
+[node name="GameUI" type="Node" unique_id=1552569568]
 script = ExtResource("1_uoilq")
 
 [node name="TargetingGrid" parent="." unique_id=1982052024 instance=ExtResource("2_r30kv")]
 
 [node name="PlayerInput" parent="." unique_id=964351074 instance=ExtResource("1_jlfe0")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1580419544]
+
+[node name="AbilityButtons" parent="CanvasLayer" unique_id=1062958035 instance=ExtResource("4_pvegd")]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -9.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AbilityInfo" parent="CanvasLayer" unique_id=644404204 instance=ExtResource("5_vdao0")]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -21.0
+offset_right = 23.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="target_selected" from="TargetingGrid" to="." method="_on_targeting_grid_target_selected"]
+[connection signal="turn_ended" from="PlayerInput" to="." method="_on_player_input_turn_ended"]
+[connection signal="ability_selected" from="CanvasLayer/AbilityButtons" to="." method="_on_ability_buttons_ability_selected"]
+[connection signal="cancelled" from="CanvasLayer/AbilityInfo" to="." method="_on_ability_info_cancelled"]
