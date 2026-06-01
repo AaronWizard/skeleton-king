@@ -26,6 +26,10 @@ var _turn_clock := TurnClock.new()
 
 
 func _ready() -> void:
+	if not initial_map_data:
+		push_error("initial_map_data not set")
+		return
+
 	_init_player()
 	_load_map(initial_map_data.instantiate() as DesignMap, player_span_marker)
 	_run()
