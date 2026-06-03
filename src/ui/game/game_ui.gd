@@ -79,5 +79,5 @@ func _on_targeting_grid_target_selected(target: Vector2i) -> void:
 	if _state != _State.TARGET:
 		return
 
-	print(target)
+	print("Selected target: ", target)
 	_set_state(_State.MOVE)

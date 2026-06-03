@@ -10,7 +10,7 @@ signal moved
 @onready var _sw := $SWSprite as Node2D
 
 
-var _targets: Array[Vector2i] = []
+var _target_range: Array[Vector2i] = []
 var _send_move_events := false
 
 
@@ -19,18 +19,18 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible or (_targets.size() <= 1):
+	if not visible or (_target_range.size() <= 1):
 		return
 
 	_try_move_target(event)
 
 
-func show_with_targets(targets: Array[Vector2i]) -> void:
-	_targets = targets
+func show_with_target_range(target_range: Array[Vector2i]) -> void:
+	_target_range = target_range
 
 	var new_target: Vector2i
 	var dist_sqr := -1
-	for target in _targets:
+	for target in _target_range:
 		if target == origin_cell:
 			new_target = target
 			break
@@ -44,9 +44,14 @@ func show_with_targets(targets: Array[Vector2i]) -> void:
 
 
 func clear_and_hide() -> void:
-	_targets.clear()
+	_target_range.clear()
 	_send_move_events = false
 	visible = false
+
+
+func try_assign_cell(cell: Vector2i) -> void:
+	if cell in _target_range:
+		origin_cell = cell
 
 
 func _try_move_target(event: InputEvent) -> void:
@@ -56,7 +61,7 @@ func _try_move_target(event: InputEvent) -> void:
 
 	var next_cell: Vector2i
 	var dist_sqr := -1
-	for target in _targets:
+	for target in _target_range:
 		var target_delta := target - origin_cell
 		var can_move_horizontal := (move_vect.y == 0) \
 				and (signi(target_delta.x) == signi(move_vect.x))

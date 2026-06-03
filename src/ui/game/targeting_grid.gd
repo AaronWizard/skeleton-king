@@ -15,22 +15,16 @@ const _ATLAS_COORD_AOE := Vector2i.ZERO
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_released("click"):
-		return
-
-	var mouse_pos := _target_range.get_local_mouse_position()
-	var mouse_cell := _target_range.local_to_map(mouse_pos)
-
-	if _target.covers_cell(mouse_cell):
-		target_selected.emit(_target.origin_cell)
-	else:
-		_target.origin_cell = mouse_cell
+	if event.is_action_pressed("wait"):
+		_select_target()
+	elif event.is_action_released("click"):
+		_try_click()
 
 
 func show_targeting(target_range: Array[Vector2i], aoe: Array[Vector2i]) -> void:
 	clear()
 
-	_target.show_with_targets(target_range)
+	_target.show_with_target_range(target_range)
 
 	for cell in target_range:
 		_target_range.set_cell(
@@ -44,6 +38,20 @@ func clear() -> void:
 	_target_range.clear()
 	_aoe.clear()
 	_target.clear_and_hide()
+
+
+func _try_click() -> void:
+	var mouse_pos := _target_range.get_local_mouse_position()
+	var mouse_cell := _target_range.local_to_map(mouse_pos)
+
+	if _target.covers_cell(mouse_cell):
+		_select_target()
+	else:
+		_target.try_assign_cell(mouse_cell)
+
+
+func _select_target() -> void:
+	target_selected.emit(_target.origin_cell)
 
 
 func _on_target_moved() -> void:
