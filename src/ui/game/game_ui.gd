@@ -55,14 +55,7 @@ func _show_target_range(ability: Ability) -> void:
 	var target_range := ability.get_target_range(_player, true)
 	var target := target_range[0]
 	var aoe := ability.get_aoe(target, _player, true)
-
-	var target_rect := Rect2i(target, Vector2i.ONE)
-	if ability.target_type == AbilityTargetType.Type.ACTOR:
-		var other_actor := _player.map.get_actor_on_cell(target)
-		if other_actor:
-			target_rect = other_actor.cell_rect
-
-	_targeting_grid.show_targeting(target_rect, target_range, aoe)
+	_targeting_grid.show_targeting(target_range, aoe)
 
 
 func _on_player_input_turn_ended() -> void:
