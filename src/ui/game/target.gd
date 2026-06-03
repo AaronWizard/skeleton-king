@@ -2,6 +2,8 @@
 class_name Target
 extends RectTileObject
 
+signal moved
+
 @onready var _nw := $NWSprite as Node2D
 @onready var _ne := $NESprite as Node2D
 @onready var _se := $SESprite as Node2D
@@ -9,6 +11,7 @@ extends RectTileObject
 
 
 var _targets: Array[Vector2i] = []
+var _send_move_events := false
 
 
 func _ready() -> void:
@@ -36,12 +39,13 @@ func show_with_targets(targets: Array[Vector2i]) -> void:
 			new_target = target
 			dist_sqr = new_dist_sqr
 	origin_cell = new_target
-
+	_send_move_events = true
 	visible = true
 
 
 func clear_and_hide() -> void:
 	_targets.clear()
+	_send_move_events = false
 	visible = false
 
 
@@ -66,6 +70,11 @@ func _try_move_target(event: InputEvent) -> void:
 
 	if dist_sqr >= 0:
 		origin_cell = next_cell
+
+
+func _origin_cell_changed(_old_cell: Vector2i) -> void:
+	if _send_move_events:
+		moved.emit()
 
 
 func _tile_size_changed() -> void:

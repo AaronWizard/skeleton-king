@@ -15,7 +15,7 @@ const _ATLAS_COORD_AOE := Vector2i.ZERO
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action("click"):
+	if not event.is_action_released("click"):
 		return
 
 	var mouse_pos := _target_range.get_local_mouse_position()
@@ -44,3 +44,7 @@ func clear() -> void:
 	_target_range.clear()
 	_aoe.clear()
 	_target.clear_and_hide()
+
+
+func _on_target_moved() -> void:
+	print("target moved to ", _target.origin_cell)
