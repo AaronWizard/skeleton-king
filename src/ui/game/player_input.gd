@@ -35,7 +35,7 @@ func _process(_delta: float) -> void:
 		_end_turn(null)
 		return
 
-	var move_vector := _get_move_vec()
+	var move_vector := MovementInput.input_move_vect()
 	var next_cell := player.origin_cell + move_vector
 	if next_cell == player.origin_cell:
 		return
@@ -50,24 +50,6 @@ func _process(_delta: float) -> void:
 	)
 	action.wait_if_failed = false
 	_end_turn(action)
-
-
-func _get_move_vec() -> Vector2i:
-	var result := Vector2i.ZERO
-
-	if Input.is_action_pressed("move_north"):
-		result += Directions.cardinal_to_dir(Directions.Cardinal.NORTH)
-	if Input.is_action_pressed("move_east"):
-		result += Directions.cardinal_to_dir(Directions.Cardinal.EAST)
-	if Input.is_action_pressed("move_south"):
-		result += Directions.cardinal_to_dir(Directions.Cardinal.SOUTH)
-	if Input.is_action_pressed("move_west"):
-		result += Directions.cardinal_to_dir(Directions.Cardinal.WEST)
-
-	if result.length_squared() > 1:
-		result = Vector2i.ZERO
-
-	return result
 
 
 func _end_turn(action: TurnAction) -> void:
