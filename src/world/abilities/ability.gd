@@ -79,7 +79,7 @@ func get_aoe(target: Vector2i, actor: Actor, for_ui := false) \
 	return result
 
 
-func target_valid(actor: Actor, target: Vector2i) -> bool:
+func target_is_valid(actor: Actor, target: Vector2i) -> bool:
 	return target in get_target_range(actor)
 
 

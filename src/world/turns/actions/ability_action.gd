@@ -13,7 +13,7 @@ func _init(p_actor: Actor, p_ability: Ability, p_target: Vector2i) -> void:
 
 
 func run() -> bool:
-	if not _ability.target_valid(_actor, _target):
+	if not _ability.target_is_valid(_actor, _target):
 		return false
 
 	await _ability.run(_actor, _target)
