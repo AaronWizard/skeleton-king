@@ -16,7 +16,7 @@ func run() -> bool:
 	if not _ability.target_is_valid(_actor, _target):
 		Log.print(
 			"%s failed to use ability %s at %.v" \
-				% [_actor.name, _ability.name, _target]
+				% [_actor.name, _ability.name, _target], Color.RED
 		)
 		return false
 
