@@ -51,8 +51,7 @@ func _set_state(state: _State) -> void:
 			_targeting_grid.clear()
 
 
-func _show_target_range(ability: Ability) -> void:
-	var targeting_data := ability.get_targeting_data(_player)
+func _show_target_range(targeting_data: TargetingData) -> void:
 	_targeting_grid.show_targeting(targeting_data)
 
 
@@ -64,8 +63,12 @@ func _on_ability_buttons_ability_selected(ability: Ability) -> void:
 	if _state != _State.MOVE:
 		return
 
-	_ability_info.set_ability(ability)
-	_show_target_range(ability)
+	var targeting_data := ability.get_targeting_data(_player)
+
+	_ability_info.set_ability(
+		ability.name, targeting_data.valid_targets.is_empty()
+	)
+	_show_target_range(targeting_data)
 	_set_state(_State.TARGET)
 
 
