@@ -28,7 +28,7 @@ func utility_score(data: AbilityData) -> float:
 
 func _setup_and_start_animation(data: AbilityData) -> void:
 	var direction: Vector2i
-	if data.target_type == AbilityTargetType.Type.ACTOR:
+	if data.target_type == TargetType.Type.ACTOR:
 		direction = \
 				data.target_actor.origin_cell - data.source_actor.origin_cell
 	else:

@@ -10,7 +10,7 @@ extends Resource
 @export var icon: Texture2D
 
 ## The type of target the ability uses.
-@export var target_type: AbilityTargetType.Type
+@export var target_type: TargetType.Type
 
 ## The base target range.
 @export var target_range_shape: TargetRangeShape

@@ -21,7 +21,7 @@ var target_cell: Vector2i:
 
 
 ## The target type.
-var target_type: AbilityTargetType.Type:
+var target_type: TargetType.Type:
 	get:
 		return _target_type
 
@@ -41,12 +41,12 @@ var target_actor: Actor:
 var _source_actor: Actor
 var _source_cell: Vector2i
 var _target_cell: Vector2i
-var _target_type: AbilityTargetType.Type
+var _target_type: TargetType.Type
 var _aoe: Array[Vector2i]
 
 
 func _init(p_actor: Actor, p_source: Vector2i, p_target: Vector2,
-		p_target_type: AbilityTargetType.Type, p_aoe: Array[Vector2i]) -> void:
+		p_target_type: TargetType.Type, p_aoe: Array[Vector2i]) -> void:
 	_source_actor = p_actor
 	_source_cell = p_source
 	_target_cell = p_target

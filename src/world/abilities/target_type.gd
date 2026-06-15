@@ -1,4 +1,4 @@
-class_name AbilityTargetType
+class_name TargetType
 
 ## The type of target the ability uses.
 
