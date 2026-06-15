@@ -52,10 +52,8 @@ func _set_state(state: _State) -> void:
 
 
 func _show_target_range(ability: Ability) -> void:
-	var target_range := ability.get_target_range(_player, true)
-	var target := target_range[0]
-	var aoe := ability.get_aoe(target, _player, true)
-	_targeting_grid.show_targeting(target_range, aoe)
+	var targeting_data := ability.get_targeting_data(_player)
+	_targeting_grid.show_targeting(targeting_data)
 
 
 func _on_player_input_turn_ended() -> void:

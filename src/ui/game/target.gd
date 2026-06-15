@@ -28,7 +28,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func show_with_target_range(target_range: Array[Vector2i]) -> void:
 	_target_range = target_range
 
-	var new_target: Vector2i
+	var new_target := Vector2i.ZERO
 	var dist_sqr := -1
 	for target in _target_range:
 		if target == origin_cell:
@@ -39,14 +39,16 @@ func show_with_target_range(target_range: Array[Vector2i]) -> void:
 			new_target = target
 			dist_sqr = new_dist_sqr
 	origin_cell = new_target
-	_send_move_events = true
-	visible = true
+	_send_move_events = not _target_range.is_empty()
+	visible = not _target_range.is_empty()
+	set_process_unhandled_input(visible)
 
 
 func clear_and_hide() -> void:
 	_target_range.clear()
 	_send_move_events = false
 	visible = false
+	set_process_unhandled_input(false)
 
 
 func try_assign_cell(cell: Vector2i) -> void:
