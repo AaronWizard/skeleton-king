@@ -23,10 +23,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_try_click()
 
 
-func show_targeting(targeting_data: TargetingData) -> void:
+func show_targeting(actor: Actor, targeting_data: TargetingData) -> void:
 	_targeting_data = targeting_data
-
-	_target.show_with_target_range(targeting_data.valid_targets)
+	_target.show_with_target_range(actor, _targeting_data)
 
 	_set_target_range()
 	_set_aoe()

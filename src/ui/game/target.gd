@@ -9,8 +9,9 @@ signal moved
 @onready var _se := $SESprite as Node2D
 @onready var _sw := $SWSprite as Node2D
 
+var _actor: Actor = null
+var _targeting_data: TargetingData = null
 
-var _target_range: Array[Vector2i] = []
 var _send_move_events := false
 
 
@@ -19,18 +20,20 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible or (_target_range.size() <= 1):
+	if not visible or not _actor or _targeting_data.valid_targets.is_empty():
 		return
 
 	_try_move_target(event)
 
 
-func show_with_target_range(target_range: Array[Vector2i]) -> void:
-	_target_range = target_range
+func show_with_target_range(actor: Actor, targeting_data: TargetingData) \
+		-> void:
+	_actor = actor
+	_targeting_data = targeting_data
 
 	var new_target := Vector2i.ZERO
 	var dist_sqr := -1
-	for target in _target_range:
+	for target in _targeting_data.valid_targets:
 		if target == origin_cell:
 			new_target = target
 			break
@@ -38,22 +41,40 @@ func show_with_target_range(target_range: Array[Vector2i]) -> void:
 		if (dist_sqr < 0) or (new_dist_sqr < dist_sqr):
 			new_target = target
 			dist_sqr = new_dist_sqr
+
 	origin_cell = new_target
-	_send_move_events = not _target_range.is_empty()
-	visible = not _target_range.is_empty()
+	if _targeting_data.target_type == TargetType.Type.ACTOR:
+		var other_actor := _actor.map.get_actor_on_cell(origin_cell)
+		assert(other_actor)
+		cell_dimensions = Vector2i(
+			other_actor.cell_length, other_actor.cell_length
+		)
+
+	_send_move_events = not _targeting_data.valid_targets.is_empty()
+	visible = not _targeting_data.valid_targets.is_empty()
 	set_process_unhandled_input(visible)
 
 
 func clear_and_hide() -> void:
-	_target_range.clear()
+	_actor = null
+	_targeting_data = null
 	_send_move_events = false
 	visible = false
 	set_process_unhandled_input(false)
 
 
 func try_assign_cell(cell: Vector2i) -> void:
-	if cell in _target_range:
-		origin_cell = cell
+	var final_cell := cell
+	var final_size := Vector2i.ONE
+	if _targeting_data.target_type == TargetType.Type.ACTOR:
+		var other_actor := _actor.map.get_actor_on_cell(cell)
+		if other_actor:
+			final_cell = other_actor.origin_cell
+			final_size *= other_actor.cell_length
+
+	if final_cell in _targeting_data.valid_targets:
+		origin_cell = final_cell
+		cell_dimensions = final_size
 
 
 func _try_move_target(event: InputEvent) -> void:
@@ -63,7 +84,7 @@ func _try_move_target(event: InputEvent) -> void:
 
 	var next_cell: Vector2i
 	var dist_sqr := -1
-	for target in _target_range:
+	for target in _targeting_data.valid_targets:
 		var target_delta := target - origin_cell
 		var can_move_horizontal := (move_vect.y == 0) \
 				and (signi(target_delta.x) == signi(move_vect.x))

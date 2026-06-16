@@ -9,8 +9,8 @@ extends Resource
 ## The ability's icon.
 @export var icon: Texture2D
 
-## The type of target the ability uses.
-@export var target_type: TargetType.Type
+## The type of cells the ability targets.
+@export var target_type := TargetType.Type.CELL
 
 ## The base target range.
 @export var target_range_shape: TargetRangeShape
@@ -30,39 +30,33 @@ extends Resource
 ## Returns true if [param target] is a valid target for this ability and
 ## [param actor] at its current cell.
 func target_is_valid(actor: Actor, target: Vector2i) -> bool:
-	var base_range := _get_base_target_range(actor)
-	var target_range := _get_target_range(actor, base_range, false)
-	return target in target_range
-
-
-## Gets the cells in the ability's area-of-effect at [param target] for
-## [param actor] at its current cell.[br]
-## [param for_ui] determines if the result is used for the UI or for regular AOE
-## logic.
-func get_aoe(target: Vector2i, actor: Actor, for_ui := false) \
-		-> Array[Vector2i]:
-	var base_aoe := _get_base_aoe(actor, target)
-	return _get_aoe(actor, target, base_aoe, for_ui)
+	var range_shape := _get_target_range_shape(actor)
+	var base_target_range := _get_base_target_range(actor, range_shape, false)
+	var valid_targets := _get_valid_targets(actor, base_target_range)
+	return target in valid_targets
 
 
 ## Gets the complete targeting data for the ability and [param actor] at its
 ## current cell.
 func get_targeting_data(actor: Actor) -> TargetingData:
-	var base_range := _get_base_target_range(actor)
-	var valid_targets := _get_target_range(actor, base_range, false)
-	var ui_target_range := _get_target_range(actor, base_range, true)
+	var range_shape := _get_target_range_shape(actor)
+
+	var base_target_range := _get_base_target_range(actor, range_shape, false)
+	var valid_targets := _get_valid_targets(actor, base_target_range)
+
+	var ui_target_range := _get_base_target_range(actor, range_shape, true)
 
 	var aoes: Dictionary[Vector2i, Array] = {}
 	var ui_aoes: Dictionary[Vector2i, Array] = {}
 	for target in valid_targets:
-		var base_aoe := _get_base_aoe(actor, target)
-		var aoe := _get_aoe(actor, target, base_aoe, false)
-		var ui_aoe := _get_aoe(actor, target, base_aoe, true)
+		var aoe_shp := _get_aoe_shape(actor, target)
+		var aoe := _get_aoe(actor, target, aoe_shp, false)
+		var ui_aoe := _get_aoe(actor, target, aoe_shp, true)
 		aoes[target] = aoe
 		ui_aoes[target] = ui_aoe
 
 	return TargetingData.new(
-		valid_targets, ui_target_range, aoes, ui_aoes
+		target_type, valid_targets, ui_target_range, aoes, ui_aoes
 	)
 
 
@@ -72,7 +66,9 @@ func run(actor: Actor, target: Vector2i) -> void:
 	if actor.map.animations_running:
 		await actor.map.animations_finished
 
-	var aoe := get_aoe(target, actor)
+	var aoe_shp := _get_aoe_shape(actor, target)
+	var aoe := _get_aoe(actor, target, aoe_shp, false)
+
 	var data := AbilityData.new(
 			actor, actor.origin_cell, target, target_type, aoe)
 
@@ -87,7 +83,7 @@ func create_turn_action(actor: Actor, target: Vector2i) -> TurnAction:
 	return AbilityAction.new(actor, self, target)
 
 
-func _get_base_target_range(actor: Actor) -> Array[Vector2i]:
+func _get_target_range_shape(actor: Actor) -> Array[Vector2i]:
 	var result: Array[Vector2i]
 	if target_range_shape:
 		result = target_range_shape.get_cells(actor)
@@ -96,11 +92,11 @@ func _get_base_target_range(actor: Actor) -> Array[Vector2i]:
 	return result
 
 
-func _get_target_range(
-		actor: Actor, base_range: Array[Vector2i], for_ui: bool) \
+func _get_base_target_range(
+		actor: Actor, range_shape: Array[Vector2i], for_ui: bool) \
 		-> Array[Vector2i]:
 	if not target_range_filters or target_range_filters.is_empty():
-		return base_range
+		return range_shape
 	else:
 		var filter_func := func (filter: TargetRangeFilter, target: Vector2i) \
 				-> bool:
@@ -110,11 +106,27 @@ func _get_target_range(
 			return target_range_filters.all(filter_func.bind(target))
 
 		var result: Array[Vector2i]
-		result.assign( base_range.filter(range_filter_funct) )
+		result.assign( range_shape.filter(range_filter_funct) )
 		return result
 
 
-func _get_base_aoe(actor: Actor, target: Vector2i) -> Array[Vector2i]:
+func _get_valid_targets(actor: Actor, base_range: Array[Vector2i]) \
+		-> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	match target_type:
+		TargetType.Type.ACTOR:
+			var target_set: Dictionary[Vector2i, bool] = {}
+			for cell in base_range:
+				var other_actor := actor.map.get_actor_on_cell(cell)
+				if other_actor:
+					target_set[other_actor.origin_cell] = true
+			result.assign(target_set.keys())
+		_:
+			result.assign(base_range)
+	return result
+
+
+func _get_aoe_shape(actor: Actor, target: Vector2i) -> Array[Vector2i]:
 	var result: Array[Vector2i]
 	if aoe_shape:
 		result = aoe_shape.get_cells(target, actor)

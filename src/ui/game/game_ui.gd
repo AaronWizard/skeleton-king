@@ -52,7 +52,7 @@ func _set_state(state: _State) -> void:
 
 
 func _show_target_range(targeting_data: TargetingData) -> void:
-	_targeting_grid.show_targeting(targeting_data)
+	_targeting_grid.show_targeting(_player, targeting_data)
 
 
 func _on_player_input_turn_ended() -> void:
