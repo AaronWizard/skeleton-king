@@ -25,10 +25,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func show_targeting(actor: Actor, targeting_data: TargetingData) -> void:
 	_targeting_data = targeting_data
-	_target.show_with_target_range(actor, _targeting_data)
+
+	if _targeting_data.valid_targets.is_empty():
+		_target.clear_and_hide()
+	else:
+		_target.show_with_target_range(actor, _targeting_data)
 
 	_set_target_range()
 	_set_aoe()
+	set_process_unhandled_input(true)
 
 
 func clear() -> void:
@@ -36,6 +41,7 @@ func clear() -> void:
 	_aoe.clear()
 	_target.clear_and_hide()
 	_targeting_data = null
+	set_process_unhandled_input(false)
 
 
 func _set_target_range() -> void:
