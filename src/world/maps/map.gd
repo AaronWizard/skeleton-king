@@ -107,6 +107,10 @@ func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
 	return _actor_layer.get_actors_in_rect(rect)
 
 
+func get_actors_on_cells(cells: Array[Vector2i]) -> Array[Actor]:
+	return _actor_layer.get_actors_on_cells(cells)
+
+
 #endregion Actors
 
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:

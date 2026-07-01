@@ -35,6 +35,25 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 	return result
 
 
+func get_actors_on_cells(cells: Array[Vector2i]) -> Array[Actor]:
+	var actor_set: Dictionary[Actor, bool] = {}
+	for c in cells:
+		var actor := get_actor_on_cell(c)
+		if actor:
+			actor_set[actor] = true
+	var result: Array[Actor] = []
+	result.assign(actor_set.keys())
+	return result
+
+
+func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
+	var result: Array[Actor] = []
+	for a in actors:
+		if a.cell_rect.intersects(rect):
+			result.append(a)
+	return result
+
+
 func actor_can_enter_cell(
 		actor: Actor, cell: Vector2i, ignore_other_actors: bool) -> bool:
 	var result := true
@@ -45,14 +64,6 @@ func actor_can_enter_cell(
 			or ignore_other_actors
 		if not result:
 			break
-	return result
-
-
-func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
-	var result: Array[Actor] = []
-	for a in actors:
-		if a.cell_rect.intersects(rect):
-			result.append(a)
 	return result
 
 

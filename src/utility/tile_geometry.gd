@@ -89,3 +89,27 @@ static func cells_in_range_of_rect(rect: Rect2i, min_dist: int, max_dist: int) \
 				result.append(Vector2i(x, y))
 
 	return result
+
+
+## Get the cells adjacent to one side of [param rect] at the given direction.
+static func adjacent_edge_cells(rect: Rect2i, direction: Directions.Cardinal) \
+		-> Array[Vector2i]:
+	var edge_rect := Rect2i(rect.position, Vector2i.ONE)
+	match direction:
+		Directions.Cardinal.NORTH:
+			edge_rect.position.y -= 1
+			edge_rect.size.x = rect.size.x
+		Directions.Cardinal.EAST:
+			edge_rect.position.x += rect.size.x
+			edge_rect.size.y = rect.size.y
+		Directions.Cardinal.SOUTH:
+			edge_rect.position.y += rect.size.y
+			edge_rect.size.x = rect.size.x
+		Directions.Cardinal.WEST:
+			edge_rect.position.x -= 1
+			edge_rect.size.y = rect.size.y
+		_:
+			push_error("%s is not a cardinal direction" % direction)
+			return []
+
+	return cells_in_rect(edge_rect)
