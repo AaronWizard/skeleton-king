@@ -64,6 +64,9 @@ func clear_and_hide() -> void:
 
 
 func try_assign_cell(cell: Vector2i) -> void:
+	if not _targeting_data or _targeting_data.valid_targets.is_empty():
+		return
+
 	var final_cell := cell
 	var final_size := Vector2i.ONE
 	if _targeting_data.target_type == TargetType.Type.ACTOR:

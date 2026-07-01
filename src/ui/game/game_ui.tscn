@@ -43,6 +43,6 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [connection signal="target_selected" from="TargetingGrid" to="." method="_on_targeting_grid_target_selected"]
-[connection signal="turn_ended" from="PlayerInput" to="." method="_on_player_input_turn_ended"]
+[connection signal="turn_action_selected" from="PlayerInput" to="." method="_on_player_input_turn_action_selected"]
 [connection signal="ability_selected" from="CanvasLayer/AbilityButtons" to="." method="_on_ability_buttons_ability_selected"]
 [connection signal="cancelled" from="CanvasLayer/AbilityInfo" to="." method="_on_ability_info_cancelled"]

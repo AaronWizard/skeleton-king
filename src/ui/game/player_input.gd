@@ -1,12 +1,11 @@
 class_name PlayerInput
 extends Node
 
-signal turn_ended
+signal turn_action_selected(action: TurnAction)
 
 @export var cheats_enabled := false
 
 var player: Actor
-var controller: PlayerController
 
 @onready var _timer: Timer = $Timer
 
@@ -32,7 +31,7 @@ func _process(_delta: float) -> void:
 		return
 
 	if Input.is_action_just_pressed("wait"):
-		_end_turn(null)
+		_select_action(null)
 		return
 
 	var move_vector := MovementInput.input_move_vect()
@@ -49,11 +48,9 @@ func _process(_delta: float) -> void:
 		[move_action, attack_action, use_action]
 	)
 	action.wait_if_failed = false
-	_end_turn(action)
+	_select_action(action)
 
 
-func _end_turn(action: TurnAction) -> void:
-	active = false
+func _select_action(action: TurnAction) -> void:
+	turn_action_selected.emit(action)
 	_timer.start()
-	controller.send_player_action(action)
-	turn_ended.emit()
