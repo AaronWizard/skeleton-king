@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://einmvlq3r18s"]
 
 [ext_resource type="Texture2D" uid="uid://c41o3fnrwub25" path="res://src/ui/cancel.png" id="1_74nb3"]
-[ext_resource type="Script" uid="uid://me5vjmnut4r7" path="res://src/ui/game/ability_info.gd" id="1_ccxwy"]
+[ext_resource type="Script" uid="uid://me5vjmnut4r7" path="res://src/ui/game/abilities/ability_info.gd" id="1_ccxwy"]
 
 [node name="AbilityInfo" type="VBoxContainer" unique_id=936619783]
 offset_right = 46.0
