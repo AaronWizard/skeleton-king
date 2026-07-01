@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ciwta14ne6cq"
-path="res://.godot/imported/aoe.png-f3d57f65df286fb82eca0775ca34d9f4.ctex"
+uid="uid://bpee61ndrjo22"
+path="res://.godot/imported/target.png-522a75ca7d4b9e1e682d88ca563dfd42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/ui/game/aoe.png"
-dest_files=["res://.godot/imported/aoe.png-f3d57f65df286fb82eca0775ca34d9f4.ctex"]
+source_file="res://src/ui/game/targeting/target.png"
+dest_files=["res://.godot/imported/target.png-522a75ca7d4b9e1e682d88ca563dfd42.ctex"]
 
 [params]
 
