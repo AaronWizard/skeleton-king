@@ -59,6 +59,9 @@ func _set_aoe() -> void:
 
 
 func _try_click() -> void:
+	if not _target.visible:
+		return
+
 	var mouse_pos := _target_range.get_local_mouse_position()
 	var mouse_cell := _target_range.local_to_map(mouse_pos)
 
