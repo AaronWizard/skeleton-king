@@ -1,6 +1,7 @@
 class_name PlayerInput
 extends Node
 
+signal targeting_started(ability: Ability)
 signal turn_action_selected(action: TurnAction)
 
 @export var cheats_enabled := false
@@ -35,24 +36,20 @@ func _process(_delta: float) -> void:
 		return
 
 	var move_vector := MovementInput.input_move_vect()
-	var next_cell := player.origin_cell + move_vector
-	if next_cell == player.origin_cell:
+	if move_vector == Vector2i.ZERO:
 		return
 
+	if _try_bump_attack(move_vector):
+		return
+
+	var next_cell := player.origin_cell + move_vector
+
 	var possible_actions: Array[TurnAction] = [
-		MoveAction.new(player, next_cell)
-	]
-
-	if player.abilities.attack.target_type == TargetType.Type.ACTOR:
-		var attack_action := _try_bump_attack(move_vector)
-		if attack_action:
-			possible_actions.append(attack_action)
-
-	possible_actions.append(
+		MoveAction.new(player, next_cell),
 		UseObjectAction.new(
 			player.map.get_useable_object_on_cell(next_cell), player.map
 		)
-	)
+	]
 
 	var action := CompositeTurnAction.new(
 		possible_actions
@@ -61,9 +58,13 @@ func _process(_delta: float) -> void:
 	_select_action(action)
 
 
-func _try_bump_attack(move_vector: Vector2i) -> TurnAction:
+func _try_bump_attack(move_vector: Vector2i) -> bool:
+	if player.abilities.attack.target_type != TargetType.Type.ACTOR:
+		return false
 	if move_vector.length_squared() != 1:
-		return null
+		return false
+
+	var result := false
 
 	var direction := Directions.dir_to_cardinal(move_vector)
 	var edge_cells := TileGeometry.adjacent_edge_cells(
@@ -75,11 +76,16 @@ func _try_bump_attack(move_vector: Vector2i) -> TurnAction:
 					player, actor.origin_cell)
 	)
 
-	var result: TurnAction = null
 	if target_actors.size() == 1:
-		result = player.abilities.create_attack_action(
+		var attack = player.abilities.create_attack_action(
 			target_actors[0].origin_cell
 		)
+		_select_action(attack)
+		result = true
+	elif not target_actors.is_empty():
+		targeting_started.emit(player.abilities.attack)
+		result = true
+
 	return result
 
 

@@ -58,22 +58,11 @@ func _set_state(state: _State) -> void:
 			_targeting_grid.clear()
 
 
-func _show_target_range(targeting_data: TargetingData) -> void:
-	_targeting_grid.show_targeting(_player, targeting_data)
-
-
-func _end_turn(action: TurnAction) -> void:
-	_controller.send_player_action(action)
-	_set_state(_State.TURN_RUNNING)
-
-
-func _on_player_input_turn_action_selected(action: TurnAction) -> void:
-	_end_turn(action)
-
-
-func _on_ability_buttons_ability_selected(ability: Ability) -> void:
+func _start_targeting(ability: Ability) -> void:
 	if _state != _State.MOVE:
 		return
+
+	Log.print("Start targeting", Color.GOLD)
 
 	_selected_ability = ability
 
@@ -81,8 +70,27 @@ func _on_ability_buttons_ability_selected(ability: Ability) -> void:
 	_ability_info.set_ability(
 		_selected_ability.name, targeting_data.valid_targets.is_empty()
 	)
-	_show_target_range(targeting_data)
+	_targeting_grid.show_targeting(_player, targeting_data)
 	_set_state(_State.TARGET)
+
+
+func _end_turn(action: TurnAction) -> void:
+	_controller.send_player_action(action)
+	_set_state(_State.TURN_RUNNING)
+
+
+func _on_player_input_targeting_started(ability: Ability) -> void:
+	_start_targeting(ability)
+
+
+func _on_player_input_turn_action_selected(action: TurnAction) -> void:
+	_end_turn(action)
+
+
+func _on_ability_buttons_ability_selected(ability: Ability) -> void:
+	_start_targeting(ability)
+
+	_selected_ability = ability
 
 
 func _on_ability_info_cancelled() -> void:
