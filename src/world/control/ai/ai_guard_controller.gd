@@ -69,7 +69,13 @@ func _ready() -> void:
 
 
 func get_turn_action() -> TurnAction:
+	var old_state := _state
 	_state = _state_transitions[_state].call()
+	if old_state != _state:
+		Log.print(
+			"%s's state is now %s" % [actor.name, _State.keys()[_state]],
+			Color.SPRING_GREEN
+		)
 	return _state_actions[_state].call()
 
 
@@ -166,9 +172,11 @@ func _state_action_idle() -> TurnAction:
 
 
 func _state_action_chase() -> TurnAction:
-	if TileGeometry.rects_are_adjacent(
-			actor.cell_rect, _target_enemy.cell_rect):
-		return AttackAction.new(actor, _target_enemy)
+	if actor.abilities.can_attack(_target_enemy.origin_cell):
+		Log.print(
+			'%s attacking %s' % [actor.name, _target_enemy.name], Color.GREEN
+		)
+		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
 	else:
 		return _head_to_rect(_target_enemy.cell_rect)
 
@@ -243,6 +251,11 @@ func _head_to_rect(rect: Rect2i) -> TurnAction:
 	var result: TurnAction = null
 	var path := ActorPathfinder.find_path_to_rect(actor, rect, false)
 	if not path.is_empty():
+		Log.print(
+			'%s moving from %.v to %.v'
+				% [actor.name, actor.origin_cell, path[0]],
+			Color.SKY_BLUE
+		)
 		result = MoveAction.new(actor, path[0])
 	return result
 
@@ -250,6 +263,11 @@ func _head_to_rect(rect: Rect2i) -> TurnAction:
 func _head_to_cell(cell: Vector2i) -> TurnAction:
 	var path := ActorPathfinder.find_path_to_cell(actor, cell, false)
 	if not path.is_empty():
+		Log.print(
+			'%s moving from %.v to %.v'
+				% [actor.name, actor.origin_cell, path[0]],
+			Color.SKY_BLUE
+		)
 		return MoveAction.new(actor, path[0])
 	return null
 

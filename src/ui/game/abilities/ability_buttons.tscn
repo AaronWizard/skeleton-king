@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://il8e5kuyw0lr"]
+
+[ext_resource type="Script" uid="uid://bf2hapt67jg70" path="res://src/ui/game/abilities/ability_buttons.gd" id="1_ofvep"]
+
+[node name="AbilityButtons" type="HBoxContainer" unique_id=1062958035]
+alignment = 1
+script = ExtResource("1_ofvep")

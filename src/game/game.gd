@@ -19,8 +19,8 @@ var map: Map:
 var _player: Actor
 var _turn_clock := TurnClock.new()
 
-@onready var _player_input := $PlayerInput as PlayerInput
 @onready var _camera := $Camera as BoundedCamera
+@onready var _game_ui := $GameUI as GameUI
 
 @onready var _no_player_turn_passer := $NoPlayerTurnPasser as Timer
 
@@ -41,10 +41,9 @@ func _init_player() -> void:
 
 	var controller := PlayerController.new()
 	_player.set_controller(controller)
-	controller.player_input_requested.connect(_on_player_input_requested)
+	controller.player_input_requested.connect(_game_ui.set_player_input_active)
 
-	_player_input.player = _player
-	_player_input.controller = controller
+	_game_ui.set_player(_player, controller)
 
 	_player.remote_transform.remote_path = _camera.get_path()
 
@@ -63,10 +62,6 @@ func _run() -> void:
 	while _player.stats.is_alive:
 		await _turn_clock.take_turn()
 	_no_player_turn_passer.start()
-
-
-func _on_player_input_requested() -> void:
-	_player_input.active = true
 
 
 func _on_map_actor_added(actor: Actor) -> void:

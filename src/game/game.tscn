@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bl3hkhamfjaac" path="res://src/game/game.gd" id="1_s6lek"]
 [ext_resource type="Resource" uid="uid://dahoujk76yhuf" path="res://data/terrain/terrain_library.tres" id="3_l80un"]
 [ext_resource type="Script" uid="uid://mulmsh7g8ilk" path="res://src/game/bounded_camera.gd" id="5_xptat"]
-[ext_resource type="PackedScene" uid="uid://diwcsg25lhq6x" path="res://src/ui/player_input.tscn" id="5_yarin"]
+[ext_resource type="PackedScene" uid="uid://d1xmur0h3fmqh" path="res://src/ui/game/game_ui.tscn" id="5_yarin"]
 
 [node name="Game" type="Node" unique_id=2145801076]
 script = ExtResource("1_s6lek")
@@ -13,11 +13,10 @@ script = ExtResource("1_s6lek")
 terrain_library = ExtResource("3_l80un")
 metadata/_edit_lock_ = true
 
-[node name="PlayerInput" parent="." unique_id=2033339375 instance=ExtResource("5_yarin")]
-cheats_enabled = true
-
 [node name="Camera" type="Camera2D" parent="." unique_id=1427840835]
 script = ExtResource("5_xptat")
+
+[node name="GameUI" parent="." unique_id=176659282 instance=ExtResource("5_yarin")]
 
 [node name="NoPlayerTurnPasser" type="Timer" parent="." unique_id=96685542]
 wait_time = 0.1

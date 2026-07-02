@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bew3mgmobynch"]
+
+[ext_resource type="Script" uid="uid://dydlcjxvnpem" path="res://src/ui/game/targeting/targeting_grid.gd" id="1_adrps"]
+[ext_resource type="PackedScene" uid="uid://rllhv05xvj5j" path="res://src/ui/game/targeting/target.tscn" id="1_ur2e0"]
+[ext_resource type="TileSet" uid="uid://droi4n81cgyrx" path="res://src/ui/game/targeting/tileset_targeting_grid.tres" id="2_pvg8m"]
+
+[node name="TargetingGrid" type="Node2D" unique_id=1982052024]
+script = ExtResource("1_adrps")
+
+[node name="TargetRange" type="TileMapLayer" parent="." unique_id=848895125]
+tile_set = ExtResource("2_pvg8m")
+
+[node name="AOE" type="TileMapLayer" parent="." unique_id=179903539]
+tile_set = ExtResource("2_pvg8m")
+
+[node name="Target" parent="." unique_id=1840973967 instance=ExtResource("1_ur2e0")]
+visible = false
+
+[connection signal="moved" from="Target" to="." method="_on_target_moved"]

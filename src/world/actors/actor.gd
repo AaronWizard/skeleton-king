@@ -50,6 +50,11 @@ var stats: Stats:
 		return _stats
 
 
+var abilities: ActorAbilities:
+	get:
+		return _abilities
+
+
 var remote_transform: RemoteTransform2D:
 	get:
 		return %RemoteTransform as RemoteTransform2D
@@ -57,6 +62,7 @@ var remote_transform: RemoteTransform2D:
 #endregion Properties
 
 var _stats: Stats
+var _abilities := ActorAbilities.new(self)
 var _controller: ActorController
 
 @onready var _sprite := $ActorSprite as ActorSprite

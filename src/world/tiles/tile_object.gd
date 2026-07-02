@@ -128,6 +128,11 @@ func covers_cell(cell: Vector2i) -> bool:
 	return cell_rect.has_point(cell)
 
 
+## Gets the cell positions the tile object currently covers.
+func get_covered_cells() -> Array[Vector2i]:
+	return get_covered_cells_at_cell(origin_cell)
+
+
 ## Gets the cell positions the tile object would cover if its
 ## [member origin_cell] was equal to [param cell].
 func get_covered_cells_at_cell(cell: Vector2i) -> Array[Vector2i]:

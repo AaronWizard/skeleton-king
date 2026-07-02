@@ -45,3 +45,71 @@ static func rect_distance_squared(a: Rect2i, b: Rect2i) -> float:
 	var center_b := Vector2(b.position) + (b.size / 2.0)
 
 	return center_a.distance_squared_to(center_b)
+
+
+## Gets all cells that are between [param min_dist] and [param max_dist] cells
+## away from [param rect] using Manhattan distance.
+static func cells_in_range_of_rect(rect: Rect2i, min_dist: int, max_dist: int) \
+		-> Array[Vector2i]:
+	if min_dist > max_dist:
+		push_error("min_dist %d is greater than max_dist %d" \
+				% [min_dist, max_dist])
+		return []
+
+	var result: Array[Vector2i] = []
+
+	# Get coordinate values of rect edges.
+	var left_edge := rect.position.x
+	var top_edge := rect.position.y
+	var right_edge := rect.end.x - 1
+	var bottom_edge := rect.end.y - 1
+
+	# Loop through cells in bounding box resulting from expanding rect by
+	# max_dist in all directions.
+	for x in range(left_edge - max_dist, right_edge + max_dist + 1):
+		for y in range(top_edge - max_dist, bottom_edge + max_dist + 1):
+			# Distance between x and left or right side of rect, or zero if x is
+			# inside rect.
+			var dx := 0
+			if x < left_edge:
+				dx = left_edge - x
+			elif x > right_edge:
+				dx = x - right_edge
+
+			# Distance between y and top or bottom of rect, or zero if y is
+			# inside rect.
+			var dy := 0
+			if y < top_edge:
+				dy = top_edge - y
+			elif y > bottom_edge:
+				dy = y - bottom_edge
+
+			var dist := dx + dy # Manhattan distance
+			if (dist >= min_dist) and (dist <= max_dist):
+				result.append(Vector2i(x, y))
+
+	return result
+
+
+## Get the cells adjacent to one side of [param rect] at the given direction.
+static func adjacent_edge_cells(rect: Rect2i, direction: Directions.Cardinal) \
+		-> Array[Vector2i]:
+	var edge_rect := Rect2i(rect.position, Vector2i.ONE)
+	match direction:
+		Directions.Cardinal.NORTH:
+			edge_rect.position.y -= 1
+			edge_rect.size.x = rect.size.x
+		Directions.Cardinal.EAST:
+			edge_rect.position.x += rect.size.x
+			edge_rect.size.y = rect.size.y
+		Directions.Cardinal.SOUTH:
+			edge_rect.position.y += rect.size.y
+			edge_rect.size.x = rect.size.x
+		Directions.Cardinal.WEST:
+			edge_rect.position.x -= 1
+			edge_rect.size.y = rect.size.y
+		_:
+			push_error("%s is not a cardinal direction" % direction)
+			return []
+
+	return cells_in_rect(edge_rect)
