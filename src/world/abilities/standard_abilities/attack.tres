@@ -1,25 +1,25 @@
 [gd_resource type="Resource" script_class="Ability" format=3 uid="uid://dr0s6kvi2j80t"]
 
-[ext_resource type="Script" uid="uid://c823lre1hplop" path="res://src/world/abilities/ability_effect.gd" id="2_y0qn1"]
-[ext_resource type="Script" uid="uid://cqixlv4no2v4g" path="res://src/world/abilities/effects/damage_effect.gd" id="3_gm67b"]
-[ext_resource type="Script" uid="uid://dgsy362030rue" path="res://src/world/abilities/ability.gd" id="3_nsasd"]
-[ext_resource type="Script" uid="uid://bryu51cvawmr7" path="res://src/world/abilities/effects/anim_attack_effect.gd" id="4_7w8ew"]
-[ext_resource type="Texture2D" uid="uid://bvwdlh8p8gfmb" path="res://src/world/abilities/standard_abilities/attack.png" id="5_7w8ew"]
-[ext_resource type="Resource" uid="uid://dv2waf83ycl1g" path="res://src/world/targeting/standard_target_configs/target_adjacent_enemies.tres" id="6_nsasd"]
+[ext_resource type="Script" uid="uid://c823lre1hplop" path="res://src/world/abilities/ability_effect.gd" id="1_xeiem"]
+[ext_resource type="Script" uid="uid://cqixlv4no2v4g" path="res://src/world/abilities/effects/damage_effect.gd" id="2_wbnvy"]
+[ext_resource type="Script" uid="uid://bryu51cvawmr7" path="res://src/world/abilities/effects/anim_attack_effect.gd" id="3_tu8cj"]
+[ext_resource type="Texture2D" uid="uid://bvwdlh8p8gfmb" path="res://src/world/abilities/standard_abilities/attack.png" id="4_wdv8v"]
+[ext_resource type="Script" uid="uid://dgsy362030rue" path="res://src/world/abilities/ability.gd" id="5_jk340"]
+[ext_resource type="Resource" uid="uid://dv2waf83ycl1g" path="res://src/world/targeting/standard_target_configs/target_adjacent_enemies.tres" id="6_jkibq"]
 
 [sub_resource type="Resource" id="Resource_iel26"]
-script = ExtResource("3_gm67b")
+script = ExtResource("2_wbnvy")
 metadata/_custom_type_script = "uid://cqixlv4no2v4g"
 
 [sub_resource type="Resource" id="Resource_ls6gy"]
-script = ExtResource("4_7w8ew")
-effects = Array[ExtResource("2_y0qn1")]([SubResource("Resource_iel26")])
+script = ExtResource("3_tu8cj")
+effects = Array[ExtResource("1_xeiem")]([SubResource("Resource_iel26")])
 metadata/_custom_type_script = "uid://bryu51cvawmr7"
 
 [resource]
-script = ExtResource("3_nsasd")
+script = ExtResource("5_jk340")
 name = "Attack"
-icon = ExtResource("5_7w8ew")
-targeting_config = ExtResource("6_nsasd")
-effects = Array[ExtResource("2_y0qn1")]([SubResource("Resource_ls6gy")])
+icon = ExtResource("4_wdv8v")
+targeting_config = ExtResource("6_jkibq")
+effects = Array[ExtResource("1_xeiem")]([SubResource("Resource_ls6gy")])
 metadata/_custom_type_script = "uid://dgsy362030rue"
