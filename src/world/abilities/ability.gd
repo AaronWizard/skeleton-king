@@ -63,6 +63,13 @@ func get_targeting_data(actor: Actor) -> TargetingData:
 ## Runs the ability with a given source actor and target.[br]
 ## Assumes [param target] is a valid target.
 func run(actor: Actor, target: Vector2i) -> void:
+	if not actor:
+		push_error("No actor set")
+		return
+	if not actor.map:
+		push_error("Actor not on a map")
+		return
+
 	if actor.map.animations_running:
 		await actor.map.animations_finished
 

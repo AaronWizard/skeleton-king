@@ -13,6 +13,10 @@ func _init(p_actor: Actor, p_ability: Ability, p_target: Vector2i) -> void:
 
 
 func run() -> bool:
+	if not _ability:
+		push_error("No ability set")
+		return false
+
 	if not _ability.target_is_valid(_actor, _target):
 		Log.print(
 			"%s failed to use ability %s at %.v" \
