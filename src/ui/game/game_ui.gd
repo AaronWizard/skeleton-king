@@ -18,6 +18,7 @@ var _controller: PlayerController
 
 var _state := _State.TURN_RUNNING
 
+var _use_object_target_range: TargetingData = null
 var _selected_ability: Ability = null
 
 
@@ -33,7 +34,11 @@ func set_player(player: Actor, controller: PlayerController) -> void:
 	_action_buttons.set_abilities(_player.abilities.all_abilities)
 
 
-func set_player_input_active() -> void:
+func set_player_input_active(use_object_target_range: TargetingData) -> void:
+	_use_object_target_range = use_object_target_range
+	_action_buttons.can_use_objects = _use_object_target_range \
+			and not _use_object_target_range.valid_targets.is_empty()
+
 	_set_state(_State.MOVE)
 
 

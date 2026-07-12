@@ -17,7 +17,9 @@ var map: Map:
 
 
 var _player: Actor
+
 var _turn_clock := TurnClock.new()
+var _interaction_tracker := InteractionTracker.new()
 
 @onready var _camera := $Camera as BoundedCamera
 @onready var _game_ui := $GameUI as GameUI
@@ -41,7 +43,7 @@ func _init_player() -> void:
 
 	var controller := PlayerController.new()
 	_player.set_controller(controller)
-	controller.player_input_requested.connect(_game_ui.set_player_input_active)
+	controller.player_input_requested.connect(_start_player_turn)
 
 	_game_ui.set_player(_player, controller)
 
@@ -62,6 +64,13 @@ func _run() -> void:
 	while _player.stats.is_alive:
 		await _turn_clock.take_turn()
 	_no_player_turn_passer.start()
+
+
+func _start_player_turn() -> void:
+	_interaction_tracker.update(_player)
+	_game_ui.set_player_input_active(
+		_interaction_tracker.use_object_targeting_data
+	)
 
 
 func _on_map_actor_added(actor: Actor) -> void:
