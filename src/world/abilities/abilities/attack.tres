@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Ability" format=3 uid="uid://dr0s6kvi2j80t"]
 
-[ext_resource type="Script" uid="uid://1bq25gr35q13" path="res://src/world/abilities/aoe_filter.gd" id="1_jh8us"]
+[ext_resource type="Script" uid="uid://1bq25gr35q13" path="res://src/world/targeting/aoe_filter.gd" id="1_jh8us"]
 [ext_resource type="Script" uid="uid://c823lre1hplop" path="res://src/world/abilities/ability_effect.gd" id="2_y0qn1"]
 [ext_resource type="Script" uid="uid://cqixlv4no2v4g" path="res://src/world/abilities/effects/damage_effect.gd" id="3_gm67b"]
 [ext_resource type="Script" uid="uid://dgsy362030rue" path="res://src/world/abilities/ability.gd" id="3_nsasd"]
 [ext_resource type="Script" uid="uid://bryu51cvawmr7" path="res://src/world/abilities/effects/anim_attack_effect.gd" id="4_7w8ew"]
-[ext_resource type="Script" uid="uid://c0chsdsq7ruvp" path="res://src/world/abilities/target_range_filter.gd" id="4_wc1no"]
+[ext_resource type="Script" uid="uid://c0chsdsq7ruvp" path="res://src/world/targeting/target_range_filter.gd" id="4_wc1no"]
 [ext_resource type="Texture2D" uid="uid://bvwdlh8p8gfmb" path="res://src/world/abilities/abilities/attack.png" id="5_7w8ew"]
 [ext_resource type="Script" uid="uid://bmytpp1b3x3nh" path="res://src/world/abilities/target_filters/actor_range_filter.gd" id="5_nsasd"]
 [ext_resource type="Script" uid="uid://bd56gshtl32q2" path="res://src/world/abilities/target_ranges/distance_range_shape.gd" id="6_wc1no"]

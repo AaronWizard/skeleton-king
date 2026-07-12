@@ -1,25 +1,25 @@
 class_name TargetingData
 
-## The targeting data for an ability and an actor at its current position.
+## The targeting data for an action and an actor at its current position.
 ##
-## The targeting data for an ability and an actor at its current position.
+## The targeting data for an action and an actor at its current position.
 ## Describes the valid targets and AOEs for each target. Also describes what
 ## cells to highlight on the screen, and what targets cells map to when
 ## selected.
 
-## The type of cells the ability targets.
+## The type of cells the action targets.
 var target_type: TargetType.Type:
 	get:
 		return _target_type
 
 
-## The cells that may be selected as targets when using the ability.
+## The cells that may be selected as targets when targeting the action.
 var valid_targets: Array[Vector2i]:
 	get:
 		return _valid_targets
 
 
-## The cells to highlight when displaying the ability's target range on-screen.
+## The cells to highlight when displaying the action's target range on-screen.
 var ui_target_range: Array[Vector2i]:
 	get:
 		return _ui_target_range
