@@ -10,8 +10,8 @@ enum _State {
 @onready var _targeting_grid := $TargetingGrid as TargetingGrid
 @onready var _player_input := $PlayerInput as PlayerInput
 
-@onready var _ability_buttons := $CanvasLayer/AbilityButtons as AbilityButtons
-@onready var _ability_info := $CanvasLayer/AbilityInfo as AbilityInfo
+@onready var _action_buttons := %ActionButtons as ActionButtons
+@onready var _ability_info := %AbilityInfo as AbilityInfo
 
 var _player: Actor
 var _controller: PlayerController
@@ -30,7 +30,7 @@ func set_player(player: Actor, controller: PlayerController) -> void:
 	_controller = controller
 
 	_player_input.player = _player
-	_ability_buttons.set_abilities(_player.abilities.all_abilities)
+	_action_buttons.set_abilities(_player.abilities.all_abilities)
 
 
 func set_player_input_active() -> void:
@@ -42,17 +42,17 @@ func _set_state(state: _State) -> void:
 	match _state:
 		_State.MOVE:
 			_selected_ability = null
-			_ability_buttons.visible = true
+			_action_buttons.visible = true
 			_ability_info.visible = false
 			_player_input.active = true
 			_targeting_grid.clear()
 		_State.TARGET:
-			_ability_buttons.visible = false
+			_action_buttons.visible = false
 			_ability_info.visible = true
 			_player_input.active = false
 		_State.TURN_RUNNING:
 			_selected_ability = null
-			_ability_buttons.visible = true
+			_action_buttons.visible = true
 			_ability_info.visible = false
 			_player_input.active = false
 			_targeting_grid.clear()
@@ -87,10 +87,12 @@ func _on_player_input_turn_action_selected(action: TurnAction) -> void:
 	_end_turn(action)
 
 
-func _on_ability_buttons_ability_selected(ability: Ability) -> void:
+func _on_action_buttons_ability_selected(ability: Ability) -> void:
 	_start_targeting(ability)
 
-	_selected_ability = ability
+
+func _on_action_buttons_use_object_selected() -> void:
+	pass # Replace with function body.
 
 
 func _on_ability_info_cancelled() -> void:
