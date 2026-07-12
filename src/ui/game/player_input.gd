@@ -59,7 +59,8 @@ func _process(_delta: float) -> void:
 
 
 func _try_bump_attack(move_vector: Vector2i) -> bool:
-	if player.abilities.attack.target_type != TargetType.Type.ACTOR:
+	if player.abilities.attack.targeting_config.target_type \
+			!= TargetType.Type.ACTOR:
 		return false
 	if move_vector.length_squared() != 1:
 		return false
@@ -72,7 +73,7 @@ func _try_bump_attack(move_vector: Vector2i) -> bool:
 	var other_actors := player.map.get_actors_on_cells(edge_cells)
 	var target_actors := other_actors.filter(
 		func (actor: Actor) -> bool:
-			return player.abilities.attack.target_is_valid(
+			return player.abilities.attack.targeting_config.target_is_valid(
 					player, actor.origin_cell)
 	)
 

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TargetingConfig" format=3 uid="uid://dv2waf83ycl1g"]
+
+[ext_resource type="Script" uid="uid://1bq25gr35q13" path="res://src/world/targeting/aoe_filter.gd" id="1_8kyqg"]
+[ext_resource type="Script" uid="uid://e1dawmpvnmbh" path="res://src/world/targeting/targeting_config.gd" id="2_hmovg"]
+[ext_resource type="Script" uid="uid://c0chsdsq7ruvp" path="res://src/world/targeting/target_range_filter.gd" id="3_6lebr"]
+[ext_resource type="Script" uid="uid://bmytpp1b3x3nh" path="res://src/world/abilities/target_filters/actor_range_filter.gd" id="4_i2reg"]
+[ext_resource type="Script" uid="uid://bd56gshtl32q2" path="res://src/world/abilities/target_ranges/distance_range_shape.gd" id="5_cnbx6"]
+
+[sub_resource type="Resource" id="Resource_jhw8o"]
+script = ExtResource("4_i2reg")
+actor_type = 1
+use_in_ui = false
+metadata/_custom_type_script = "uid://bmytpp1b3x3nh"
+
+[sub_resource type="Resource" id="Resource_yarin"]
+script = ExtResource("5_cnbx6")
+metadata/_custom_type_script = "uid://bd56gshtl32q2"
+
+[resource]
+script = ExtResource("2_hmovg")
+target_type = 1
+target_range_shape = SubResource("Resource_yarin")
+target_range_filters = Array[ExtResource("3_6lebr")]([SubResource("Resource_jhw8o")])
+metadata/_custom_type_script = "uid://e1dawmpvnmbh"

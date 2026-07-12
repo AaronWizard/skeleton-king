@@ -66,7 +66,8 @@ func _start_targeting(ability: Ability) -> void:
 
 	_selected_ability = ability
 
-	var targeting_data := _selected_ability.get_targeting_data(_player)
+	var targeting_data := \
+			_selected_ability.targeting_config.get_targeting_data(_player)
 	_ability_info.set_ability(
 		_selected_ability.name, targeting_data.valid_targets.is_empty()
 	)

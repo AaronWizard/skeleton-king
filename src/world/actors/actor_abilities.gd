@@ -21,7 +21,7 @@ var all_abilities: Array[Ability]:
 
 
 func can_attack(target: Vector2i) -> bool:
-	return attack.target_is_valid(_actor, target)
+	return attack.targeting_config.target_is_valid(_actor, target)
 
 
 func create_attack_action(target: Vector2i) -> TurnAction:
