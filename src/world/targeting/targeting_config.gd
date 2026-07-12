@@ -101,6 +101,13 @@ func _get_valid_targets(actor: Actor, base_range: Array[Vector2i]) \
 				if other_actor:
 					target_set[other_actor.origin_cell] = true
 			result.assign(target_set.keys())
+		TargetType.Type.OBJECT:
+			var target_set: Dictionary[Vector2i, bool] = {}
+			for cell in base_range:
+				var object := actor.map.get_useable_object_on_cell(cell)
+				if object:
+					target_set[object.origin_cell] = true
+			result.assign(target_set.keys())
 		_:
 			result.assign(base_range)
 	return result
