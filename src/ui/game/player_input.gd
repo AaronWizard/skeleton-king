@@ -1,7 +1,11 @@
 class_name PlayerInput
 extends Node
 
-signal targeting_started(ability: Ability)
+signal targeting_started(
+	action_name: String,
+	targeted_action_factory: TargetedActionFactory,
+	targeting_data: TargetingData
+)
 signal turn_action_selected(action: TurnAction)
 
 @export var cheats_enabled := false
@@ -67,14 +71,16 @@ func _try_bump_attack(move_vector: Vector2i) -> bool:
 
 	var result := false
 
+	var targeting_data := \
+			player.abilities.attack.targeting_config.get_targeting_data(player)
+
 	var direction := Directions.dir_to_cardinal(move_vector)
 	var edge_cells := TileGeometry.adjacent_edge_cells(
 			player.cell_rect, direction)
 	var other_actors := player.map.get_actors_on_cells(edge_cells)
 	var target_actors := other_actors.filter(
 		func (actor: Actor) -> bool:
-			return player.abilities.attack.targeting_config.target_is_valid(
-					player, actor.origin_cell)
+			return actor.origin_cell in targeting_data.valid_targets
 	)
 
 	if target_actors.size() == 1:
@@ -84,7 +90,11 @@ func _try_bump_attack(move_vector: Vector2i) -> bool:
 		_select_action(attack)
 		result = true
 	elif not target_actors.is_empty():
-		targeting_started.emit(player.abilities.attack)
+		targeting_started.emit(
+			player.abilities.attack.name,
+			AbilityActionFactory.new(player, player.abilities.attack),
+			targeting_data
+		)
 		result = true
 
 	return result

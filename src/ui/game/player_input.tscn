@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dasis7y0urj3h" path="res://src/ui/game/player_input.gd" id="1_bmm6t"]
 
-[node name="PlayerInput" type="Node"]
+[node name="PlayerInput" type="Node" unique_id=638712998]
 script = ExtResource("1_bmm6t")
 metadata/_custom_type_script = "uid://dasis7y0urj3h"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=838951209]
 wait_time = 0.125
 one_shot = true

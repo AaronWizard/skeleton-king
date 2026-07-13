@@ -86,21 +86,16 @@ func _start_targeting(
 	_set_state(_State.TARGET)
 
 
-func _start_targeting_ability(ability: Ability) -> void:
-	_start_targeting(
-		ability.name,
-		AbilityActionFactory.new(_player, ability),
-		ability.targeting_config.get_targeting_data(_player)
-	)
-
-
 func _end_turn(action: TurnAction) -> void:
 	_controller.send_player_action(action)
 	_set_state(_State.TURN_RUNNING)
 
 
-func _on_player_input_targeting_started(ability: Ability) -> void:
-	_start_targeting_ability(ability)
+func _on_player_input_targeting_started(
+		action_name: String,
+		targeted_action_factory: TargetedActionFactory,
+		targeting_data: TargetingData) -> void:
+	_start_targeting(action_name, targeted_action_factory, targeting_data)
 
 
 func _on_player_input_turn_action_selected(action: TurnAction) -> void:
@@ -108,7 +103,11 @@ func _on_player_input_turn_action_selected(action: TurnAction) -> void:
 
 
 func _on_action_buttons_ability_selected(ability: Ability) -> void:
-	_start_targeting_ability(ability)
+	_start_targeting(
+		ability.name,
+		AbilityActionFactory.new(_player, ability),
+		ability.targeting_config.get_targeting_data(_player)
+	)
 
 
 func _on_action_buttons_use_object_selected() -> void:
