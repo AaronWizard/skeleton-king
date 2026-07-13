@@ -11,7 +11,7 @@ enum _State {
 @onready var _player_input := $PlayerInput as PlayerInput
 
 @onready var _action_buttons := %ActionButtons as ActionButtons
-@onready var _ability_info := %AbilityInfo as AbilityInfo
+@onready var _action_info := %ActionInfo as ActionInfo
 
 var _player: Actor
 var _controller: PlayerController
@@ -48,17 +48,17 @@ func _set_state(state: _State) -> void:
 		_State.MOVE:
 			_selected_ability = null
 			_action_buttons.visible = true
-			_ability_info.visible = false
+			_action_info.visible = false
 			_player_input.active = true
 			_targeting_grid.clear()
 		_State.TARGET:
 			_action_buttons.visible = false
-			_ability_info.visible = true
+			_action_info.visible = true
 			_player_input.active = false
 		_State.TURN_RUNNING:
 			_selected_ability = null
 			_action_buttons.visible = true
-			_ability_info.visible = false
+			_action_info.visible = false
 			_player_input.active = false
 			_targeting_grid.clear()
 
@@ -73,7 +73,7 @@ func _start_targeting(ability: Ability) -> void:
 
 	var targeting_data := \
 			_selected_ability.targeting_config.get_targeting_data(_player)
-	_ability_info.set_ability(
+	_action_info.set_action(
 		_selected_ability.name, targeting_data.valid_targets.is_empty()
 	)
 	_targeting_grid.show_targeting(_player, targeting_data)
