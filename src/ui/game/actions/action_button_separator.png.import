@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cexoq10co8kdo"
-path="res://.godot/imported/use.png-e9bb5d639baf445362282eb69a1bd3e4.ctex"
+uid="uid://d3qt3mfur10a6"
+path="res://.godot/imported/action_button_separator.png-1e38dbac28fa06ac20f3cc3a6cedbb0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/ui/game/use.png"
-dest_files=["res://.godot/imported/use.png-e9bb5d639baf445362282eb69a1bd3e4.ctex"]
+source_file="res://src/ui/game/actions/action_button_separator.png"
+dest_files=["res://.godot/imported/action_button_separator.png-1e38dbac28fa06ac20f3cc3a6cedbb0f.ctex"]
 
 [params]
 

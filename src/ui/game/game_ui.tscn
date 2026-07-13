@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://diwcsg25lhq6x" path="res://src/ui/game/player_input.tscn" id="1_jlfe0"]
 [ext_resource type="Script" uid="uid://coravmrhrsmk0" path="res://src/ui/game/game_ui.gd" id="1_uoilq"]
 [ext_resource type="PackedScene" uid="uid://bew3mgmobynch" path="res://src/ui/game/targeting/targeting_grid.tscn" id="2_r30kv"]
-[ext_resource type="PackedScene" uid="uid://dh1l8ip0k0kl7" path="res://src/ui/game/action_buttons.tscn" id="4_vdao0"]
-[ext_resource type="PackedScene" uid="uid://einmvlq3r18s" path="res://src/ui/game/abilities/ability_info.tscn" id="5_vdao0"]
+[ext_resource type="PackedScene" uid="uid://dh1l8ip0k0kl7" path="res://src/ui/game/actions/action_buttons.tscn" id="4_vdao0"]
+[ext_resource type="PackedScene" uid="uid://einmvlq3r18s" path="res://src/ui/game/actions/ability_info.tscn" id="5_vdao0"]
 
 [node name="GameUI" type="Node" unique_id=1552569568]
 script = ExtResource("1_uoilq")

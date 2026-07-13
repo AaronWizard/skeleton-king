@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dh1l8ip0k0kl7"]
 
-[ext_resource type="PackedScene" uid="uid://il8e5kuyw0lr" path="res://src/ui/game/abilities/ability_buttons.tscn" id="1_av7v7"]
-[ext_resource type="Script" uid="uid://ciwepqfvcpxk3" path="res://src/ui/game/action_buttons.gd" id="1_lyiil"]
-[ext_resource type="Texture2D" uid="uid://d3qt3mfur10a6" path="res://src/ui/game/action_button_separator.png" id="2_lyiil"]
-[ext_resource type="Texture2D" uid="uid://cexoq10co8kdo" path="res://src/ui/game/use.png" id="3_du0t6"]
+[ext_resource type="PackedScene" uid="uid://il8e5kuyw0lr" path="res://src/ui/game/actions/ability_buttons.tscn" id="1_av7v7"]
+[ext_resource type="Script" uid="uid://ciwepqfvcpxk3" path="res://src/ui/game/actions/action_buttons.gd" id="1_lyiil"]
+[ext_resource type="Texture2D" uid="uid://d3qt3mfur10a6" path="res://src/ui/game/actions/action_button_separator.png" id="2_lyiil"]
+[ext_resource type="Texture2D" uid="uid://cexoq10co8kdo" path="res://src/ui/game/actions/use.png" id="3_du0t6"]
 
 [node name="ActionButtons" type="HBoxContainer" unique_id=391213531]
 offset_right = 23.0
