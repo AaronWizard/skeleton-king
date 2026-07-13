@@ -7,6 +7,10 @@ enum _State {
 	TURN_RUNNING
 }
 
+const _ACTION_USE_NAME := "Use"
+const _ACTION_USE_TARGETING_CONFIG := preload("uid://d0vwau5s8b80u") \
+		as TargetingConfig
+
 @onready var _targeting_grid := $TargetingGrid as TargetingGrid
 @onready var _player_input := $PlayerInput as PlayerInput
 
@@ -19,7 +23,8 @@ var _controller: PlayerController
 var _state := _State.TURN_RUNNING
 
 var _use_object_target_range: TargetingData = null
-var _selected_ability: Ability = null
+
+var _targeted_action_factory: TargetedActionFactory = null
 
 
 func _ready() -> void:
@@ -46,7 +51,7 @@ func _set_state(state: _State) -> void:
 	_state = state
 	match _state:
 		_State.MOVE:
-			_selected_ability = null
+			_targeted_action_factory = null
 			_action_buttons.visible = true
 			_action_info.visible = false
 			_player_input.active = true
@@ -56,28 +61,37 @@ func _set_state(state: _State) -> void:
 			_action_info.visible = true
 			_player_input.active = false
 		_State.TURN_RUNNING:
-			_selected_ability = null
+			_targeted_action_factory = null
 			_action_buttons.visible = true
 			_action_info.visible = false
 			_player_input.active = false
 			_targeting_grid.clear()
 
 
-func _start_targeting(ability: Ability) -> void:
+func _start_targeting(
+		action_name: String,
+		targetd_action_factory: TargetedActionFactory,
+		targeting_data: TargetingData) -> void:
 	if _state != _State.MOVE:
 		return
 
 	Log.print("Start targeting", Color.GOLD)
 
-	_selected_ability = ability
+	_targeted_action_factory = targetd_action_factory
 
-	var targeting_data := \
-			_selected_ability.targeting_config.get_targeting_data(_player)
 	_action_info.set_action(
-		_selected_ability.name, targeting_data.valid_targets.is_empty()
+		action_name, targeting_data.valid_targets.is_empty()
 	)
 	_targeting_grid.show_targeting(_player, targeting_data)
 	_set_state(_State.TARGET)
+
+
+func _start_targeting_ability(ability: Ability) -> void:
+	_start_targeting(
+		ability.name,
+		AbilityActionFactory.new(_player, ability),
+		ability.targeting_config.get_targeting_data(_player)
+	)
 
 
 func _end_turn(action: TurnAction) -> void:
@@ -86,7 +100,7 @@ func _end_turn(action: TurnAction) -> void:
 
 
 func _on_player_input_targeting_started(ability: Ability) -> void:
-	_start_targeting(ability)
+	_start_targeting_ability(ability)
 
 
 func _on_player_input_turn_action_selected(action: TurnAction) -> void:
@@ -94,11 +108,15 @@ func _on_player_input_turn_action_selected(action: TurnAction) -> void:
 
 
 func _on_action_buttons_ability_selected(ability: Ability) -> void:
-	_start_targeting(ability)
+	_start_targeting_ability(ability)
 
 
 func _on_action_buttons_use_object_selected() -> void:
-	pass # Replace with function body.
+	_start_targeting(
+		_ACTION_USE_NAME,
+		UseObjectActionFactory.new(_player),
+		_ACTION_USE_TARGETING_CONFIG.get_targeting_data(_player)
+	)
 
 
 func _on_ability_info_cancelled() -> void:
@@ -109,4 +127,4 @@ func _on_targeting_grid_target_selected(target: Vector2i) -> void:
 	if _state != _State.TARGET:
 		return
 
-	_end_turn(AbilityAction.new(_player, _selected_ability, target))
+	_end_turn(_targeted_action_factory.create_action(target))
