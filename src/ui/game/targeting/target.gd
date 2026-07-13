@@ -43,12 +43,20 @@ func show_with_target_range(actor: Actor, targeting_data: TargetingData) \
 			dist_sqr = new_dist_sqr
 
 	origin_cell = new_target
-	if _targeting_data.target_type == TargetType.Type.ACTOR:
-		var other_actor := _actor.map.get_actor_on_cell(origin_cell)
-		assert(other_actor)
-		cell_dimensions = Vector2i(
-			other_actor.cell_length, other_actor.cell_length
-		)
+
+	match _targeting_data.target_type:
+		TargetType.Type.ACTOR:
+			var other_actor := _actor.map.get_actor_on_cell(origin_cell)
+			assert(other_actor)
+			cell_dimensions = Vector2i(
+				other_actor.cell_length, other_actor.cell_length
+			)
+		TargetType.Type.OBJECT:
+			var object := _actor.map.get_useable_object_on_cell(origin_cell)
+			assert(object)
+			cell_dimensions = object.cell_dimensions
+		_:
+			cell_dimensions = Vector2i.ONE
 
 	_send_move_events = not _targeting_data.valid_targets.is_empty()
 	visible = not _targeting_data.valid_targets.is_empty()
