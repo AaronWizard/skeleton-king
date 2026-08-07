@@ -13,8 +13,8 @@ extends Resource
 ## If true, filter will be used when displaying an action's target range in the
 ## UI.[br]
 ## [br]
-## Example: Consider a filter that checks if a target cell is filtered by an
-## actor, and an action that only has that one filter. If
+## Example: Consider a filter that checks if a target cell has an actor on it,
+## and an action that only has that one filter. If
 ## [member TargetRangeFilter.use_in_ui] is set to true, only cells occupied by
 ## actors will be displayed when the action's target range is displayed in-game.
 ## If this is set to false, the action's full target range is displayed.
