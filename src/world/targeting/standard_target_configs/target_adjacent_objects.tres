@@ -4,6 +4,12 @@
 [ext_resource type="Script" uid="uid://e1dawmpvnmbh" path="res://src/world/targeting/targeting_config.gd" id="2_g7slc"]
 [ext_resource type="Script" uid="uid://c0chsdsq7ruvp" path="res://src/world/targeting/target_range_filter.gd" id="3_esxbn"]
 [ext_resource type="Script" uid="uid://bd56gshtl32q2" path="res://src/world/targeting/target_ranges/distance_range_shape.gd" id="4_fo7x3"]
+[ext_resource type="Script" uid="uid://c0v2450oddf7a" path="res://src/world/targeting/target_filters/object_range_filter.gd" id="4_ule8o"]
+
+[sub_resource type="Resource" id="Resource_01tcq"]
+script = ExtResource("4_ule8o")
+use_in_ui = false
+metadata/_custom_type_script = "uid://c0v2450oddf7a"
 
 [sub_resource type="Resource" id="Resource_yarin"]
 script = ExtResource("4_fo7x3")
@@ -13,4 +19,5 @@ metadata/_custom_type_script = "uid://bd56gshtl32q2"
 script = ExtResource("2_g7slc")
 target_type = 2
 target_range_shape = SubResource("Resource_yarin")
+target_range_filters = Array[ExtResource("3_esxbn")]([SubResource("Resource_01tcq")])
 metadata/_custom_type_script = "uid://e1dawmpvnmbh"
