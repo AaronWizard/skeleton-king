@@ -18,6 +18,7 @@ func run() -> bool:
 
 	if _map.animations_running:
 		await _map.animations_finished
-	_object.use()
-
-	return true
+	var result := _object.use()
+	if not result:
+		Log.print("%s could not be used" % _object.name, Color.RED)
+	return result

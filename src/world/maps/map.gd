@@ -58,7 +58,7 @@ func load_map(design_map: DesignMap) -> void:
 		_terrain_layer.add_child(tilemap)
 
 	for object in design_map.useable_objects:
-		_useable_object_layer.add_child(object)
+		_add_useable_object(object)
 	for actor in design_map.actors:
 		add_actor(actor, actor.origin_cell)
 	for marker in design_map.markers:
@@ -116,6 +116,7 @@ func get_actors_on_cells(cells: Array[Vector2i]) -> Array[Actor]:
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
 	return _useable_object_layer.get_object_on_cell(cell)
 
+#endregion
 
 func get_terrain(cell: Vector2i) -> Terrain:
 	return _terrain_layer.get_terrain(cell)
@@ -136,6 +137,11 @@ func _clear() -> void:
 	_clear_layer(_useable_object_layer)
 	_clear_layer(_actor_layer)
 	_clear_layer(_marker_layer)
+
+
+func _add_useable_object(object: UseableObject) -> void:
+	_useable_object_layer.add_child(object)
+	object.set_map(self)
 
 
 static func _clear_layer(layer: Node) -> void:

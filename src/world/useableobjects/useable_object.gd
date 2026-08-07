@@ -41,6 +41,8 @@ var current_state: UseableObjectState:
 
 @onready var _sprite := $Sprite as Sprite2D
 
+var _map_tracker := ParentMapTracker.new(self)
+
 
 static func create_useable_object(p_data: UseableObjectData, initial_state: int) \
 		-> UseableObject:
@@ -50,8 +52,32 @@ static func create_useable_object(p_data: UseableObjectData, initial_state: int)
 	return object
 
 
-func use() -> void:
-	state_index += 1
+func set_map(map: Map) -> void:
+	_map_tracker.set_map(map)
+
+
+func can_use() -> bool:
+	if not data or not data.states or data.states.is_empty():
+		return false
+
+	var result := true
+
+	var next_index := wrapi(state_index + 1, 0, data.states.size())
+	var next_state := data.states[next_index]
+
+	if next_state.blocks_move and _map_tracker.get_map():
+		var actors := _map_tracker.get_map().get_actors_in_rect(cell_rect)
+		result = actors.is_empty()
+
+	return result
+
+
+func use() -> bool:
+	var result := false
+	if can_use():
+		state_index += 1
+		result = true
+	return result
 
 
 func _tile_size_changed() -> void:
