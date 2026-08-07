@@ -17,22 +17,12 @@ signal map_changed(old_map: Map)
 #region Properties
 
 var map: Map:
+	get:
+		return _map_tracker.get_map()
 	set(value):
-		if map == value:
-			return
-
-		if map and map.is_ancestor_of(self):
-			push_error("Cannot change an actor's map while it is still a " \
-					+ "child of its current map")
-			return
-		if value and not value.is_ancestor_of(self):
-			push_error("Cannot change an actor's map to a map it is not a " \
-					+ "child of")
-			return
-
 		var old_map := map
-		map = value
-		map_changed.emit(old_map)
+		if _map_tracker.set_map(value):
+			map_changed.emit(old_map)
 
 
 var turn_taker: TurnTaker:
@@ -60,6 +50,8 @@ var remote_transform: RemoteTransform2D:
 		return %RemoteTransform as RemoteTransform2D
 
 #endregion Properties
+
+var _map_tracker := ParentMapTracker.new(self)
 
 var _stats: Stats
 var _abilities := ActorAbilities.new(self)
