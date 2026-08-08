@@ -72,6 +72,28 @@ func can_use() -> bool:
 	return result
 
 
+## Get how many times object has to be used before it doesn't block movement.
+## [br]
+## Returns 0 if the object is already unblocked.
+## [br]
+## Returns -1 if the object can never be unblocked.
+func use_count_until_move_unblocked() -> int:
+	if not current_state.blocks_move:
+		return 0
+	var count := 0
+	var index := wrapi(state_index + 1, 0, data.states.size())
+	while index != state_index:
+		count += 1
+		if not data.states[index].blocks_move:
+			break
+		index = wrapi(index + 1, 0, data.states.size())
+
+	if index == state_index:
+		return -1
+	else:
+		return count
+
+
 func use() -> bool:
 	var result := false
 	if can_use():
