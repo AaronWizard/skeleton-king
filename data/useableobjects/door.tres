@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="UseableObjectData" format=3 uid="uid://dh7g4jvxgjk7m"]
+
+[ext_resource type="Script" uid="uid://ijtcjwvqanks" path="res://src/world/useableobjects/useable_object_data.gd" id="1_4usmv"]
+[ext_resource type="Script" uid="uid://bqdrcg0ycn60x" path="res://src/world/useableobjects/useable_object_state.gd" id="2_rumrd"]
+[ext_resource type="Texture2D" uid="uid://cv3ckxg7uiad" path="res://data/useableobjects/objects.png" id="3_rumrd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4usmv"]
+atlas = ExtResource("3_rumrd")
+region = Rect2(0, 36, 12, 12)
+
+[sub_resource type="Resource" id="Resource_nhc11"]
+script = ExtResource("2_rumrd")
+sprite = SubResource("AtlasTexture_4usmv")
+blocks_move = true
+blocks_sight = true
+metadata/_custom_type_script = "uid://bqdrcg0ycn60x"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pld2k"]
+atlas = ExtResource("3_rumrd")
+region = Rect2(0, 48, 12, 12)
+
+[sub_resource type="Resource" id="Resource_2d3e4"]
+script = ExtResource("2_rumrd")
+sprite = SubResource("AtlasTexture_pld2k")
+metadata/_custom_type_script = "uid://bqdrcg0ycn60x"
+
+[resource]
+script = ExtResource("1_4usmv")
+states = Array[ExtResource("2_rumrd")]([SubResource("Resource_nhc11"), SubResource("Resource_2d3e4")])
+metadata/_custom_type_script = "uid://ijtcjwvqanks"

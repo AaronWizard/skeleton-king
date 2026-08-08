@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://de8r14kbdtflu"]
+
+[ext_resource type="Script" uid="uid://3cs5pfg71ocl" path="res://src/editing/design_useable_object.gd" id="1_uapvp"]
+[ext_resource type="Resource" uid="uid://dh7g4jvxgjk7m" path="res://data/useableobjects/door.tres" id="2_4rqfw"]
+
+[node name="Door" type="Node2D" unique_id=1923375510]
+position = Vector2(0, 12)
+script = ExtResource("1_uapvp")
+data = ExtResource("2_4rqfw")
+metadata/_custom_type_script = "uid://3cs5pfg71ocl"
