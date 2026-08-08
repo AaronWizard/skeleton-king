@@ -243,6 +243,11 @@ func _pick_new_search_cell() -> bool:
 				_search_cell = target
 				result = true
 				break
+			else:
+				Log.print(
+					"%s failed to find path to %.v" % [actor.name, target],
+					Color.DARK_ORANGE
+				)
 
 	return result
 
@@ -257,6 +262,11 @@ func _head_to_rect(rect: Rect2i) -> TurnAction:
 			Color.SKY_BLUE
 		)
 		result = MoveAction.new(actor, path[0])
+	else:
+		Log.print(
+			"%s failed to find path to %s" % [actor.name, rect],
+			Color.DARK_ORANGE
+		)
 	return result
 
 
@@ -269,6 +279,11 @@ func _head_to_cell(cell: Vector2i) -> TurnAction:
 			Color.SKY_BLUE
 		)
 		return MoveAction.new(actor, path[0])
+	else:
+		Log.print(
+			"%s failed to find path to %.v" % [actor.name, cell],
+			Color.DARK_ORANGE
+		)
 	return null
 
 
