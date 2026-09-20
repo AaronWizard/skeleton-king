@@ -237,7 +237,7 @@ func _pick_new_search_cell() -> bool:
 	cells.erase(actor.origin_cell)
 	cells.shuffle()
 	for target in cells:
-		if actor.map.actor_can_enter_cell(actor, target, true):
+		if actor.map.actor_can_enter_cell(actor, target, true, true):
 			var path := ActorPathfinder.find_path_to_cell(actor, target, true)
 			if not path.is_empty():
 				_search_cell = target

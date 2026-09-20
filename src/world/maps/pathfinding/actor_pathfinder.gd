@@ -92,7 +92,7 @@ static func _get_neighbors(cell: Vector2i, actor: Actor,
 	for dir in Directions.get_cardinal_dirs():
 		var next_cell := cell + dir
 		if actor.map.actor_can_enter_cell(
-				actor, next_cell, not actors_are_walls):
+				actor, next_cell, not actors_are_walls, true):
 			result.append(next_cell)
 	return result
 
@@ -102,11 +102,34 @@ static func _cell_cost(cell: Vector2i, actor: Actor) -> float:
 
 	# Treat cells occupied by other actors as having a higher move cost instead
 	# of as fully blocked.
+	result = maxf(result, _cost_of_actor_occupied_cell(cell, actor))
+	result += _cost_of_doors(cell, actor)
+	return result
+
+
+static func _cost_of_actor_occupied_cell(cell: Vector2i, actor: Actor) -> float:
+	var result := 1.0
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
-		var other_actor := actor.map.get_actor_on_cell(covered_cell)
+		var other_actor := actor.map.get_actor_on_cell(cell)
 		if other_actor and (other_actor != actor):
 			result = _PATHFIND_COST_OTHER_ACTOR
 			break
+	return result
+
+
+static func _cost_of_doors(cell: Vector2i, actor: Actor) -> float:
+	var result := 1.0
+
+	for covered_cell in actor.get_covered_cells_at_cell(cell):
+		var door := actor.map.get_useable_object_on_cell(cell)
+		if not door:
+			continue
+		var use_count := door.use_count_until_move_unblocked()
+		if use_count < 0:
+			result = -1.0
+			break
+		else:
+			result += float(use_count)
 
 	return result
 

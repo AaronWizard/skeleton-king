@@ -97,10 +97,14 @@ func get_actor_on_cell(cell: Vector2i) -> Actor:
 
 
 func actor_can_enter_cell(
-		actor: Actor, cell: Vector2i, ignore_other_actors: bool) -> bool:
-	return _actor_layer.actor_can_enter_cell(actor, cell, ignore_other_actors) \
-		and _terrain_layer.actor_can_enter_cell(actor, cell) \
-		and _useable_object_layer.actor_can_enter_cell(actor, cell)
+		actor: Actor, cell: Vector2i,
+		ignore_other_actors: bool, ignore_closed_doors: bool
+		) -> bool:
+	return _terrain_layer.actor_can_enter_cell(actor, cell) \
+		and _actor_layer.actor_can_enter_cell( \
+			actor, cell, ignore_other_actors) \
+		and _useable_object_layer.actor_can_enter_cell( \
+			actor, cell, ignore_closed_doors)
 
 
 func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:

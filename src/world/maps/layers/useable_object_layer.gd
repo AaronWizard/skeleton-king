@@ -27,11 +27,20 @@ func get_object_on_cell(cell: Vector2i) -> UseableObject:
 	return result
 
 
-func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
+func actor_can_enter_cell( \
+		actor: Actor, cell: Vector2i, ignore_closed_doors: bool) -> bool:
 	var result := true
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
 		var object := get_object_on_cell(cell)
-		result = not object or not object.current_state.blocks_move
+		result = not object \
+				or ( \
+					not ignore_closed_doors \
+					and not object.current_state.blocks_move \
+				) \
+				or ( \
+					ignore_closed_doors \
+					and (object.use_count_until_move_unblocked() > -1) \
+				)
 		if not result:
 			break
 	return result
