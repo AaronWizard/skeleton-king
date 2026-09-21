@@ -120,7 +120,6 @@ func get_actors_on_cells(cells: Array[Vector2i]) -> Array[Actor]:
 func get_useable_object_on_cell(cell: Vector2i) -> UseableObject:
 	return _useable_object_layer.get_object_on_cell(cell)
 
-#endregion
 
 func get_terrain(cell: Vector2i) -> Terrain:
 	return _terrain_layer.get_terrain(cell)
