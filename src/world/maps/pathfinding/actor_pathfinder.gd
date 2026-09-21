@@ -103,7 +103,9 @@ static func _cell_cost(cell: Vector2i, actor: Actor) -> float:
 	# Treat cells occupied by other actors as having a higher move cost instead
 	# of as fully blocked.
 	result = maxf(result, _cost_of_actor_occupied_cell(cell, actor))
-	result += _cost_of_doors(cell, actor)
+	var cost_of_doors := _cost_of_doors(cell, actor)
+	if cost_of_doors > 0:
+		result += cost_of_doors
 	return result
 
 
@@ -118,7 +120,7 @@ static func _cost_of_actor_occupied_cell(cell: Vector2i, actor: Actor) -> float:
 
 
 static func _cost_of_doors(cell: Vector2i, actor: Actor) -> float:
-	var result := 1.0
+	var result := 0.0
 
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
 		var door := actor.map.get_useable_object_on_cell(cell)
@@ -126,6 +128,7 @@ static func _cost_of_doors(cell: Vector2i, actor: Actor) -> float:
 			continue
 		var use_count := door.use_count_until_move_unblocked()
 		if use_count < 0:
+			push_error("Blocked cell at %.v" % covered_cell)
 			result = -1.0
 			break
 		else:
