@@ -58,6 +58,7 @@ var _state_actions: Dictionary[_State, Callable] = {
 
 #endregion State Structure
 
+var _use_object_action_factory: UseObjectActionFactory = null
 var _state := _State.IDLE
 
 
@@ -66,7 +67,7 @@ func _ready() -> void:
 	actor.map_changed.connect(_on_map_changed)
 	if actor.map:
 		actor.map.events.custom_event_sent.connect(_on_map_custom_event_sent)
-
+	_use_object_action_factory = UseObjectActionFactory.new(actor)
 
 func get_turn_action() -> TurnAction:
 	var old_state := _state
@@ -253,7 +254,6 @@ func _pick_new_search_cell() -> bool:
 
 
 func _head_to_rect(rect: Rect2i) -> TurnAction:
-	var result: TurnAction = null
 	var path := ActorPathfinder.find_path_to_rect(actor, rect, false)
 	if not path.is_empty():
 		Log.print(
@@ -261,13 +261,13 @@ func _head_to_rect(rect: Rect2i) -> TurnAction:
 				% [actor.name, actor.origin_cell, path[0]],
 			Color.SKY_BLUE
 		)
-		result = MoveAction.new(actor, path[0])
+		return _create_move_action(path[0])
 	else:
 		Log.print(
 			"%s failed to find path to %s" % [actor.name, rect],
 			Color.DARK_ORANGE
 		)
-	return result
+	return null
 
 
 func _head_to_cell(cell: Vector2i) -> TurnAction:
@@ -278,7 +278,7 @@ func _head_to_cell(cell: Vector2i) -> TurnAction:
 				% [actor.name, actor.origin_cell, path[0]],
 			Color.SKY_BLUE
 		)
-		return MoveAction.new(actor, path[0])
+		return _create_move_action(path[0])
 	else:
 		Log.print(
 			"%s failed to find path to %.v" % [actor.name, cell],
@@ -318,6 +318,19 @@ func _update_investigate_target_from_alert() -> bool:
 
 	# Alerted about rect to investigate
 	return true
+
+
+func _create_move_action(next_cell: Vector2i) -> TurnAction:
+	var actions: Array[TurnAction] = [ MoveAction.new(actor, next_cell) ]
+
+	var edge_cells := TileGeometry.adjacent_edge_cells(
+		actor.cell_rect,
+		Directions.dir_to_cardinal(next_cell - actor.origin_cell)
+	)
+	for cell in edge_cells:
+		actions.append(_use_object_action_factory.create_action(cell))
+
+	return CompositeTurnAction.new(actions)
 
 
 func _on_map_changed(old_map: Map) -> void:
