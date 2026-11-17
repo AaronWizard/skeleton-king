@@ -33,30 +33,11 @@ var _investigate_target: Rect2i
 var _search_cell: Vector2i
 var _search_count := 0
 
-var _closest_alert_target: Rect2i
-var _closest_alert_target_dist_sqr := -1.0
+var _pending_yell_target := Rect2i()
+var _has_pending_yell := false
+var _yell_accepted := false
 
 #endregion State Data
-
-#region State Structure
-
-var _state_transitions: Dictionary[_State, Callable] = {
-	_State.IDLE: _state_check_idle,
-	_State.CHASE: _state_check_chase,
-	_State.INVESTIGATE: _state_check_investigate,
-	_State.SEARCH: _state_check_search,
-	_State.RETURN: _state_check_return
-}
-
-var _state_actions: Dictionary[_State, Callable] = {
-	_State.IDLE: _state_action_idle,
-	_State.CHASE: _state_action_chase,
-	_State.INVESTIGATE: _state_action_investigate,
-	_State.SEARCH: _state_action_search,
-	_State.RETURN: _state_action_return
-}
-
-#endregion State Structure
 
 var _use_object_action_factory: UseObjectActionFactory = null
 var _state := _State.IDLE
@@ -67,148 +48,88 @@ func _ready() -> void:
 	if actor.map:
 		actor.map.events.custom_event_sent.connect(_on_map_custom_event_sent)
 	_use_object_action_factory = UseObjectActionFactory.new(actor)
-
 	_init_data()
 
 
 func get_turn_action() -> TurnAction:
-	var old_state := _state
-	_state = _state_transitions[_state].call()
-	if old_state != _state:
-		Log.print(
-			"%s's state is now %s" % [actor.name, _State.keys()[_state]],
-			Color.SPRING_GREEN
-		)
-	return _state_actions[_state].call()
+	_observe()
+	var next_state := _get_next_state()
+	_set_state(next_state)
+	return _get_turn_action()
 
 
-#region States
-
-#region Idle
-
-func _state_check_idle() -> _State:
+func _observe() -> void:
+	_yell_accepted = false
 	_track_enemy()
 	if _target_enemy:
-		_yell_for_help(_investigate_target)
-		return _State.CHASE
-
-	if _update_investigate_target_from_alert():
-		return _State.INVESTIGATE
-
-	return _State.IDLE
-
-
-func _state_action_idle() -> TurnAction:
-	return null
-
-#endregion Idle
-
-#region Chase
-
-func _state_check_chase() -> _State:
-	_track_enemy()
-	if _target_enemy:
-		return _State.CHASE
-	else:
-		return _State.INVESTIGATE
-
-
-func _state_action_chase() -> TurnAction:
-	if actor.abilities.can_attack(_target_enemy.origin_cell):
-		Log.print(
-			'%s attacking %s' % [actor.name, _target_enemy.name], Color.GREEN
-		)
-		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
-	else:
-		return _head_to_rect(_target_enemy.cell_rect)
-
-#endregion Chase
-
-#region Investigate
-
-func _state_check_investigate() -> _State:
-	_track_enemy()
-	if _target_enemy:
-		_yell_for_help(_investigate_target)
-		return _State.CHASE
-
-	# Investigate closer target when alerted about one
-	_update_investigate_target_from_alert()
-
-	var ally_at_target := func (other_actor: Actor) -> bool:
-		return (actor != other_actor) \
-				and not Actor.are_enemies(actor, other_actor)
-
-	if actor.cell_rect.intersects(_investigate_target) \
-			or ( \
-				_can_see_rect(_investigate_target) \
-				and actor.map.get_actors_in_rect(_investigate_target).any( \
-					ally_at_target \
-				) \
-			):
-		if _pick_new_search_cell():
-			_search_count = _MAX_SEARCH_COUNT
-			return _State.SEARCH
-		else:
-			_search_count = 0
-			return _State.RETURN
-
-	return _State.INVESTIGATE
-
-
-func _state_action_investigate() -> TurnAction:
-	return _head_to_rect(_investigate_target)
-
-#endregion Investigate
-
-#region Search
-
-func _state_check_search() -> _State:
-	_track_enemy()
-	if _target_enemy:
-		_yell_for_help(_investigate_target)
-		return _State.CHASE
-
-	if _update_investigate_target_from_alert():
-		return _State.INVESTIGATE
-
-	if actor.origin_cell == _search_cell:
+		return
+	if _has_pending_yell:
+		_consume_yell()
+	elif (_state == _State.SEARCH) and (actor.origin_cell == _search_cell):
 		_search_count -= 1
-		if (_search_count <= 0) or not _pick_new_search_cell():
+		if _search_count > 0 and not _pick_new_search_cell():
 			_search_count = 0
-			return _State.RETURN
-
-	return _State.SEARCH
 
 
-func _state_action_search() -> TurnAction:
-	return _head_to_cell(_search_cell)
-
-#endregion Search
-
-#region Return
-
-func _state_check_return() -> _State:
-	_track_enemy()
+func _get_next_state() -> _State:
 	if _target_enemy:
-		_yell_for_help(_investigate_target)
 		return _State.CHASE
-
-	if _update_investigate_target_from_alert():
+	if _yell_accepted:
 		return _State.INVESTIGATE
 
-	if actor.origin_cell == _initial_cell:
-		return _State.IDLE
-	else:
-		return _State.RETURN
+	match _state:
+		_State.CHASE:
+			assert(not _target_enemy)
+			return _State.INVESTIGATE
+		_State.INVESTIGATE:
+			if _has_reached_investigate_target():
+				return _State.SEARCH
+		_State.SEARCH:
+			if _search_count <= 0:
+				return _State.RETURN
+		_State.RETURN:
+			if actor.origin_cell == _initial_cell:
+				return _State.IDLE
+
+	return _state
 
 
-func _state_action_return() -> TurnAction:
-	return _head_to_cell(_initial_cell)
+func _set_state(new_state: _State) -> void:
+	if new_state == _state:
+		return
+	var old_state := _state
+	_state = new_state
+	Log.print(
+		"%s: %s -> %s" % [
+			actor.name, _State.keys()[old_state], _State.keys()[new_state]
+		],
+		Color.SPRING_GREEN
+	)
+	match new_state:
+		_State.CHASE:
+			_clear_pending_yell()
+			_yell_for_help(_target_enemy.cell_rect)
+		_State.SEARCH:
+			_search_count = _MAX_SEARCH_COUNT
+			if not _pick_new_search_cell():
+				_set_state(_State.RETURN)
 
-#endregion Return
 
-#endregion States
+func _get_turn_action() -> TurnAction:
+	match _state:
+		_State.IDLE:
+			return null
+		_State.CHASE:
+			return _chase_or_attack()
+		_State.INVESTIGATE:
+			return _head_to_rect(_investigate_target)
+		_State.SEARCH:
+			return _head_to_cell(_search_cell)
+		_State.RETURN:
+			return _head_to_cell(_initial_cell)
+		_:
+			push_error("Invalid state: %d" % _state)
+			return null
 
 
 func _init_data() -> void:
@@ -222,8 +143,8 @@ func _init_data() -> void:
 	_search_cell = Vector2i.ZERO
 	_search_count = 0
 
-	_closest_alert_target = Rect2i()
-	_closest_alert_target_dist_sqr = -1.0
+	_clear_pending_yell()
+	_yell_accepted = false
 
 
 func _track_enemy() -> void:
@@ -248,6 +169,28 @@ func _can_see_rect(rect: Rect2i) -> bool:
 	sight_rect.size += actor.cell_size
 
 	return sight_rect.intersects(rect)
+
+
+func _chase_or_attack() -> TurnAction:
+	if actor.abilities.can_attack(_target_enemy.origin_cell):
+		Log.print(
+			'%s attacking %s' % [actor.name, _target_enemy.name], Color.GREEN
+		)
+		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
+	else:
+		return _head_to_rect(_target_enemy.cell_rect)
+
+
+func _has_reached_investigate_target() -> bool:
+	if actor.cell_rect.intersects(_investigate_target):
+		return true
+	# Check if a visible ally is at _investigate_target
+	return _can_see_rect(_investigate_target) \
+			and actor.map.get_actors_in_rect(_investigate_target).any(
+				func (other_actor: Actor) -> bool:
+					return (actor != other_actor) \
+						and not Actor.are_enemies(actor, other_actor) \
+			)
 
 
 func _pick_new_search_cell() -> bool:
@@ -317,6 +260,8 @@ func _head_to_cell(cell: Vector2i) -> TurnAction:
 
 
 func _yell_for_help(enemy_rect: Rect2i) -> void:
+	Log.print("%s yelling about enemy at %s" % [actor.name, enemy_rect],
+			Color.GOLD)
 	actor.map.events.send_custom_event(
 		_YELL_EVENT_ID,
 		actor.cell_rect,
@@ -327,26 +272,24 @@ func _yell_for_help(enemy_rect: Rect2i) -> void:
 	)
 
 
-func _update_investigate_target_from_alert() -> bool:
-	if _closest_alert_target_dist_sqr < 0:
-		# We've not been alerted
-		return false
+func _consume_yell() -> void:
+	var yell_target := _pending_yell_target
+	_clear_pending_yell()
+	if (_state == _State.INVESTIGATE) and (
+			_dist_sqr_to_actor(yell_target)
+				> _dist_sqr_to_actor(_investigate_target)
+	):
+		# Already investigating something closer.
+		return
+	_investigate_target = yell_target
+	_yell_accepted = true
+	Log.print("%s will investigate yell targeting %s" \
+			% [actor.name, _investigate_target], Color.GOLD)
 
-	if _state == _State.INVESTIGATE:
-		var curr_invst_rect_dist_sqr := TileGeometry.rect_distance_squared(
-				actor.cell_rect, _investigate_target)
-		if _closest_alert_target_dist_sqr > curr_invst_rect_dist_sqr:
-			# Alert target farther than what we're already investigating
-			return false
 
-	_investigate_target = _closest_alert_target
-
-	# Reset closest alert tracking
-	_closest_alert_target = Rect2i()
-	_closest_alert_target_dist_sqr = -1.0
-
-	# Alerted about rect to investigate
-	return true
+func _clear_pending_yell() -> void:
+	_pending_yell_target = Rect2i()
+	_has_pending_yell = false
 
 
 func _create_move_action(next_cell: Vector2i) -> TurnAction:
@@ -385,10 +328,13 @@ func _on_map_custom_event_sent(event: MapEvents.CustomEvent) -> void:
 		return
 
 	var enemy_rect := event.data[_YELL_DATA_ENEMY_LOCATION] as Rect2i
-	var dist_sqrd := TileGeometry.rect_distance_squared(
-			actor.cell_rect, enemy_rect)
+	if not _has_pending_yell or (
+			_dist_sqr_to_actor(enemy_rect)
+				< _dist_sqr_to_actor(_pending_yell_target)
+	):
+		_pending_yell_target = enemy_rect
+		_has_pending_yell = true
 
-	if (_closest_alert_target_dist_sqr < 0) \
-			or (dist_sqrd < _closest_alert_target_dist_sqr):
-		_closest_alert_target = enemy_rect
-		_closest_alert_target_dist_sqr = dist_sqrd
+
+func _dist_sqr_to_actor(rect: Rect2i) -> float:
+	return TileGeometry.rect_distance_squared(actor.cell_rect, rect)
