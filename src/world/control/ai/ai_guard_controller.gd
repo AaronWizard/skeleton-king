@@ -82,7 +82,9 @@ func get_turn_action() -> TurnAction:
 	return _state_actions[_state].call()
 
 
-#region State Checks
+#region States
+
+#region Idle
 
 func _state_check_idle() -> _State:
 	_track_enemy()
@@ -96,6 +98,13 @@ func _state_check_idle() -> _State:
 	return _State.IDLE
 
 
+func _state_action_idle() -> TurnAction:
+	return null
+
+#endregion Idle
+
+#region Chase
+
 func _state_check_chase() -> _State:
 	_track_enemy()
 	if _target_enemy:
@@ -103,6 +112,19 @@ func _state_check_chase() -> _State:
 	else:
 		return _State.INVESTIGATE
 
+
+func _state_action_chase() -> TurnAction:
+	if actor.abilities.can_attack(_target_enemy.origin_cell):
+		Log.print(
+			'%s attacking %s' % [actor.name, _target_enemy.name], Color.GREEN
+		)
+		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
+	else:
+		return _head_to_rect(_target_enemy.cell_rect)
+
+#endregion Chase
+
+#region Investigate
 
 func _state_check_investigate() -> _State:
 	_track_enemy()
@@ -134,6 +156,13 @@ func _state_check_investigate() -> _State:
 	return _State.INVESTIGATE
 
 
+func _state_action_investigate() -> TurnAction:
+	return _head_to_rect(_investigate_target)
+
+#endregion Investigate
+
+#region Search
+
 func _state_check_search() -> _State:
 	_track_enemy()
 	if _target_enemy:
@@ -152,6 +181,13 @@ func _state_check_search() -> _State:
 	return _State.SEARCH
 
 
+func _state_action_search() -> TurnAction:
+	return _head_to_cell(_search_cell)
+
+#endregion Search
+
+#region Return
+
 func _state_check_return() -> _State:
 	_track_enemy()
 	if _target_enemy:
@@ -166,37 +202,13 @@ func _state_check_return() -> _State:
 	else:
 		return _State.RETURN
 
-#endregion State Checks
-
-#region State Actions
-
-func _state_action_idle() -> TurnAction:
-	return null
-
-
-func _state_action_chase() -> TurnAction:
-	if actor.abilities.can_attack(_target_enemy.origin_cell):
-		Log.print(
-			'%s attacking %s' % [actor.name, _target_enemy.name], Color.GREEN
-		)
-		return actor.abilities.create_attack_action(_target_enemy.origin_cell)
-	else:
-		return _head_to_rect(_target_enemy.cell_rect)
-
-
-func _state_action_investigate() -> TurnAction:
-	return _head_to_rect(_investigate_target)
-
-
-func _state_action_search() -> TurnAction:
-	return _head_to_cell(_search_cell)
-
 
 func _state_action_return() -> TurnAction:
 	return _head_to_cell(_initial_cell)
 
+#endregion Return
 
-#endregion State Actions
+#endregion States
 
 
 func _init_data() -> void:
