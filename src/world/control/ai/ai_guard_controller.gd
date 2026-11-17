@@ -63,11 +63,13 @@ var _state := _State.IDLE
 
 
 func _ready() -> void:
-	_initial_cell = actor.origin_cell
 	actor.map_changed.connect(_on_map_changed)
 	if actor.map:
 		actor.map.events.custom_event_sent.connect(_on_map_custom_event_sent)
 	_use_object_action_factory = UseObjectActionFactory.new(actor)
+
+	_init_data()
+
 
 func get_turn_action() -> TurnAction:
 	var old_state := _state
@@ -99,7 +101,6 @@ func _state_check_chase() -> _State:
 	if _target_enemy:
 		return _State.CHASE
 	else:
-		_search_count = _MAX_SEARCH_COUNT
 		return _State.INVESTIGATE
 
 
@@ -124,6 +125,7 @@ func _state_check_investigate() -> _State:
 				) \
 			):
 		if _pick_new_search_cell():
+			_search_count = _MAX_SEARCH_COUNT
 			return _State.SEARCH
 		else:
 			_search_count = 0
@@ -143,7 +145,7 @@ func _state_check_search() -> _State:
 
 	if actor.origin_cell == _search_cell:
 		_search_count -= 1
-		if (_search_count == 0) or not _pick_new_search_cell():
+		if (_search_count <= 0) or not _pick_new_search_cell():
 			_search_count = 0
 			return _State.RETURN
 
@@ -195,6 +197,19 @@ func _state_action_return() -> TurnAction:
 
 
 #endregion State Actions
+
+
+func _init_data() -> void:
+	_initial_cell = actor.origin_cell
+
+	_target_enemy = null
+	_investigate_target = Rect2i()
+
+	_search_cell = Vector2i.ZERO
+	_search_count = 0
+
+	_closest_alert_target = Rect2i()
+	_closest_alert_target_dist_sqr = -1.0
 
 
 func _track_enemy() -> void:
@@ -338,6 +353,8 @@ func _on_map_changed(old_map: Map) -> void:
 		old_map.events.custom_event_sent.disconnect(_on_map_custom_event_sent)
 	if actor.map:
 		actor.map.events.custom_event_sent.connect(_on_map_custom_event_sent)
+
+	_init_data()
 
 
 func _on_map_custom_event_sent(event: MapEvents.CustomEvent) -> void:
