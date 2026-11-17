@@ -200,6 +200,8 @@ func _state_action_return() -> TurnAction:
 
 
 func _init_data() -> void:
+	_state = _State.IDLE
+
 	_initial_cell = actor.origin_cell
 
 	_target_enemy = null
