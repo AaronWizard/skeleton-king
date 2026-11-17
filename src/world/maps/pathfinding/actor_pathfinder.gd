@@ -39,11 +39,23 @@ static func find_path_to_rect(actor: Actor, end_rect: Rect2i,
 		actors_are_walls: bool) -> Array[Vector2i]:
 	var heuristic_func := \
 		func (cell: Vector2i) -> float:
-			@warning_ignore("integer_division")
-			var actor_centre := cell + (actor.cell_size / 2)
-			@warning_ignore("integer_division")
-			var end_centre := end_rect.position + (end_rect.size / 2)
-			return TileGeometry.manhattan_distance(actor_centre, end_centre)
+			var actor_rect := Rect2i(cell, actor.cell_size)
+			# Get gap between actor's rect and end_rect
+			var gap_x := maxi(
+				0,
+				maxi(
+					end_rect.position.x - actor_rect.end.x,
+					actor_rect.position.x - end_rect.end.x
+				) + 1
+			)
+			var gap_y := maxi(
+				0,
+				maxi(
+					end_rect.position.y - actor_rect.end.y,
+					actor_rect.position.y - end_rect.end.y
+				) + 1
+			)
+			return gap_x + gap_y
 
 	var reached_goal_func := \
 		func (cell: Vector2i) -> bool:
@@ -112,7 +124,7 @@ static func _cell_cost(cell: Vector2i, actor: Actor) -> float:
 static func _cost_of_actor_occupied_cell(cell: Vector2i, actor: Actor) -> float:
 	var result := 1.0
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
-		var other_actor := actor.map.get_actor_on_cell(cell)
+		var other_actor := actor.map.get_actor_on_cell(covered_cell)
 		if other_actor and (other_actor != actor):
 			result = _PATHFIND_COST_OTHER_ACTOR
 			break
@@ -123,7 +135,7 @@ static func _cost_of_doors(cell: Vector2i, actor: Actor) -> float:
 	var result := 0.0
 
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
-		var door := actor.map.get_useable_object_on_cell(cell)
+		var door := actor.map.get_useable_object_on_cell(covered_cell)
 		if not door:
 			continue
 		var use_count := door.use_count_until_move_unblocked()
