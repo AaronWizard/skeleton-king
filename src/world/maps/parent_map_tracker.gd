@@ -20,8 +20,8 @@ func set_map(new_map: Map) -> bool:
 		return false
 
 	if _map and _map.is_ancestor_of(_self_node):
-		push_error("Cannot change map for '%s' while it is still a child of " \
-				+ "its current map" % _self_node.name)
+		push_error(("Cannot change map for '%s'"  % _self_node.name) \
+				+ " while it is still a child of its current map")
 		return false
 
 	if new_map and not new_map.is_ancestor_of(_self_node):
