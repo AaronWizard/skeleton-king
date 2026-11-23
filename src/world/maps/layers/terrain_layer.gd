@@ -18,11 +18,27 @@ var mouse_cell: Vector2i:
 var _rect := Rect2i(Vector2i.ZERO, Vector2i(-1, -1))
 var _tile_size := Vector2i(-1, -1)
 
+func update_dimensions() -> void:
+	_rect = Rect2i()
+	_tile_size = Vector2i()
+
+	var top_layer := get_children().back() as TileMapLayer
+	if top_layer:
+		_tile_size = top_layer.tile_set.tile_size
+
+	_rect.size = Vector2.ZERO
+	var size_set := false
+	for layer: TileMapLayer in get_children():
+		var layer_rect := layer.get_used_rect()
+		var layer_size := Rect2i(layer_rect.position, layer_rect.size)
+		if size_set:
+			_rect = _rect.merge(layer_size)
+		else:
+			_rect = layer_size
+			size_set = true
+
 
 func get_pixel_rect() -> Rect2i:
-	if _tile_size.x == -1:
-		var top_layer := get_children().back() as TileMapLayer
-		_tile_size = top_layer.tile_set.tile_size
 	var result := get_cell_rect()
 	result.position *= _tile_size
 	result.size *= _tile_size
@@ -30,13 +46,6 @@ func get_pixel_rect() -> Rect2i:
 
 
 func get_cell_rect() -> Rect2i:
-	if _rect.size.x == -1:
-		_rect.size = Vector2.ZERO
-		for layer: TileMapLayer in get_children():
-			var layer_rect := layer.get_used_rect()
-			_rect = _rect.merge(
-				Rect2i(layer_rect.position, layer_rect.size)
-			)
 	return _rect
 
 

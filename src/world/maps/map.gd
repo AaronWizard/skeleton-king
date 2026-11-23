@@ -56,6 +56,7 @@ func load_map(design_map: DesignMap) -> void:
 
 	for tilemap in design_map.terrain:
 		_terrain_layer.add_child(tilemap)
+	_terrain_layer.update_dimensions()
 
 	for object in design_map.useable_objects:
 		_add_useable_object(object)
