@@ -60,7 +60,7 @@ func get_terrain(cell: Vector2i) -> Terrain:
 
 
 func actor_can_enter_cell(actor: Actor, cell: Vector2i) -> bool:
-	if not get_cell_rect().has_point(cell):
+	if not get_cell_rect().encloses(actor.get_rect_at_cell(cell)):
 		return false
 
 	for covered_cell in actor.get_covered_cells_at_cell(cell):
