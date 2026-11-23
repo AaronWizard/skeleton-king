@@ -4,7 +4,7 @@ extends Node2D
 
 const _TERRAIN_DATA_LAYER_NAME := "terrain"
 
-@export var terrain_library: TerrainLibrary
+var terrain_library: TerrainLibrary
 
 
 var mouse_cell: Vector2i:
