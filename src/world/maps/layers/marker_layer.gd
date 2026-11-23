@@ -9,6 +9,7 @@ func has_marker(marker_name: StringName) -> bool:
 func get_marker_cell(marker_name: StringName) -> Vector2i:
 	if not has_marker(marker_name):
 		push_error("No marker with name '%s'" % marker_name)
+		return Vector2i.ZERO
 
 	var result := Vector2.ZERO
 	var tile_object := get_node(NodePath(marker_name)) \

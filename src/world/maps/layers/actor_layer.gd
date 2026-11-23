@@ -71,6 +71,7 @@ func _on_actor_added(node: Node) -> void:
 	var actor := node as Actor
 	if not actor:
 		push_error("%s is not an actor" % node.name)
+		return
 
 	actor.moved.connect(_on_actor_moved.bind(actor))
 	actor.tree_exited.connect(_on_actor_removed.bind(actor))
