@@ -28,7 +28,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func get_actor_on_cell(cell: Vector2i) -> Actor:
 	var result: Actor = null
-	for a in actors:
+	for a: Actor in get_children():
 		if a.covers_cell(cell):
 			result = a
 			break
@@ -48,7 +48,7 @@ func get_actors_on_cells(cells: Array[Vector2i]) -> Array[Actor]:
 
 func get_actors_in_rect(rect: Rect2i) -> Array[Actor]:
 	var result: Array[Actor] = []
-	for a in actors:
+	for a: Actor in get_children():
 		if a.cell_rect.intersects(rect):
 			result.append(a)
 	return result
