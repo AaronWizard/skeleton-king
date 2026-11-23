@@ -84,7 +84,7 @@ var cell_size: Vector2i:
 ## The rectangle the tile object covers on the grid.
 var cell_rect: Rect2i:
 	get:
-		return Rect2i(origin_cell, _cell_size)
+		return get_rect_at_cell(origin_cell)
 
 
 ## The center of the tile object in pixels.
@@ -136,7 +136,13 @@ func get_covered_cells() -> Array[Vector2i]:
 ## Gets the cell positions the tile object would cover if its
 ## [member origin_cell] was equal to [param cell].
 func get_covered_cells_at_cell(cell: Vector2i) -> Array[Vector2i]:
-	return TileGeometry.cells_in_rect(Rect2i(cell, cell_size))
+	return TileGeometry.cells_in_rect(get_rect_at_cell(cell))
+
+
+## Get the rectangle the tile object would cover on the grid with an origin of
+## [param cell].
+func get_rect_at_cell(cell: Vector2i) -> Rect2i:
+	return Rect2i(cell, cell_size)
 
 
 func _set_position(new_origin_cell: Vector2i) -> void:

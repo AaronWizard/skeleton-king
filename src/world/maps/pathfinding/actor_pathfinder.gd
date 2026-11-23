@@ -39,7 +39,7 @@ static func find_path_to_rect(actor: Actor, end_rect: Rect2i,
 		actors_are_walls: bool) -> Array[Vector2i]:
 	var heuristic_func := \
 		func (cell: Vector2i) -> float:
-			var actor_rect := Rect2i(cell, actor.cell_size)
+			var actor_rect := actor.get_rect_at_cell(cell)
 			# Get gap between actor's rect and end_rect
 			var gap_x := maxi(
 				0,
@@ -59,7 +59,7 @@ static func find_path_to_rect(actor: Actor, end_rect: Rect2i,
 
 	var reached_goal_func := \
 		func (cell: Vector2i) -> bool:
-			var actor_rect := Rect2i(cell, actor.cell_size)
+			var actor_rect := actor.get_rect_at_cell(cell)
 			return end_rect.intersects(actor_rect)
 
 	return _find_path(
